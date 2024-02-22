@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <JobName>sauq</JobName>
+    <Sequence>sample, write</Sequence>
+    <WorkingDir>sauq_runs</WorkingDir>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="sauq" type="">../sauq.m</Input>
+    <Input name="rt" type="">../RateTheory.m</Input>
+    <Input name="kc" type="">../KlemensCallawayModel.m</Input>
+  </Files>
+
+  <Models>
+    <Code name="fp" subType="GenericCode">
+      <executable>/Applications/MATLAB_R2017b.app/bin/matlab</executable>
+      <shell>False</shell>
+      <outputFile>out_sauq.csv</outputFile>
+      <inputExtensions>.m</inputExtensions>
+      <clargs arg='-nosplash -nodesktop -r "run ./sauq.m"' type="input" extension='.m'/>
+    </Code>
+  </Models>
+
+  <Distributions>
+    <Uniform name="damage_dist">
+      <lowerBound>0.0</lowerBound>
+      <upperBound>1.0</upperBound>
+    </Uniform>
+    <!-- <Uniform name="">
+      <lowerBound></lowerBound>
+      <upperBound></upperBound>
+    </Uniform> -->
+  </Distributions>
+
+  <Samplers>
+    <MonteCarlo name="MC">
+      <samplerInit>
+        <limit>3</limit>
+      </samplerInit>
+      <variable name="damage">
+        <distribution>damage_dist</distribution>
+      </variable>
+    </MonteCarlo>
+  </Samplers>
+
+  <Steps>
+    <MultiRun name="sample" clearRunDir="False">
+      <Input class="Files" type="">sauq</Input>
+      <Input class="Files" type="">rt</Input>
+      <Input class="Files" type="">kc</Input>
+      <Model class="Models" type="Code">fp</Model>
+      <Sampler class="Samplers" type="MonteCarlo">MC</Sampler>
+      <Output class="DataObjects" type="HistorySet">samples</Output>
+    </MultiRun>
+    <IOStep name="write">
+      <Input class="DataObjects" type="HistorySet">samples</Input>
+      <Output class="OutStreams" type="Print">dump_samples</Output>
+    </IOStep>
+  </Steps>
+
+  <DataObjects>
+    <HistorySet name="samples">
+      <Output>irrT, RL, NL, k</Output>
+      <options>
+        <pivotParameter>irrT</pivotParameter>
+      </options>
+    </HistorySet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="dump_samples">
+      <type>csv</type>
+      <source>samples</source>
+      <what>input, output</what>
+    </Print>
+  </OutStreams>
+
+</Simulation>
