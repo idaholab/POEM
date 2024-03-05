@@ -1,0 +1,186 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>SparseGrid</WorkingDir>
+    <Sequence>
+      load_sparse_grid_data,
+      RestartSparseGrid,
+      train,
+      pkDump,
+      ROMstats,
+      RomSampling,
+      PrintRomSampling
+    </Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="SparseGrid_data">SparseGrid_dump.csv</Input>
+    <Input name="SparseGridRom_pk" type="">SparseGridRom_pk</Input>
+  </Files>
+
+  <Steps>
+    <IOStep name="load_sparse_grid_data">
+      <Input class="Files" type="">SparseGrid_data</Input>
+      <Output class="DataObjects" type="PointSet">outGrid</Output>
+    </IOStep>
+    <!--
+      Combine model and experimental data
+      Experimental data: SparseGrid_dump.csv
+      Model data: from model directly, i.e., matyas
+    -->
+    <MultiRun name="RestartSparseGrid">
+      <Input class="DataObjects" type="PointSet">outGrid</Input>
+      <Model class="Models" type="ExternalModel">matyas</Model>
+      <Sampler class="Samplers" type="SparseGridCollocation">SparseGrid</Sampler>
+      <Output class="DataObjects" type="PointSet">solnsRestart</Output>
+    </MultiRun>
+
+    <RomTrainer name="train">
+      <Input class="DataObjects" type="PointSet">solnsRestart</Input>
+      <Output class="Models" type="ROM">SparseGridRom</Output>
+    </RomTrainer>
+
+    <IOStep name="pkDump">
+      <Input class="Models" type="ROM">SparseGridRom</Input>
+      <Output class="Files" type="">SparseGridRom_pk</Output>
+    </IOStep>
+
+    <IOStep name="ROMstats">
+      <Input class="Models" type="ROM">SparseGridRom</Input>
+      <Output class="DataObjects" type="DataSet">rom_stats</Output>
+    </IOStep>
+
+    <MultiRun name="RomSampling">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="ROM">SparseGridRom</Model>
+      <Sampler class="Samplers" type="SparseGridCollocation">Grid</Sampler>
+      <Output class="DataObjects" type="PointSet">outRomGrid</Output>
+    </MultiRun>
+
+    <IOStep name="PrintRomSampling">
+      <Input class="DataObjects" type="PointSet">outRomGrid</Input>
+      <Output class="OutStreams" type="Print">Grid_dump</Output>
+      <Output class="OutStreams" type="Plot">Grid_sampling</Output>
+    </IOStep>
+
+  </Steps>
+
+  <Distributions>
+    <Uniform name="x_dist">
+      <lowerBound>-4</lowerBound>
+      <upperBound>4</upperBound>
+    </Uniform>
+    <Uniform name="y_dist">
+      <lowerBound>-4</lowerBound>
+      <upperBound>4</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Samplers>
+    <SparseGridCollocation name="SparseGrid">
+      <variable name="x">
+        <distribution>x_dist</distribution>
+      </variable>
+      <variable name="y">
+        <distribution>y_dist</distribution>
+      </variable>
+      <ROM class="Models" type="ROM">SparseGridRom</ROM>
+      <Restart class="DataObjects" type="PointSet">outGrid</Restart>
+      <restartTolerance>1e-2</restartTolerance>
+    </SparseGridCollocation>
+    <Grid name="Grid">
+      <variable name="x">
+        <distribution>x_dist</distribution>
+        <grid construction="equal" steps="20" type="value">-4 4</grid>
+      </variable>
+      <variable name="y">
+        <distribution>y_dist</distribution>
+        <grid construction="equal" steps="20" type="value">-4 4</grid>
+      </variable>
+    </Grid>
+  </Samplers>
+
+  <Models>
+    <Dummy name="MyDummy" subType=""/>
+    <ExternalModel ModuleToLoad="../models/matyas" name="matyas" subType="">
+      <inputs>x, y</inputs>
+      <outputs>ans</outputs>
+    </ExternalModel>
+    <ROM name="SparseGridRom" subType="GaussPolynomialRom">
+      <Target>ans</Target>
+      <Features>x,y</Features>
+      <IndexSet>TotalDegree</IndexSet>
+      <PolynomialOrder>2</PolynomialOrder>
+      <Interpolation quad="ClenshawCurtis">x</Interpolation>
+      <Interpolation quad="ClenshawCurtis">y</Interpolation>
+    </ROM>
+  </Models>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>x,y</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="outGrid">
+      <Input>x,y</Input>
+      <Output>ans</Output>
+    </PointSet>
+    <PointSet name="outRomGrid">
+      <Input>x,y</Input>
+      <Output>ans</Output>
+    </PointSet>
+    <DataSet name="rom_stats"/>
+    <PointSet name="solnsRestart">
+      <Input>x,y</Input>
+      <Output>ans</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="Grid_dump">
+      <type>csv</type>
+      <source>outRomGrid</source>
+      <what>input,output</what>
+    </Print>
+    <Plot name="Grid_sampling" overwrite="True">
+      <plotSettings>
+        <plot>
+          <type>scatter</type>
+          <x>outRomGrid|Input|x</x>
+          <y>outRomGrid|Input|y</y>
+          <xlabel>x</xlabel>
+          <ylabel>y</ylabel>
+          <colorMap>outRomGrid|Output|ans</colorMap>
+          <cmap>RdBu</cmap>
+          <range>
+            <xmin>-4.0</xmin>
+            <xmax>4.0</xmax>
+            <ymin>-4.0</ymin>
+            <ymax>4.0</ymax>
+          </range>
+          <linewidths>0</linewidths>
+        </plot>
+      </plotSettings>
+      <kwargs>
+        <linewidths>0</linewidths>
+      </kwargs>
+      <actions>
+        <!-- The difference is the type of file output -->
+        <how>png</how>
+        <figureProperties>
+          <frameon>false</frameon>
+          <figsize>7,6</figsize>
+        </figureProperties>
+        <title>
+          <text>Grid Sampled Experimental Matrix Using ROM</text>
+        </title>
+        <colorbar>on</colorbar>
+        <axis>off</axis>
+        <grid>off</grid>
+        <axesBox>off</axesBox>
+      </actions>
+    </Plot>
+  </OutStreams>
+
+</Simulation>
