@@ -7,7 +7,7 @@
   </RunInfo>
 
   <Models>
-    <ExternalModel ModuleToLoad="../models/matyas" name="matyas" subType="">
+    <ExternalModel ModuleToLoad="../../models/himmelblau" name="himmelblau" subType="">
       <inputs>x, y</inputs>
       <outputs>ans</outputs>
     </ExternalModel>
@@ -15,12 +15,12 @@
 
   <Distributions>
     <Uniform name="x_dist">
-      <lowerBound>-10</lowerBound>
-      <upperBound>10</upperBound>
+      <lowerBound>-5</lowerBound>
+      <upperBound>5</upperBound>
     </Uniform>
     <Uniform name="y_dist">
-      <lowerBound>-10</lowerBound>
-      <upperBound>10</upperBound>
+      <lowerBound>-5</lowerBound>
+      <upperBound>5</upperBound>
     </Uniform>
   </Distributions>
 
@@ -28,11 +28,11 @@
     <Grid name="myGrid">
       <variable name="x">
         <distribution>x_dist</distribution>
-        <grid construction="equal" steps="20" type="value">-10 10</grid>
+        <grid construction="equal" steps="20" type="value">-5 5</grid>
       </variable>
       <variable name="y">
         <distribution>y_dist</distribution>
-        <grid construction="equal" steps="20" type="value">-10 10</grid>
+        <grid construction="equal" steps="20" type="value">-5 5</grid>
       </variable>
     </Grid>
   </Samplers>
@@ -65,10 +65,10 @@
           <colorMap>outGrid|Output|ans</colorMap>
           <cmap>RdBu</cmap>
           <range>
-            <xmin>-4.0</xmin>
-            <xmax>4.0</xmax>
-            <ymin>-4.0</ymin>
-            <ymax>4.0</ymax>
+            <xmin>-5.0</xmin>
+            <xmax>5.0</xmax>
+            <ymin>-5.0</ymin>
+            <ymax>5.0</ymax>
           </range>
           <linewidths>0</linewidths>
         </plot>
@@ -97,7 +97,7 @@
   <Steps>
     <MultiRun name="CustomSampler">
       <Input class="DataObjects" type="PointSet">dummyIN</Input>
-      <Model class="Models" type="ExternalModel">matyas</Model>
+      <Model class="Models" type="ExternalModel">himmelblau</Model>
       <Sampler class="Samplers" type="Grid">myGrid</Sampler>
       <Output class="DataObjects" type="PointSet">outGrid</Output>
     </MultiRun>

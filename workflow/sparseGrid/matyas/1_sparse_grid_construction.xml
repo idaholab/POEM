@@ -49,7 +49,7 @@
 
   <Models>
     <Dummy name="MyDummy" subType=""/>
-    <ExternalModel ModuleToLoad="../models/matyas" name="matyas" subType="">
+    <ExternalModel ModuleToLoad="../../models/matyas" name="matyas" subType="">
       <inputs>x, y</inputs>
       <outputs>ans</outputs>
     </ExternalModel>
@@ -91,10 +91,10 @@
           <colorMap>outGrid|Output|ans</colorMap>
           <cmap>RdBu</cmap>
           <range>
-            <xmin>-4.0</xmin>
-            <xmax>4.0</xmax>
-            <ymin>-4.0</ymin>
-            <ymax>4.0</ymax>
+            <xmin>-10.0</xmin>
+            <xmax>10.0</xmax>
+            <ymin>-10.0</ymin>
+            <ymax>10.0</ymax>
           </range>
           <linewidths>0</linewidths>
         </plot>

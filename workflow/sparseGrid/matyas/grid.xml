@@ -1,0 +1,111 @@
+<?xml version="1.0" ?>
+<Simulation verbosity="debug">
+  <RunInfo>
+    <WorkingDir>Grid</WorkingDir>
+    <Sequence>CustomSampler, OutStream</Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Models>
+    <ExternalModel ModuleToLoad="../../models/matyas" name="matyas" subType="">
+      <inputs>x, y</inputs>
+      <outputs>ans</outputs>
+    </ExternalModel>
+  </Models>
+
+  <Distributions>
+    <Uniform name="x_dist">
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
+    </Uniform>
+    <Uniform name="y_dist">
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Samplers>
+    <Grid name="myGrid">
+      <variable name="x">
+        <distribution>x_dist</distribution>
+        <grid construction="equal" steps="20" type="value">-10 10</grid>
+      </variable>
+      <variable name="y">
+        <distribution>y_dist</distribution>
+        <grid construction="equal" steps="20" type="value">-10 10</grid>
+      </variable>
+    </Grid>
+  </Samplers>
+
+  <DataObjects>
+    <PointSet name="outGrid">
+      <Input>x, y</Input>
+      <Output>ans</Output>
+    </PointSet>
+    <PointSet name="dummyIN">
+      <Input>x, y</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="outGrid_dump">
+      <type>csv</type>
+      <source>outGrid</source>
+      <what>input,output</what>
+    </Print>
+    <Plot  name="grid_sampling" overwrite="True">
+      <plotSettings>
+        <plot>
+          <type>scatter</type>
+          <x>outGrid|Input|x</x>
+          <y>outGrid|Input|y</y>
+          <xlabel>x</xlabel>
+          <ylabel>y</ylabel>
+          <colorMap>outGrid|Output|ans</colorMap>
+          <cmap>RdBu</cmap>
+          <range>
+            <xmin>-10.0</xmin>
+            <xmax>10.0</xmax>
+            <ymin>-10.0</ymin>
+            <ymax>10.0</ymax>
+          </range>
+          <linewidths>0</linewidths>
+        </plot>
+      </plotSettings>
+      <kwargs>
+        <linewidths>0</linewidths>
+      </kwargs>
+      <actions>
+        <!-- The difference is the type of file output -->
+        <how>png</how>
+        <figureProperties>
+          <frameon>false</frameon>
+          <figsize>7,6</figsize>
+        </figureProperties>
+        <title>
+          <text>Sampled Experimental Matrix (21X21)</text>
+        </title>
+        <colorbar>on</colorbar>
+        <axis>off</axis>
+        <grid>off</grid>
+        <axesBox>off</axesBox>
+      </actions>
+    </Plot>
+  </OutStreams>
+
+  <Steps>
+    <MultiRun name="CustomSampler">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="ExternalModel">matyas</Model>
+      <Sampler class="Samplers" type="Grid">myGrid</Sampler>
+      <Output class="DataObjects" type="PointSet">outGrid</Output>
+    </MultiRun>
+    <IOStep name="OutStream">
+      <Input class="DataObjects" type="PointSet">outGrid</Input>
+      <Output class="OutStreams" type="Print">outGrid_dump</Output>
+      <Output class="OutStreams" type="Plot">grid_sampling</Output>
+    </IOStep>
+  </Steps>
+
+</Simulation>
