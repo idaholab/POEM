@@ -26,12 +26,12 @@
 
   <Distributions>
     <Uniform name="x_dist">
-      <lowerBound>-4</lowerBound>
-      <upperBound>4</upperBound>
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
     </Uniform>
     <Uniform name="y_dist">
-      <lowerBound>-4</lowerBound>
-      <upperBound>4</upperBound>
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
     </Uniform>
   </Distributions>
 
