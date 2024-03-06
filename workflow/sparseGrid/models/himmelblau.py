@@ -22,4 +22,4 @@ def run(self,Inputs):
     @ In, Inputs, dict, additional inputs
     @ Out, None
   """
-  self.ans = evaluate(self.x,self.y)
+  self.z2 = evaluate(self.x,self.y)

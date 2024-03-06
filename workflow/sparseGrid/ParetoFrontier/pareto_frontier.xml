@@ -1,0 +1,118 @@
+<Simulation verbosity="debug">
+  <RunInfo>
+    <WorkingDir>SampleRom</WorkingDir>
+    <Sequence>load_data,PP, plot</Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="combined_data" type="">combined.csv</Input>
+  </Files>
+
+  <Models>
+    <PostProcessor name="paretoPP" subType="ParetoFrontier">
+      <objective goal='min'>z1</objective>
+      <objective goal='min'>z2</objective>
+    </PostProcessor>
+  </Models>
+
+  <Steps>
+    <IOStep      name='load_data'>
+      <Input     class='Files'        type=''>combined_data</Input>
+      <Output    class='DataObjects'  type='PointSet'>candidates</Output>
+    </IOStep>
+    <PostProcess name="PP">
+      <Input     class="DataObjects"  type="PointSet"        >candidates</Input>
+      <Model     class="Models"       type="PostProcessor"   >paretoPP</Model>
+      <Output    class="DataObjects"  type="PointSet"        >paretoPoints</Output>
+      <Output    class="OutStreams"   type="Print"           >PrintParetoBothLimits</Output>
+    </PostProcess>
+    <IOStep      name='plot'>
+      <Input     class='DataObjects'  type='PointSet'>candidates</Input>
+      <Input     class='DataObjects'  type='PointSet'>paretoPoints</Input>
+      <Output    class='OutStreams'  type='Plot'>plot_pp</Output>
+    </IOStep>
+  </Steps>
+
+  <DataObjects>
+    <PointSet name="candidates">
+      <Input>x,y</Input>
+      <Output>z1,z2</Output>
+    </PointSet>
+    <PointSet name="paretoPoints">
+      <Input>x,y</Input>
+      <Output>z1,z2</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="PrintParetoBothLimits">
+      <type>csv</type>
+      <source>paretoPoints</source>
+    </Print>
+    <Plot name="plot_pp" overwrite="True">
+      <plotSettings>
+        <plot>
+          <type>scatter</type>
+          <c>b</c>
+          <s>10</s>
+          <alpha>0.5</alpha>
+          <x>candidates|Output|z1</x>
+          <y>candidates|Output|z2</y>
+          <range>
+            <xmin>-5.0</xmin>
+            <xmax>5.0</xmax>
+            <ymin>-5.0</ymin>
+            <ymax>5.0</ymax>
+          </range>
+          <linewidths>0</linewidths>
+          <kwargs>
+            <label>Samples</label>
+          </kwargs>
+        </plot>
+        <plot>
+          <type>scatter</type>
+          <c>r</c>
+          <s>20</s>
+          <x>paretoPoints|Output|z1</x>
+          <y>paretoPoints|Output|z2</y>
+          <range>
+            <xmin>-5.0</xmin>
+            <xmax>5.0</xmax>
+            <ymin>-5.0</ymin>
+            <ymax>5.0</ymax>
+          </range>
+          <linewidths>0</linewidths>
+          <kwargs>
+            <label>Pareto Frontier</label>
+          </kwargs>
+        </plot>
+        <xlabel>z1</xlabel>
+        <ylabel>z2</ylabel>
+        <legend>
+          <loc>upper right</loc>
+        </legend>
+      </plotSettings>
+      <actions>
+        <!-- The difference is the type of file output -->
+        <how>png</how>
+        <figureProperties>
+          <frameon>false</frameon>
+          <figsize>7,6</figsize>
+        </figureProperties>
+        <title>
+          <text>Pareto Frontier Using ROM</text>
+        </title>
+        <scale>
+          <xscale>log</xscale>
+          <yscale>log</yscale>
+        </scale>
+        <colorbar>on</colorbar>
+        <axis>on</axis>
+        <grid>off</grid>
+        <axesBox>off</axesBox>
+      </actions>
+    </Plot>
+  </OutStreams>
+
+</Simulation>

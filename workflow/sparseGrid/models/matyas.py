@@ -34,4 +34,4 @@ def run(self,Inputs):
     @ In, Inputs, dict, additional inputs
     @ Out, None
   """
-  self.ans = evaluate(self.x,self.y)
+  self.z1 = evaluate(self.x,self.y)

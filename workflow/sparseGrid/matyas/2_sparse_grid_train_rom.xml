@@ -107,10 +107,10 @@
     <Dummy name="MyDummy" subType=""/>
     <ExternalModel ModuleToLoad="../../models/matyas" name="matyas" subType="">
       <inputs>x, y</inputs>
-      <outputs>ans</outputs>
+      <outputs>z1</outputs>
     </ExternalModel>
     <ROM name="SparseGridRom" subType="GaussPolynomialRom">
-      <Target>ans</Target>
+      <Target>z1</Target>
       <Features>x,y</Features>
       <IndexSet>TotalDegree</IndexSet>
       <PolynomialOrder>2</PolynomialOrder>
@@ -126,16 +126,16 @@
     </PointSet>
     <PointSet name="outGrid">
       <Input>x,y</Input>
-      <Output>ans</Output>
+      <Output>z1</Output>
     </PointSet>
     <PointSet name="outRomGrid">
       <Input>x,y</Input>
-      <Output>ans</Output>
+      <Output>z1</Output>
     </PointSet>
     <DataSet name="rom_stats"/>
     <PointSet name="solnsRestart">
       <Input>x,y</Input>
-      <Output>ans</Output>
+      <Output>z1</Output>
     </PointSet>
   </DataObjects>
 
@@ -157,7 +157,7 @@
           <y>outRomGrid|Input|y</y>
           <xlabel>x</xlabel>
           <ylabel>y</ylabel>
-          <colorMap>outRomGrid|Output|ans</colorMap>
+          <colorMap>outRomGrid|Output|z1</colorMap>
           <cmap>RdBu</cmap>
           <range>
             <xmin>-10.0</xmin>

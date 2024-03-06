@@ -9,7 +9,7 @@
   <Models>
     <ExternalModel ModuleToLoad="../../models/matyas" name="matyas" subType="">
       <inputs>x, y</inputs>
-      <outputs>ans</outputs>
+      <outputs>z1</outputs>
     </ExternalModel>
   </Models>
 
@@ -40,7 +40,7 @@
   <DataObjects>
     <PointSet name="outGrid">
       <Input>x, y</Input>
-      <Output>ans</Output>
+      <Output>z1</Output>
     </PointSet>
     <PointSet name="dummyIN">
       <Input>x, y</Input>
@@ -62,7 +62,7 @@
           <y>outGrid|Input|y</y>
           <xlabel>x</xlabel>
           <ylabel>y</ylabel>
-          <colorMap>outGrid|Output|ans</colorMap>
+          <colorMap>outGrid|Output|z1</colorMap>
           <cmap>RdBu</cmap>
           <range>
             <xmin>-10.0</xmin>
