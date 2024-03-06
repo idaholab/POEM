@@ -24,3 +24,18 @@ An optimal experimental design platform powered with automated machine learning 
 - Pareto Frontier to guides the design of experiment to be evaluated
 
 - Sparse grid stochastic collocation to accelerate experimental design
+
+## Accelerate Experimental Design via Sparse Grid Stochastic Collocation Method
+
+### Matyas Function
+
+![image](https://media.github.inl.gov/user/161/files/f20d06cd-e81e-444c-bd6b-4ee09563e49a)
+
+### Himmelblau's Function
+![image](https://media.github.inl.gov/user/161/files/19151f05-b46e-4cbb-b1df-ed117629bf34)
+
+### Pareto Frontier
+
+![image](https://media.github.inl.gov/user/161/files/db838b94-18e8-47e5-b385-6d81cc2919bc)
+
+
