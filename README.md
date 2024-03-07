@@ -41,7 +41,7 @@ An optimal experimental design platform powered with automated machine learning 
 
 ## Tasks 
 
-- [ ] Utilize Sparse Grid to accelerate Experimental Design, including Sparse Grid, Generalized Polynomial Chaos, Pareto Frontier 
+- [x] Utilize Sparse Grid to accelerate Experimental Design, including Sparse Grid, Generalized Polynomial Chaos, Pareto Frontier 
 - [ ] Bayesian Optimization to accelerate Experimental Design, including Gaussian process
 - [ ] Sensivitiy/Uncertainty analysis, including ROM training, correlation, percentile and sensitivity 
 - [ ] Model calibration, including Bayesian inference, generalized linear least square method 
