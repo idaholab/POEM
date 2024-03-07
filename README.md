@@ -39,3 +39,12 @@ An optimal experimental design platform powered with automated machine learning 
 ![image](https://media.github.inl.gov/user/161/files/db838b94-18e8-47e5-b385-6d81cc2919bc)
 
 
+## Tasks 
+
+- [ ] Utilize Sparse Grid to accelerate Experimental Design, including Sparse Grid, Generalized Polynomial Chaos, Pareto Frontier 
+- [ ] Bayesian Optimization to accelerate Experimental Design, including Gaussian process
+- [ ] Sensivitiy/Uncertainty analysis, including ROM training, correlation, percentile and sensitivity 
+- [ ] Model calibration, including Bayesian inference, generalized linear least square method 
+- [ ] Material thermal properties modeling
+
+
