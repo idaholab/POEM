@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>GP</WorkingDir>
+    <Sequence>
+      Sampling, Print
+    </Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Steps>
+    <MultiRun name="Sampling">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="ExternalModel">matyas</Model>
+      <Sampler class="Samplers" type="Stratified">LHS</Sampler>
+      <Output class="DataObjects" type="PointSet">out</Output>
+    </MultiRun>
+
+    <IOStep name="Print">
+      <Input class="DataObjects" type="PointSet">out</Input>
+      <Output class="OutStreams" type="Print">LHS_dump</Output>
+      <Output class="OutStreams" type="Plot">LHS_sampling</Output>
+    </IOStep>
+  </Steps>
+
+  <Distributions>
+    <Uniform name="x_dist">
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
+    </Uniform>
+    <Uniform name="y_dist">
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Samplers>
+    <Stratified name="LHS">
+      <samplerInit>
+        <initialSeed>1234</initialSeed>
+      </samplerInit>
+      <variable name="x">
+        <distribution>x_dist</distribution>
+        <grid construction="equal" steps="40" type="value">-10 10</grid>
+      </variable>
+      <variable name="y">
+        <distribution>y_dist</distribution>
+        <grid construction="equal" steps="40" type="value">-10 10</grid>
+      </variable>
+    </Stratified>
+  </Samplers>
+
+  <Models>
+    <ExternalModel ModuleToLoad="../../models/matyas" name="matyas" subType="">
+      <inputs>x, y</inputs>
+      <outputs>z1</outputs>
+    </ExternalModel>
+  </Models>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>x,y</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="out">
+      <Input>x,y</Input>
+      <Output>z1</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="LHS_dump">
+      <type>csv</type>
+      <source>out</source>
+      <what>input,output</what>
+    </Print>
+
+    <Plot name="LHS_sampling" overwrite="True">
+      <plotSettings>
+        <plot>
+          <type>scatter</type>
+          <x>out|Input|x</x>
+          <y>out|Input|y</y>
+          <xlabel>x</xlabel>
+          <ylabel>y</ylabel>
+          <colorMap>out|Output|z1</colorMap>
+          <cmap>RdBu</cmap>
+          <range>
+            <xmin>-10.0</xmin>
+            <xmax>10.0</xmax>
+            <ymin>-10.0</ymin>
+            <ymax>10.0</ymax>
+          </range>
+          <linewidths>0</linewidths>
+        </plot>
+      </plotSettings>
+      <kwargs>
+        <linewidths>0</linewidths>
+      </kwargs>
+      <actions>
+        <!-- The difference is the type of file output -->
+        <how>png</how>
+        <figureProperties>
+          <frameon>false</frameon>
+          <figsize>7,6</figsize>
+        </figureProperties>
+        <title>
+          <text>LHS Sampled Experimental Matrix</text>
+        </title>
+        <colorbar>on</colorbar>
+        <axis>on</axis>
+        <grid>on</grid>
+        <axesBox>on</axesBox>
+      </actions>
+    </Plot>
+  </OutStreams>
+
+</Simulation>
