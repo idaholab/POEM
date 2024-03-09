@@ -1,31 +1,26 @@
 <?xml version="1.0" ?>
 <Simulation verbosity="debug">
-  <TestInfo>
-    <name>framework/Optimizers/BO.Matyas</name>
-    <author>AnthoneyGriffith</author>
-    <created>2023-07-13</created>
-    <classesTested>BayesianOptimizer</classesTested>
-    <description>
-      This file provides regression testing of the BayesianOptimizer class in RAVEN. The primary
-      functionality tested is the PoI acquisition function with the differentialEvolution solution
-      option. The function is the 2-dimensional Matyas.
-      The post processing step captures the final results from opt_export. This is because for testing on mac and
-      windows, the entire optimization process is golded; however, due to seeding issues between OS's, the linux
-      tests only consider the final solutions proximity to the correct answer for the analytical test.
-    </description>
-    <analytic>
-      This test uses the Matya's function, which is documented in the analytic tests documentation under
-      the Optimizer functions section.
-    </analytic>
-  </TestInfo>
-
   <RunInfo>
-    <WorkingDir>./</WorkingDir>
-    <Sequence>optimize, collect_final, print</Sequence>
+    <WorkingDir>GP</WorkingDir>
+    <Sequence>load_data, train, optimize, collect_final, print</Sequence>
     <batchSize>1</batchSize>
   </RunInfo>
 
+  <Files>
+    <Input name="samples">LHS_dump.csv</Input>
+  </Files>
+
   <Steps>
+    <IOStep name="load_data">
+      <Input class="Files" type="">samples</Input>
+      <Output class="DataObjects" type="PointSet">samples</Output>
+    </IOStep>
+
+    <RomTrainer name="train">
+      <Input class="DataObjects" type="PointSet">samples</Input>
+      <Output class="Models" type="ROM">gpROM</Output>
+    </RomTrainer>
+
     <MultiRun name="optimize" >
       <Input class="DataObjects" type="PointSet">placeholder</Input>
       <Model class="Models" type="ExternalModel">mat</Model>
@@ -51,7 +46,11 @@
   </Steps>
 
   <Distributions>
-    <Uniform name='mat_dist'>
+    <Uniform name="x_dist">
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
+    </Uniform>
+    <Uniform name="y_dist">
       <lowerBound>-10</lowerBound>
       <upperBound>10</upperBound>
     </Uniform>
@@ -59,12 +58,12 @@
 
   <Optimizers>
     <BayesianOptimizer name="BOopt">
-      <objective>ans</objective>
+      <objective>z1</objective>
       <variable name="x">
-        <distribution>mat_dist</distribution>
+        <distribution>x_dist</distribution>
       </variable>
       <variable name="y">
-        <distribution>mat_dist</distribution>
+        <distribution>y_dist</distribution>
       </variable>
       <TargetEvaluation class="DataObjects" type="PointSet">optOut</TargetEvaluation>
       <samplerInit>
@@ -100,23 +99,24 @@
         <initialSeed>42</initialSeed>
       </samplerInit>
       <variable name="x">
-        <distribution>mat_dist</distribution>
+        <distribution>x_dist</distribution>
         <grid construction="equal" steps="5" type="CDF">0 1</grid>
       </variable>
       <variable name="y">
-        <distribution>mat_dist</distribution>
+        <distribution>y_dist</distribution>
         <grid construction="equal" steps="5" type="CDF">0 1</grid>
       </variable>
     </Stratified>
   </Samplers>
 
   <Models>
-    <ExternalModel ModuleToLoad="../../../AnalyticModels/optimizing/matyas.py" name="mat" subType="">
-      <variables>x,y,ans</variables>
+    <ExternalModel ModuleToLoad="../../../models/matyas.py" name="mat" subType="">
+      <inputs>x, y</inputs>
+      <outputs>z1</outputs>
     </ExternalModel>
     <ROM name="gpROM" subType="GaussianProcessRegressor">
       <Features>x,y</Features>
-      <Target>ans</Target>
+      <Target>z1</Target>
       <alpha>1e-8</alpha>
       <n_restarts_optimizer>5</n_restarts_optimizer>
       <normalize_y>True</normalize_y>
@@ -133,17 +133,21 @@
 
   <DataObjects>
     <PointSet name="placeholder"/>
+    <PointSet name="samples">
+      <Input>x,y</Input>
+      <Output>z1</Output>
+    </PointSet>
     <PointSet name="optOut">
       <Input>x,y</Input>
-      <Output>ans</Output>
+      <Output>z1</Output>
     </PointSet>
     <PointSet name="opt_export">
       <Input>trajID</Input>
-      <Output>x,y,ans,accepted,solutionValue</Output>
+      <Output>x,y,z1,accepted,solutionValue</Output>
     </PointSet>
     <PointSet name="selected_index">
       <Input>trajID</Input>
-      <Output>x,y,ans</Output>
+      <Output>x,y,z1</Output>
     </PointSet>
   </DataObjects>
 
