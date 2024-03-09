@@ -7,7 +7,7 @@
   </RunInfo>
 
   <Models>
-    <ExternalModel ModuleToLoad="../../models/himmelblau" name="himmelblau" subType="">
+    <ExternalModel ModuleToLoad="../../../models/himmelblau" name="himmelblau" subType="">
       <inputs>x, y</inputs>
       <outputs>z2</outputs>
     </ExternalModel>

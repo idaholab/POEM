@@ -105,7 +105,7 @@
 
   <Models>
     <Dummy name="MyDummy" subType=""/>
-    <ExternalModel ModuleToLoad="../../models/matyas" name="matyas" subType="">
+    <ExternalModel ModuleToLoad="../../../models/matyas" name="matyas" subType="">
       <inputs>x, y</inputs>
       <outputs>z1</outputs>
     </ExternalModel>
