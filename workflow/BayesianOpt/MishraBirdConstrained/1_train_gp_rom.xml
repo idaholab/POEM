@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>GP</WorkingDir>
+    <Sequence>
+      load_data, train, RomSampling, PrintRomSampling
+    </Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="samples">LHS_dump.csv</Input>
+  </Files>
+
+  <Steps>
+    <IOStep name="load_data">
+      <Input class="Files" type="">samples</Input>
+      <Output class="DataObjects" type="PointSet">samples</Output>
+    </IOStep>
+
+    <RomTrainer name="train">
+      <Input class="DataObjects" type="PointSet">samples</Input>
+      <Output class="Models" type="ROM">gpROM</Output>
+    </RomTrainer>
+
+    <MultiRun name="RomSampling">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="ROM">gpROM</Model>
+      <Sampler class="Samplers" type="Grid">Grid</Sampler>
+      <Output class="DataObjects" type="PointSet">outRomGrid</Output>
+    </MultiRun>
+
+    <IOStep name="PrintRomSampling">
+      <Input class="DataObjects" type="PointSet">outRomGrid</Input>
+      <Output class="OutStreams" type="Print">Grid_rom_dump</Output>
+      <Output class="OutStreams" type="Plot">Grid_rom_sampling</Output>
+    </IOStep>
+
+  </Steps>
+
+  <Distributions>
+    <Uniform name='mishra_dist_x'>
+      <lowerBound>-10</lowerBound>
+      <upperBound>0</upperBound>
+    </Uniform>
+    <Uniform name='mishra_dist_y'>
+      <lowerBound>-6.5</lowerBound>
+      <upperBound>0</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Samplers>
+    <Grid name="Grid">
+      <variable name="x">
+        <distribution>mishra_dist_x</distribution>
+        <grid construction="equal" steps="20" type="CDF">0 1</grid>
+      </variable>
+      <variable name="y">
+        <distribution>mishra_dist_y</distribution>
+        <grid construction="equal" steps="20" type="CDF">0 1</grid>
+      </variable>
+    </Grid>
+  </Samplers>
+
+  <Models>
+    <ROM name="gpROM" subType="GaussianProcessRegressor">
+      <Features>x,y</Features>
+      <Target>z</Target>
+      <alpha>1e-8</alpha>
+      <n_restarts_optimizer>10</n_restarts_optimizer>
+      <normalize_y>True</normalize_y>
+      <random_state>42</random_state>
+      <kernel>Custom</kernel>
+      <custom_kernel>(Constant*Matern)</custom_kernel>
+      <anisotropic>True</anisotropic>
+      <multioutput>False</multioutput>
+    </ROM>
+  </Models>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>x,y</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="samples">
+      <Input>x,y</Input>
+      <Output>z</Output>
+    </PointSet>
+    <PointSet name="outRomGrid">
+      <Input>x,y</Input>
+      <Output>z</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="Grid_rom_dump">
+      <type>csv</type>
+      <source>outRomGrid</source>
+      <what>input,output</what>
+    </Print>
+
+    <Plot name="Grid_rom_sampling" overwrite="True">
+      <plotSettings>
+        <plot>
+          <type>scatter</type>
+          <x>outRomGrid|Input|x</x>
+          <y>outRomGrid|Input|y</y>
+          <xlabel>x</xlabel>
+          <ylabel>y</ylabel>
+          <colorMap>outRomGrid|Output|z</colorMap>
+          <cmap>RdBu</cmap>
+          <range>
+            <xmin>-10.0</xmin>
+            <xmax>0.0</xmax>
+            <ymin>-6.5</ymin>
+            <ymax>0.0</ymax>
+          </range>
+          <linewidths>0</linewidths>
+        </plot>
+      </plotSettings>
+      <kwargs>
+        <linewidths>0</linewidths>
+      </kwargs>
+      <actions>
+        <!-- The difference is the type of file output -->
+        <how>png</how>
+        <figureProperties>
+          <frameon>false</frameon>
+          <figsize>7,6</figsize>
+        </figureProperties>
+        <title>
+          <text>Grid Sampled Experimental Matrix Using ROM</text>
+        </title>
+        <colorbar>on</colorbar>
+        <axis>off</axis>
+        <grid>off</grid>
+        <axesBox>off</axesBox>
+      </actions>
+    </Plot>
+  </OutStreams>
+
+</Simulation>
