@@ -42,6 +42,7 @@
       <Output class="OutStreams" type="Print">opt_export</Output>
       <Output class="OutStreams" type="Print">optOut</Output>
       <Output class="OutStreams" type="Print">final_opt</Output>
+      <Output class="OutStreams" type="Plot">opt_path</Output>
     </IOStep>
   </Steps>
 
@@ -165,5 +166,9 @@
       <type>csv</type>
       <source>selected_index</source>
     </Print>
+    <Plot name="opt_path" subType="OptPath">
+      <source>opt_export</source>
+      <vars>x,y,z1</vars>
+    </Plot>
   </OutStreams>
 </Simulation>
