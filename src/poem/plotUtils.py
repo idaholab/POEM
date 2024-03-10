@@ -41,11 +41,14 @@ def plotFunction(fig, title,method,constraint,xscale,yscale,cscale=None,log=Fals
   Z = method(X,Y)
   #Z[np.where(not constraint(X,Y))] = np.nan
   # constraint function from optimization, Negative for violated constraint
-  for i,x in enumerate(xs):
-    for j,y in enumerate(ys):
-      if constraint(x,y)<=0:
-        Z[j][i] = np.nan
-  Zm = np.ma.masked_where(np.isnan(Z),Z)
+  if constraint is not None:
+    for i,x in enumerate(xs):
+      for j,y in enumerate(ys):
+        if constraint(x,y)<=0:
+          Z[j][i] = np.nan
+    Zm = np.ma.masked_where(np.isnan(Z),Z)
+  else:
+    Zm = Z
   print('min: {}, max:{}'.format(np.nanmin(Z),np.nanmax(Z)))
   if log:
     if cscale is None:
