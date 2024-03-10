@@ -42,9 +42,28 @@ An optimal experimental design platform powered with automated machine learning 
 ## Accelerate Experimental Design via Bayesian Optimization Method
 
 ### Matyas Function
+- LHS pre-samplings to simulate experiments
+![LHS_sampling_scatter](https://media.github.inl.gov/user/161/files/eb50562d-a312-454b-ad58-f048c24614f2)
 
 
-### Mishra Bird Constrained Function
+- Train Gaussian Process model with LHS samples, and use Grid approach to sample the trained Gaussian Process model
+![Grid_rom_sampling_scatter](https://media.github.inl.gov/user/161/files/9648983f-625e-4260-9abf-63bb4a66e284)
+
+
+- Utilize Bayesian Optimization with pre-trained Gaussian Process model to optimize the experimental design
+
+<div align="center">
+  <img src="https://media.github.inl.gov/user/161/files/0feaea6b-f5ec-45cb-8afb-0afb5c0653c9"><br><br>
+  <img src="https://media.github.inl.gov/user/161/files/64381289-0bd7-4ef0-9810-83423728b640"><br><br>
+</div>
+
+https://media.github.inl.gov/user/161/files/9021d2e6-b6b0-4c8f-96e0-3d0005f03cd4
+
+### Mishra 
+
+
+
+Bird Constrained Function
 
 - LHS pre-samplings to simulate experiments
 ![LHS_sampling_scatter](https://media.github.inl.gov/user/161/files/427e246a-6cfc-4cdc-bf69-1e048b20c365)
@@ -54,9 +73,10 @@ An optimal experimental design platform powered with automated machine learning 
 
 - Utilize Bayesian Optimization with pre-trained Gaussian Process model to optimize the experimental design
 
-![opt_path](https://media.github.inl.gov/user/161/files/b20666c9-14ad-4375-9ec5-9fed200eab81)
-
-![mishra_opt_path](https://media.github.inl.gov/user/161/files/6b68bab0-125b-4813-b0c2-281b7478685e)
+<div align="center">
+  <img src="https://media.github.inl.gov/user/161/files/b20666c9-14ad-4375-9ec5-9fed200eab81"><br><br>
+  <img src="https://media.github.inl.gov/user/161/files/6b68bab0-125b-4813-b0c2-281b7478685e"><br><br>
+</div>
 
 https://media.github.inl.gov/user/161/files/86dc8928-7017-4a4b-893c-f77286ded0d4
 
