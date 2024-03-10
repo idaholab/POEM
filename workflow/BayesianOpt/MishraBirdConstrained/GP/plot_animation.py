@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import pandas as pd
 import os, sys
 
 cwd = os.getcwd()
@@ -9,6 +10,10 @@ sys.path.append(os.path.join(cwd, "..", "..", "..", "models"))
 from mishraBirdConstrained import evaluate as mishra
 from mishraBirdConstrained import constraint as mishra_c
 
+# Load existing pre-trained data
+extData = pd.read_csv('LHS_dump.csv', header=0)
+
+# Load optimization data
 data = {}
 with open('opt_export_0.csv','r', encoding = "utf-8-sig") as infile:
   data = {'x':[],'y':[],'z':[],'a':[]}
@@ -26,6 +31,6 @@ with open('opt_export_0.csv','r', encoding = "utf-8-sig") as infile:
     data['a'].append(line[ia])
 
 fig = plt.figure(figsize=(12,8))
-optPath(data, fig, 'mishra',mishra,mishra_c,(-10,0),(-6.5,0),log=False)
-animatePlot(data, fig, 'mishra',mishra,mishra_c,(-10,0),(-6.5,0),log=False)
+optPath(data['x'], data['y'], data['a'], fig, 'mishra',mishra,mishra_c,(-10,0),(-6.5,0),log=False, xp=extData['x'], yp=extData['y'])
+animatePlot(data['x'], data['y'], data['a'], fig, 'mishra',mishra,mishra_c,(-10,0),(-6.5,0),log=False, xp=extData['x'], yp=extData['y'])
 

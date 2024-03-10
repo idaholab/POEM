@@ -1,18 +1,15 @@
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from matplotlib.lines import Line2D
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
 import matplotlib.colors as colors
 import numpy as np
-import sys, os
 import pickle as pk
 from collections import defaultdict
 
 markerMap = {'first': 'yo',
             'accepted': 'go',
             'rejected': 'rx',
-            'rerun': 'c.',
+            'pre-existing': 'c^',
             'final': 'mo'}
 markers = defaultdict(lambda: 'k.', markerMap)
 
@@ -20,7 +17,7 @@ def addPoint(ax, x, y, accepted):
   lines = ax.plot(x, y, f'{markers[accepted]}')
   return lines
 
-def plotFunction(fig, title,method,constraint,xscale,yscale,cscale=None,log=False, samps=500):
+def plotFunction(fig, title,method,constraint,xscale,yscale,cscale=None,log=False, samps=500, xp=None, yp=None):
   """
     Plots a 2D function as a colormap.  Returns parameters suitable to plotting in a pcolormesh call.
     @ In, title, string, title name for figure
@@ -30,6 +27,8 @@ def plotFunction(fig, title,method,constraint,xscale,yscale,cscale=None,log=Fals
     @ In, yscale, tuple(float), low/hi value for y
     @ In, cscale, tuple(float), optional, low and high values for the color map
     @ In, log, bool, optional, if False will not lognormalize the color map
+    @ In, samps, int
+    @ In, extData, pandas.Dataframe
     @ Out, X, np.array(np.array(float)), mesh grid of X values
     @ Out, Y, np.array(np.array(float)), mesh grid of Y values
     @ Out, Z, np.array(np.array(float)), mesh grid of Z (response) values
@@ -60,21 +59,23 @@ def plotFunction(fig, title,method,constraint,xscale,yscale,cscale=None,log=Fals
     axPlot=ax.pcolormesh(X,Y,Zm,norm=norm)
   else:
     axPlot=ax.pcolormesh(X,Y,Zm)
+  if xp is not None and yp is not None:
+    ax.scatter(xp, yp, marker=markerMap['pre-existing'][1], c=markerMap['pre-existing'][0])
   fig.colorbar(axPlot, ax=ax)
   plt.title(title)
-  with open(title,'wb') as file:
+  with open(title+'.pk','wb') as file:
     pk.dump((X, Y, Zm),file)
 
   plt.savefig(title+'.png')
   return fig, ax
 
-def animate(n, ax, data):
-  mk = markers[data['a'][n]]
-  ax.plot(data['x'][n], data['y'][n], mk, markersize=10)
+def animate(n, ax, x, y, a):
+  mk = markers[a[n]]
+  ax.plot(x[n], y[n], mk, markersize=10)
   return ax
 
-def animatePlot(data, fig, title,method,constraint,xscale,yscale,cscale=None,log=False, samps=500):
-  fig, ax = plotFunction(fig, title,method,constraint,xscale,yscale,cscale,log, samps)
+def animatePlot(x, y, a, fig, title,method,constraint,xscale,yscale,cscale=None,log=False, samps=500, xp=None, yp=None):
+  fig, ax = plotFunction(fig, title,method,constraint,xscale,yscale,cscale,log, samps, xp, yp)
   lns = []
   for cond in markerMap.keys():
     lns.append(Line2D([0], [0], color=markerMap[cond][0], marker=markerMap[cond][1]))
@@ -82,16 +83,16 @@ def animatePlot(data, fig, title,method,constraint,xscale,yscale,cscale=None,log
               loc='center right',
               borderaxespad=0.1,
               title='Legend')
-  ani=animation.FuncAnimation(fig,animate,len(data['x']), fargs=(ax, data), interval=5000000)
+  ani=animation.FuncAnimation(fig,animate,len(x), fargs=(ax, x, y, a), interval=5000000)
   Writer = animation.writers['ffmpeg']
   writer = Writer(fps=15,bitrate=1800)
   ani.save(title+'.mp4',writer=writer)
 
-def optPath(data, fig, title,method,constraint,xscale,yscale,cscale=None,log=False, samps=500):
-  fig, ax = plotFunction(fig, title,method,constraint,xscale,yscale,cscale,log, samps)
-  for i in range(len(data['x'])):
-    mk = markers[data['a'][i]]
-    ax.plot(data['x'][i], data['y'][i], mk, markersize=10)
+def optPath(x, y, a, fig, title,method,constraint,xscale,yscale,cscale=None,log=False, samps=500, xp=None, yp=None):
+  fig, ax = plotFunction(fig, title,method,constraint,xscale,yscale,cscale,log, samps, xp, yp)
+  for i in range(len(x)):
+    mk = markers[a[i]]
+    ax.plot(x[i], y[i], mk, markersize=10)
 
   lns = []
   for cond in markerMap.keys():
