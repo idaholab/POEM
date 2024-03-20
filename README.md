@@ -21,7 +21,7 @@ An optimal experimental design platform powered with automated machine learning 
 
 - Bayesian optimization for optimal experimental design
 
-- Pareto Frontier to guides the design of experiment to be evaluated
+- Pareto Frontier to guide the design of experiment to be evaluated
 
 - Sparse grid stochastic collocation to accelerate experimental design
 
