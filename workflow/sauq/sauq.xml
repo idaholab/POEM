@@ -8,9 +8,9 @@
   </RunInfo>
 
   <Files>
-    <Input name="sauq" type="">../../model/sauq.m</Input>
-    <Input name="rt" type="">../../model/RateTheory.m</Input>
-    <Input name="kc" type="">../../model/KlemensCallawayModel.m</Input>
+    <Input name="sauq" type="">../../../model/sauq.m</Input>
+    <Input name="rt" type="">../../../model/RateTheory.m</Input>
+    <Input name="kc" type="">../../../model/KlemensCallawayModel.m</Input>
   </Files>
 
   <Models>
