@@ -1,5 +1,5 @@
 # POEM
-## Platform of Optimal Experimental Design (POEM)
+## Platform of Optimal Experiment Management (POEM)
 
 An optimal experimental design platform powered with automated machine learning to automatically guides the design of experiment to be evaluated.
 
