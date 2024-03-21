@@ -80,6 +80,12 @@ Bird Constrained Function
 
 https://media.github.inl.gov/user/161/files/86dc8928-7017-4a4b-893c-f77286ded0d4
 
+## Dynamic Sensitivity Analysis
+
+- Regression based method
+- Sobol index based method
+
+![sen](https://media.github.inl.gov/user/161/files/74d63142-ffe8-49dd-89c3-52d65d8841e0)
 
 
 ## Tasks 
