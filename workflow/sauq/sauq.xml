@@ -2,7 +2,7 @@
 <Simulation>
   <RunInfo>
     <JobName>sauq</JobName>
-    <Sequence>sample, write</Sequence>
+    <Sequence>sample, write, stats</Sequence>
     <WorkingDir>sauq_runs</WorkingDir>
     <batchSize>1</batchSize>
   </RunInfo>
@@ -25,6 +25,7 @@
       <clargs arg='-nosplash -nodesktop -r "run ./sauq.m"' type="input" extension='.m'/>
     </Code>
     <PostProcessor name="stats" subType="BasicStatistics" verbosity="debug">
+      <pivotParameter>irrT</pivotParameter>
       <skewness prefix="skew">RL, NL, k</skewness>
       <variationCoefficient prefix="vc">RL, NL, k</variationCoefficient>
       <percentile prefix="percentile" interpolation="midpoint">RL, NL, k</percentile>
@@ -100,6 +101,7 @@
 
   <DataObjects>
     <HistorySet name="samples">
+      <Input>damage</Input>
       <Output>irrT, RL, NL, k</Output>
       <options>
         <pivotParameter>irrT</pivotParameter>
@@ -107,56 +109,56 @@
     </HistorySet>
     <HistorySet name="stats_do">
       <Output>
-        skew_RL
-        skew_NL
-        skew_k
-        vc_RL
-        vc_NL
-        vc_k
-        percentile_5_RL
-        percentile_5_NL
-        percentile_5_k
-        percentile_95_RL
-        percentile_95_NL
-        percentile_95_k
-        mean_RL
-        mean_NL
-        mean_k
-        kurt_RL
-        kurt_NL
-        kurt_k
-        median_RL
-        median_NL
-        median_k
-        max_RL
-        max_NL
-        max_k
-        min_RL
-        min_NL
-        min_k
-        samp_RL
-        samp_NL
-        samp_k
-        var_RL
-        var_NL
-        var_k
-        sigma_RL
-        sigma_NL
-        sigma_k
-        nsen_RL_damage
-        nsen_NL_damage
-        nsen_k_damage
-        sen_RL_damage
-        sen_NL_damage
-        sen_k_damage
-        pear_RL_damage
-        pear_NL_damage
-        pear_k_damage
-        cov_RL_damage
-        cov_NL_damage
-        cov_k_damage
-        vsen_RL_damage
-        vsen_NL_damage
+        skew_RL,
+        skew_NL,
+        skew_k,
+        vc_RL,
+        vc_NL,
+        vc_k,
+        percentile_5_RL,
+        percentile_5_NL,
+        percentile_5_k,
+        percentile_95_RL,
+        percentile_95_NL,
+        percentile_95_k,
+        mean_RL,
+        mean_NL,
+        mean_k,
+        kurt_RL,
+        kurt_NL,
+        kurt_k,
+        median_RL,
+        median_NL,
+        median_k,
+        max_RL,
+        max_NL,
+        max_k,
+        min_RL,
+        min_NL,
+        min_k,
+        samp_RL,
+        samp_NL,
+        samp_k,
+        var_RL,
+        var_NL,
+        var_k,
+        sigma_RL,
+        sigma_NL,
+        sigma_k,
+        nsen_RL_damage,
+        nsen_NL_damage,
+        nsen_k_damage,
+        sen_RL_damage,
+        sen_NL_damage,
+        sen_k_damage,
+        pear_RL_damage,
+        pear_NL_damage,
+        pear_k_damage,
+        cov_RL_damage,
+        cov_NL_damage,
+        cov_k_damage,
+        vsen_RL_damage,
+        vsen_NL_damage,
         vsen_k_damage
       </Output>
       <options>
