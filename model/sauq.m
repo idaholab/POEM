@@ -8,7 +8,9 @@ N = 100;
 irrT = 0:1e3/N:1e3;
 Em = [5 2.1 2.6 1];
 D0 = [0.65 0.02 0.01 0.01];
-damage = 1;
+% damage = 1;
+% using RAVEN generic interface to perturb model inputs to allow parametric study
+damage = $RAVEN-damage$;
 doserate = 1e-5;
 a = 5.4713e-08;
 roM = 4;
