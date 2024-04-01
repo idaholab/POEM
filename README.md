@@ -87,13 +87,20 @@ https://media.github.inl.gov/user/161/files/86dc8928-7017-4a4b-893c-f77286ded0d4
 
 ![sen](https://media.github.inl.gov/user/161/files/74d63142-ffe8-49dd-89c3-52d65d8841e0)
 
+## Bayesian Model Calibration
+
+## Analytic High-Dimensional Problem
+A python analytic problem with 50 responses, three input parameters with uniform prior distributions.
+
+![image](https://media.github.inl.gov/user/161/files/08ba5691-f4cc-49d8-9d1e-034ba14f40c2)
+
 
 ## Tasks 
 
 - [x] Utilize Sparse Grid to accelerate Experimental Design, including Sparse Grid, Generalized Polynomial Chaos, Pareto Frontier 
 - [x] Bayesian Optimization to accelerate Experimental Design, including Gaussian process
-- [ ] Sensivitiy/Uncertainty analysis, including ROM training, correlation, percentile and sensitivity 
-- [ ] Model calibration, including Bayesian inference, generalized linear least square method 
+- [x] Sensivitiy/Uncertainty analysis, including ROM training, correlation, percentile and sensitivity 
+- [x] Model calibration, including Bayesian inference, generalized linear least square method 
 - [ ] Data mining such as clustering and classification
 - [ ] Material thermal properties modeling
 
