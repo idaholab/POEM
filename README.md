@@ -89,7 +89,7 @@ https://media.github.inl.gov/user/161/files/86dc8928-7017-4a4b-893c-f77286ded0d4
 
 ## Bayesian Model Calibration
 
-## Analytic High-Dimensional Problem
+### Analytic High-Dimensional Problem
 A python analytic problem with 50 responses, three input parameters with uniform prior distributions.
 
 ![image](https://media.github.inl.gov/user/161/files/08ba5691-f4cc-49d8-9d1e-034ba14f40c2)
