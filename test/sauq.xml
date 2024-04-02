@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <JobName>sauq</JobName>
+    <WorkingDir>sauq_runs</WorkingDir>
+    <batchSize>1</batchSize>
+    <pivotParameter>time</pivotParameter>
+    <AnalysisType>sensitivity</AnalysisType>
+  </RunInfo>
+
+  <Files>
+    <Input name="sauq" type="">../../../model/sauq.m</Input>
+    <Input name="rt" type="">../../../model/RateTheory.m</Input>
+    <Input name="kc" type="">../../../model/KlemensCallawayModel.m</Input>
+  </Files>
+
+  <Models>
+    <Code name="fp" subType="GenericCode">
+      <!-- local matlab -->
+      <!-- <executable>/Applications/MATLAB_R2017b.app/bin/matlab</executable> -->
+      <!-- hpc matlab: module load matlab/R2023b-gcc-12.3.0-buub -->
+      <executable>matlab</executable>
+      <shell>False</shell>
+      <outputFile>out_sauq.csv</outputFile>
+      <inputExtensions>.m</inputExtensions>
+      <clargs arg='-nosplash -nodesktop -r "run ./sauq.m"' type="input" extension='.m'/>
+    </Code>
+  </Models>
+
+  <Distributions>
+    <Uniform name="damage">
+      <lowerBound>0.0</lowerBound>
+      <upperBound>1.0</upperBound>
+    </Uniform>
+  </Distributions>
+
+</Simulation>
