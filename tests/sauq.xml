@@ -14,9 +14,9 @@
   </GlobalSettings>
 
   <Files>
-    <Input name="sauq" type="">../../../model/sauq.m</Input>
-    <Input name="rt" type="">../../../model/RateTheory.m</Input>
-    <Input name="kc" type="">../../../model/KlemensCallawayModel.m</Input>
+    <Input name="sauq" type="">../../model/sauq.m</Input>
+    <Input name="rt" type="">../../model/RateTheory.m</Input>
+    <Input name="kc" type="">../../model/KlemensCallawayModel.m</Input>
   </Files>
 
   <Models>
@@ -25,7 +25,7 @@
       <shell>False</shell>
       <outputFile>out_sauq.csv</outputFile>
       <inputExtensions>.m</inputExtensions>
-      <clargs arg='-nosplash -nodesktop -r "run ./sauq.m"' type="input" extension='.m'/>
+      <clargs arg="-nosplash -nodesktop -r 'run ./sauq.m'" type="input" extension='.m'/>
     </Code>
   </Models>
 
