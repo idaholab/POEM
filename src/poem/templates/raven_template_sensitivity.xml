@@ -6,7 +6,7 @@
   </RunInfo>
 
   <Models>
-    <PostProcessor name="timeDepBasicStat" subType="BasicStatistics" verbosity="silent">
+    <PostProcessor name="stats" subType="BasicStatistics" verbosity="silent">
       <pivotParameter>time</pivotParameter>
       <skewness prefix="skewness">outputGroup</skewness>
       <variationCoefficient prefix="variationCoefficient">outputGroup</variationCoefficient>
