@@ -35,9 +35,9 @@
   <Samplers>
     <AdaptiveMetropolis name="Metropolis">
       <samplerInit>
-        <limit>1000</limit>
+        <limit>100</limit>
         <initialSeed>070419</initialSeed>
-        <burnIn>500</burnIn>
+        <burnIn>50</burnIn>
       </samplerInit>
       <likelihood log="True">likelihood</likelihood>
       <variable name="alpha">
@@ -77,11 +77,15 @@
 
   <Models>
     <ExternalModel ModuleToLoad="model" name="model" subType="">
-      <variables>alpha, beta, gamma, time, eta</variables>
+      <!-- <variables>alpha, beta, gamma, time, eta</variables> -->
+      <inputs>alpha, beta, gamma</inputs>
+      <outputs>time, eta</outputs>
     </ExternalModel>
 
     <ExternalModel name="likelihood" subType="BayCal.LikelihoodModel">
-      <variables>likelihood, time, eta</variables>
+      <inputs>time, eta</inputs>
+      <outputs>likelihood</outputs>
+      <!-- <variables>likelihood, time, eta</variables> -->
       <LikelihoodModel type="normal">
         <simTargets>eta</simTargets>
         <expTargets shape="1,50" computeCov='False' correlation='False'>

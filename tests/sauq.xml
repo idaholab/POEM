@@ -4,9 +4,14 @@
     <JobName>sauq</JobName>
     <WorkingDir>sauq_runs</WorkingDir>
     <batchSize>1</batchSize>
-    <pivotParameter>time</pivotParameter>
-    <AnalysisType>sensitivity</AnalysisType>
   </RunInfo>
+
+  <GlobalSettings>
+    <AnalysisType>sensitivity</AnalysisType>
+    <limit>10</limit>
+    <Inputs>damage</Inputs>
+    <Outputs>RL</Outputs>
+  </GlobalSettings>
 
   <Files>
     <Input name="sauq" type="">../../../model/sauq.m</Input>
@@ -16,9 +21,6 @@
 
   <Models>
     <Code name="fp" subType="GenericCode">
-      <!-- local matlab -->
-      <!-- <executable>/Applications/MATLAB_R2017b.app/bin/matlab</executable> -->
-      <!-- hpc matlab: module load matlab/R2023b-gcc-12.3.0-buub -->
       <executable>matlab</executable>
       <shell>False</shell>
       <outputFile>out_sauq.csv</outputFile>
