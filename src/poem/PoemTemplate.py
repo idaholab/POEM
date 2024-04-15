@@ -8,6 +8,7 @@ template as an accelerated way to write new RAVEN workflows.
 import logging
 
 from ravenframework.InputTemplates.TemplateBaseClass import Template as TemplateBase
+from ravenframework.utils import xmlUtils
 
 logger = logging.getLogger(__name__)
 
@@ -24,15 +25,15 @@ class PoemTemplate(TemplateBase):
       @ Out, None
     """
     TemplateBase.__init__(self)
+    self._validEntities = ['RunInfo', 'Files', 'Models', 'Distributions', 'Samplers', 'Optimizers', 'DataObjects', 'OutStreams', 'Functions', 'Steps', 'Metrics', 'VariableGroups']
 
-  def loadTemplate(self, filename, path):
+  def loadTemplate(self, filename):
     """
       Loads template file statefully.
       @ In, filename, str, name of file to load (xml)
-      @ In, path, str, path (maybe relative) to file
       @ Out, None
     """
-    TemplateBase.loadTemplate(self, filename, path)
+    self._template, _ = xmlUtils.loadToTree(filename)
 
   def createWorkflow(self, inputs, miscDict):
     """
@@ -43,10 +44,19 @@ class PoemTemplate(TemplateBase):
     """
     # call the base class to read in the template; this just creates a copy of the XML tree in self._template.
     template = TemplateBase.createWorkflow(self)
+    runInfo = template.find('RunInfo')
     for key, val in inputs.items():
-      for subnode in template.iter(key):
-        if val:
-          subnode.extend(val)
+      if key == 'RunInfo':
+        for subnode in val:
+          sub = runInfo.find(subnode.tag)
+          if sub is not None:
+            sub.text = subnode.text
+          else:
+            runInfo.append(subnode)
+      else:
+        for subnode in template.iter(key):
+          if len(val) > 0:
+            subnode.extend(val)
     for key, val in miscDict.items():
       for subnode in template.iter(key):
         if val:
