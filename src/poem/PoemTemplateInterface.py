@@ -75,9 +75,10 @@ class PoemTemplateInterface(object):
   lhModelNode.append(basisNode)
   lhExternalModelNode.append(lhModelNode)
 
-  validAnalysis = ['sensitivity', 'sparse_grid_construction', 'bayesian_optimization', 'model_calibration', 'sparse_grid']
+  validAnalysis = ['sensitivity', 'sparse_grid_construction', 'sparse_grid_rom', 'bayesian_optimization', 'model_calibration']
   analysisRequired ={'sensitivity':['RunInfo', 'Files', 'Models', 'Distributions'],
-                     'sparse_grid_construction':['RunInfo', 'Files', 'Models', 'Distributions']}
+                     'sparse_grid_construction':['RunInfo', 'Files', 'Models', 'Distributions'],
+                     'sparse_grid_rom':['RunInfo', 'Files', 'Models', 'Distributions']}
 
 
   def __init__(self, filename):
@@ -109,13 +110,15 @@ class PoemTemplateInterface(object):
     self._statsPrefix = ['skewness', 'variationCoefficient', 'mean', 'kurtosis', 'median', 'max', 'min', 'var', 'sigma']
     self._statsVectorPrefix = ['nsen', 'sen', 'pearson', 'cov', 'vsen', 'spearman']
     self._polynomialOrder = '2'
+    self._sparseGridData = None
     self._globalSettings = {}
     self._miscDict =  {'AnalysisType':'required',
                     'limit':self._limit,
                     'Inputs':'required',
                     'Outputs':'required',
                     'pivot':self._pivot,
-                    'PolynomialOrder':self._polynomialOrder} # dictionary stores some default values and required inputs
+                    'PolynomialOrder':self._polynomialOrder,
+                    'SparseGridData':self._sparseGridData} # dictionary stores some default values and required inputs
 
   def getTemplateFile(self):
     """
@@ -163,21 +166,24 @@ class PoemTemplateInterface(object):
     self._variableGroupsList.append(inputGroup)
     outputGroup = self.buildVariableGroup('outputGroup', self._outputVarList)
     self._variableGroupsList.append(outputGroup)
-    if self._analysisType.lower() == 'sensitivity':
+    if self._analysisType == 'sensitivity':
       statsGroup = self.buildStatsGroup("statsGroup", self._inputVarList, self._outputVarList)
       self._variableGroupsList.append(statsGroup)
     self._ravenNodeDict['VariableGroups'] = self._variableGroupsList
 
     # build Monte Carlo Sampler
     sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'])
-    if self._analysisType.lower() == 'sensitivity':
+    if self._analysisType in ['sensitivity', 'sparse_grid_rom']:
       mcNode = self.buildMonteCarloSampler('MC', self._limit)
       mcNode.extend(sampledVars)
       self._ravenNodeDict['Samplers'] = [mcNode]
-    elif self._analysisType.lower() == 'sparse_grid_construction':
+    if self._analysisType in ['sparse_grid_construction', 'sparse_grid_rom']:
       sparseGridNode = self.buildSparseGridSampler('SparseGrid')
       sparseGridNode.extend(sampledVars)
-      self._ravenNodeDict['Samplers'] = [sparseGridNode]
+      if 'Samplers' not in self._ravenNodeDict:
+        self._ravenNodeDict['Samplers'] = [sparseGridNode]
+      else:
+        self._ravenNodeDict['Samplers'].append(sparseGridNode)
 
     # build MultiRun Input
     if 'Files' in self._ravenNodeDict:
@@ -187,6 +193,15 @@ class PoemTemplateInterface(object):
       for fname in files:
         inputNodes.append(xmlUtils.newNode(tag='Input', attrib={'class':'Files', 'type':''}, text=fname))
       self._ravenNodeDict['MultiRun'] = inputNodes
+
+    if self._analysisType in ['sparse_grid_rom']:
+      if self._sparseGridData is None:
+        raise IOError('SparseGridData is required, please specify it in "GlobalSettings"')
+      inputNode = xmlUtils.newNode(tag='Input', attrib={'name':'SparseGrid_data', 'type':''}, text=self._sparseGridData)
+      if 'Files' not in self._ravenNodeDict:
+        self._ravenNodeDict['Files'] = [inputNode]
+      else:
+        self._ravenNodeDict['Files'].append(inputNode)
 
     self.checkInput()
 
@@ -214,7 +229,8 @@ class PoemTemplateInterface(object):
     self._pivot = self._globalSettings.get('pivot', self._pivot)
     self._limit = self._globalSettings.get('limit', self._limit)
     self._polynomialOrder = self._globalSettings.get('PolynomialOrder', self._polynomialOrder)
-    print(self._polynomialOrder)
+    self._sparseGridData = self._globalSettings.get('SparseGridData', self._sparseGridData)
+
     if self._analysisType not in self.validAnalysis:
       raise IOError(f'Invalid analysis type "{self._analysisType}" provided, please choose one of "{self.validAnalysis}" instead.')
 

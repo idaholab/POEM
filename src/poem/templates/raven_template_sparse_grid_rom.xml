@@ -1,0 +1,138 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>SparseGrid</WorkingDir>
+    <Sequence>
+      load_sparse_grid_data,
+      RestartSparseGrid,
+      train,
+      pkDump,
+      ROMstats,
+      RomSampling,
+      PrintRomSampling
+    </Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="SparseGridRom_pk" type="">SparseGridRom_pk</Input>
+  </Files>
+
+  <Steps>
+    <IOStep name="load_sparse_grid_data">
+      <Input class="Files" type="">SparseGrid_data</Input>
+      <Output class="DataObjects" type="PointSet">outGrid</Output>
+    </IOStep>
+    <!--
+      Combine model and experimental data
+      Experimental data: SparseGrid_dump.csv
+      Model data: from model directly, i.e., matyas
+    -->
+    <MultiRun name="RestartSparseGrid">
+      <Input class="DataObjects" type="PointSet">outGrid</Input>
+      <Model class="Models" type="ExternalModel">externalModel</Model>
+      <Sampler class="Samplers" type="SparseGridCollocation">SparseGrid</Sampler>
+      <Output class="DataObjects" type="PointSet">solnsRestart</Output>
+    </MultiRun>
+
+    <RomTrainer name="train">
+      <Input class="DataObjects" type="PointSet">solnsRestart</Input>
+      <Output class="Models" type="ROM">SparseGridRom</Output>
+    </RomTrainer>
+
+    <IOStep name="pkDump">
+      <Input class="Models" type="ROM">SparseGridRom</Input>
+      <Output class="Files" type="">SparseGridRom_pk</Output>
+    </IOStep>
+
+    <IOStep name="ROMstats">
+      <Input class="Models" type="ROM">SparseGridRom</Input>
+      <Output class="DataObjects" type="DataSet">rom_stats</Output>
+    </IOStep>
+
+    <MultiRun name="RomSampling">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="ROM">SparseGridRom</Model>
+      <Sampler class="Samplers" type="MonteCarlo">MC</Sampler>
+      <Output class="DataObjects" type="PointSet">outRomGrid</Output>
+    </MultiRun>
+
+    <IOStep name="PrintRomSampling">
+      <Input class="DataObjects" type="PointSet">outRomGrid</Input>
+      <Input class="DataObjects" type="PointSet">rom_stats</Input>
+      <Output class="OutStreams" type="Print">Grid_dump</Output>
+      <Output class="OutStreams" type="Print">romstats_dump</Output>
+    </IOStep>
+
+  </Steps>
+
+  <Distributions>
+
+  </Distributions>
+
+  <Samplers>
+    <!-- <SparseGridCollocation name="SparseGrid">
+      <variable name="x">
+        <distribution>x_dist</distribution>
+      </variable>
+      <variable name="y">
+        <distribution>y_dist</distribution>
+      </variable>
+      <ROM class="Models" type="ROM">SparseGridRom</ROM>
+      <Restart class="DataObjects" type="PointSet">outGrid</Restart>
+      <restartTolerance>1e-2</restartTolerance>
+    </SparseGridCollocation>
+    <Grid name="Grid">
+      <variable name="x">
+        <distribution>x_dist</distribution>
+        <grid construction="equal" steps="20" type="value">-10 10</grid>
+      </variable>
+      <variable name="y">
+        <distribution>y_dist</distribution>
+        <grid construction="equal" steps="20" type="value">-10 10</grid>
+      </variable>
+    </Grid> -->
+  </Samplers>
+
+  <Models>
+    <ROM name="SparseGridRom" subType="GaussPolynomialRom">
+      <Target>outputGroup</Target>
+      <Features>inputGroup</Features>
+      <IndexSet>TotalDegree</IndexSet>
+      <PolynomialOrder>2</PolynomialOrder>
+    </ROM>
+  </Models>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>inputGroup</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="outGrid">
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
+    </PointSet>
+    <PointSet name="outRomGrid">
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
+    </PointSet>
+    <DataSet name="rom_stats"/>
+    <PointSet name="solnsRestart">
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="Grid_dump">
+      <type>csv</type>
+      <source>outRomGrid</source>
+      <what>input,output</what>
+    </Print>
+    <Print name="romstats_dump">
+      <type>csv</type>
+      <source>rom_stats</source>
+    </Print>
+  </OutStreams>
+
+</Simulation>

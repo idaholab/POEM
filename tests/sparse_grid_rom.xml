@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<Simulation>
+
+  <GlobalSettings>
+    <AnalysisType>sparse_grid_rom</AnalysisType>
+    <Inputs>x, y</Inputs>
+    <Outputs>z1</Outputs>
+    <PolynomialOrder>2</PolynomialOrder>
+    <limit>10</limit>
+    <SparseGridData>dump_SparseGrid.csv</SparseGridData>
+  </GlobalSettings>
+
+  <Distributions>
+    <Uniform name="x">
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
+    </Uniform>
+    <Uniform name="y">
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Models>
+    <ExternalModel ModuleToLoad="../models/matyas" name="externalModel" subType="">
+      <inputs>x, y</inputs>
+      <outputs>z1</outputs>
+    </ExternalModel>
+  </Models>
+
+</Simulation>
