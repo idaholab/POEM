@@ -103,16 +103,19 @@ class PoemTemplateInterface(object):
     self._inputDict = {} # dictionary stores the user provided information, constructed from self._miscDict
     self._pivot = 'time'
     self._limit = 1000
-    self._miscDict =  {'AnalysisType':'required',
-                       'limit':self._limit,
-                       'Inputs':'required',
-                       'Outputs':'required',
-                       'pivot':self._pivot} # dictionary stores some default values and required inputs
     self._templateFile = None
     self._analysisType = None
     self._ravenNodeDict = {}
     self._statsPrefix = ['skewness', 'variationCoefficient', 'mean', 'kurtosis', 'median', 'max', 'min', 'var', 'sigma']
     self._statsVectorPrefix = ['nsen', 'sen', 'pearson', 'cov', 'vsen', 'spearman']
+    self._polynomialOrder = '2'
+    self._globalSettings = {}
+    self._miscDict =  {'AnalysisType':'required',
+                    'limit':self._limit,
+                    'Inputs':'required',
+                    'Outputs':'required',
+                    'pivot':self._pivot,
+                    'PolynomialOrder':self._polynomialOrder} # dictionary stores some default values and required inputs
 
   def getTemplateFile(self):
     """
@@ -127,7 +130,8 @@ class PoemTemplateInterface(object):
         the templated input, while the second dictionary contains only the values that need to be replaced.
     """
     miscDict = {'limit': self._limit,
-                'pivotParameter':self._pivot}
+                'pivotParameter':self._pivot,
+                'PolynomialOrder':self._polynomialOrder}
     return self._ravenNodeDict, miscDict
 
   def readInput(self):
@@ -194,26 +198,27 @@ class PoemTemplateInterface(object):
       @ Out, None
     """
     logger.info("Start to read 'GlobalSettings' node")
-    inputDict = {}
     for key, val in self._miscDict.items():
       if val == 'required':
         node = self.findRequiredNode(xmlNode, key)
-        inputDict[key] = node.text
+        self._globalSettings[key] = node.text
       else:
         try:
           node = self.findRequiredNode(xmlNode, key)
-          inputDict[key] = node.text
+          self._globalSettings[key] = node.text
         except IOError:
           pass
-    self._analysisType = inputDict['AnalysisType'].strip().lower()
-    self._inputVarList = poemUtils.convertNodeTextToList(inputDict['Inputs'])
-    self._outputVarList = poemUtils.convertNodeTextToList(inputDict['Outputs'])
-    self._pivot = inputDict.get('pivot', self._pivot)
-    self._limit = inputDict.get('limit', self._limit)
+    self._analysisType = self._globalSettings['AnalysisType'].strip().lower()
+    self._inputVarList = poemUtils.convertNodeTextToList(self._globalSettings['Inputs'])
+    self._outputVarList = poemUtils.convertNodeTextToList(self._globalSettings['Outputs'])
+    self._pivot = self._globalSettings.get('pivot', self._pivot)
+    self._limit = self._globalSettings.get('limit', self._limit)
+    self._polynomialOrder = self._globalSettings.get('PolynomialOrder', self._polynomialOrder)
+    print(self._polynomialOrder)
     if self._analysisType not in self.validAnalysis:
       raise IOError(f'Invalid analysis type "{self._analysisType}" provided, please choose one of "{self.validAnalysis}" instead.')
 
-    self._miscDict.update(inputDict)
+    self._miscDict.update(self._globalSettings)
 
   def checkInput(self):
     """

@@ -10,6 +10,7 @@
     <AnalysisType>sparse_grid_construction</AnalysisType>
     <Inputs>x, y</Inputs>
     <Outputs>z1</Outputs>
+    <PolynomialOrder>3</PolynomialOrder>
   </GlobalSettings>
 
   <Distributions>
