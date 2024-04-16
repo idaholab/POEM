@@ -144,6 +144,8 @@ class PoemTemplateInterface(object):
     requiredNode = self.analysisRequired[self._analysisType]
     for node in requiredNode:
       xml = self.findRequiredNode(self._inputRoot, node)
+      if xml is None:
+        continue
       if node not in self._ravenNodeDict:
         self._ravenNodeDict[node] = [subnode for subnode in xml]
       else:
@@ -167,13 +169,13 @@ class PoemTemplateInterface(object):
     self._ravenNodeDict['Samplers'] = [mcNode]
 
     # build MultiRun Input
-    filesList = self._ravenNodeDict['Files']
-    files = [inp.attrib['name'] for inp in filesList]
-    inputNodes = []
-    for fname in files:
-      inputNodes.append(xmlUtils.newNode(tag='Input', attrib={'class':'Files', 'type':''}, text=fname))
-
-    self._ravenNodeDict['MultiRun'] = inputNodes
+    if 'Files' in self._ravenNodeDict:
+      filesList = self._ravenNodeDict['Files']
+      files = [inp.attrib['name'] for inp in filesList]
+      inputNodes = []
+      for fname in files:
+        inputNodes.append(xmlUtils.newNode(tag='Input', attrib={'class':'Files', 'type':''}, text=fname))
+      self._ravenNodeDict['MultiRun'] = inputNodes
 
     self.checkInput()
 
@@ -330,6 +332,6 @@ class PoemTemplateInterface(object):
       @ Out, subnode, xml.etree.ElementTree.Element, xml element node
     """
     subnode = xmlNode.find(nodeTag)
-    if subnode is None:
+    if subnode is None and nodeTag != 'RunInfo':
       raise IOError('Required node ' + nodeTag + ' is not found in the input file!')
     return subnode

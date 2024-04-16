@@ -20,7 +20,7 @@
   </Files>
 
   <Models>
-    <Code name="fp" subType="GenericCode">
+    <Code name="code" subType="GenericCode">
       <executable>matlab</executable>
       <shell>False</shell>
       <outputFile>out_sauq.csv</outputFile>

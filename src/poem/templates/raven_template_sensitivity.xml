@@ -59,7 +59,7 @@
   <Steps>
     <MultiRun name="sample" clearRunDir="False">
       <!-- <Input class="Files" type="">sauq</Input> -->
-      <Model class="Models" type="Code">fp</Model>
+      <Model class="Models" type="Code">code</Model>
       <Sampler class="Samplers" type="MonteCarlo">MC</Sampler>
       <Output class="DataObjects" type="HistorySet">samples</Output>
     </MultiRun>

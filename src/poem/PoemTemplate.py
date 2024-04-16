@@ -57,6 +57,12 @@ class PoemTemplate(TemplateBase):
         for subnode in template.iter(key):
           if len(val) > 0:
             subnode.extend(val)
+        # Update Models info
+        if key == 'Models':
+          for multiRunNode in template.iter('MultiRun'):
+            modelNode = multiRunNode.find('Model')
+            modelNode.text = val[0].get('name')
+
     for key, val in miscDict.items():
       for subnode in template.iter(key):
         if val:
