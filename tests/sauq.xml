@@ -14,9 +14,9 @@
   </GlobalSettings>
 
   <Files>
-    <Input name="sauq" type="">../../model/sauq.m</Input>
-    <Input name="rt" type="">../../model/RateTheory.m</Input>
-    <Input name="kc" type="">../../model/KlemensCallawayModel.m</Input>
+    <Input name="sauq" type="">../../models/sauq.m</Input>
+    <Input name="rt" type="">../../models/RateTheory.m</Input>
+    <Input name="kc" type="">../../models/KlemensCallawayModel.m</Input>
   </Files>
 
   <Models>

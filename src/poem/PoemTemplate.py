@@ -45,23 +45,29 @@ class PoemTemplate(TemplateBase):
     # call the base class to read in the template; this just creates a copy of the XML tree in self._template.
     template = TemplateBase.createWorkflow(self)
     runInfo = template.find('RunInfo')
+
     for key, val in inputs.items():
-      if key == 'RunInfo':
-        for subnode in val:
-          sub = runInfo.find(subnode.tag)
-          if sub is not None:
-            sub.text = subnode.text
-          else:
-            runInfo.append(subnode)
+      if template.find(key) is not None:
+        if key == 'RunInfo':
+          for subnode in val:
+            sub = runInfo.find(subnode.tag)
+            if sub is not None:
+              sub.text = subnode.text
+            else:
+              runInfo.append(subnode)
+        else:
+          for subnode in template.iter(key):
+            if len(val) > 0:
+              subnode.extend(val)
+          # Update Models info
+          if key == 'Models':
+            for multiRunNode in template.iter('MultiRun'):
+              modelNode = multiRunNode.find('Model')
+              modelNode.text = val[0].get('name')
       else:
-        for subnode in template.iter(key):
-          if len(val) > 0:
-            subnode.extend(val)
-        # Update Models info
-        if key == 'Models':
-          for multiRunNode in template.iter('MultiRun'):
-            modelNode = multiRunNode.find('Model')
-            modelNode.text = val[0].get('name')
+        extraNode = xmlUtils.newNode(tag=key)
+        extraNode.extend(val)
+        template.append(extraNode)
 
     for key, val in miscDict.items():
       for subnode in template.iter(key):

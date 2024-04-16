@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>SparseGrid</WorkingDir>
+    <Sequence>SparseGridSampler, print</Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Steps>
+    <MultiRun name="SparseGridSampler">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="ExternalModel">externalModel</Model>
+      <Sampler class="Samplers" type="SparseGridCollocation">SparseGrid</Sampler>
+      <Output class="DataObjects" type="PointSet">outGrid</Output>
+    </MultiRun>
+    <IOStep name="print">
+      <Input class="DataObjects" type="PointSet">outGrid</Input>
+      <Output class="OutStreams" type="Print">dump_SparseGrid</Output>
+    </IOStep>
+  </Steps>
+
+  <Distributions>
+
+  </Distributions>
+
+  <Samplers>
+
+  </Samplers>
+
+  <Models>
+    <Dummy name="MyDummy" subType=""/>
+
+    <ROM name="SparseGridRom" subType="GaussPolynomialRom">
+      <Target>outputGroup</Target>
+      <Features>inputGroup</Features>
+      <IndexSet>TotalDegree</IndexSet>
+      <PolynomialOrder>2</PolynomialOrder>
+    </ROM>
+  </Models>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>inputGroup</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="outGrid">
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="dump_SparseGrid">
+      <type>csv</type>
+      <source>outGrid</source>
+      <what>input,output</what>
+    </Print>
+  </OutStreams>
+
+</Simulation>

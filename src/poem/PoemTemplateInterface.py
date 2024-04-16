@@ -9,6 +9,7 @@ import os
 import sys
 import logging
 from .templates import templateConfig
+from . import poemUtils
 
 logging.basicConfig(format='%(asctime)s %(name)-20s %(levelname)-8s %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.DEBUG)
 # To enable the logging to both file and console, the logger for the main should be the root,
@@ -74,8 +75,9 @@ class PoemTemplateInterface(object):
   lhModelNode.append(basisNode)
   lhExternalModelNode.append(lhModelNode)
 
-  validAnalysis = ['sensitivity', 'bayesian_optimization', 'model_calibration', 'sparse_grid']
-  analysisRequired ={'sensitivity':['RunInfo', 'Files', 'Models', 'Distributions']}
+  validAnalysis = ['sensitivity', 'sparse_grid_construction', 'bayesian_optimization', 'model_calibration', 'sparse_grid']
+  analysisRequired ={'sensitivity':['RunInfo', 'Files', 'Models', 'Distributions'],
+                     'sparse_grid_construction':['RunInfo', 'Files', 'Models', 'Distributions']}
 
 
   def __init__(self, filename):
@@ -157,16 +159,21 @@ class PoemTemplateInterface(object):
     self._variableGroupsList.append(inputGroup)
     outputGroup = self.buildVariableGroup('outputGroup', self._outputVarList)
     self._variableGroupsList.append(outputGroup)
-    statsGroup = self.buildStatsGroup("statsGroup", self._inputVarList, self._outputVarList)
-    self._variableGroupsList.append(statsGroup)
+    if self._analysisType.lower() == 'sensitivity':
+      statsGroup = self.buildStatsGroup("statsGroup", self._inputVarList, self._outputVarList)
+      self._variableGroupsList.append(statsGroup)
     self._ravenNodeDict['VariableGroups'] = self._variableGroupsList
 
     # build Monte Carlo Sampler
     sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'])
-    mcNode = self.buildMonteCarloSampler('MC', self._limit)
-    mcNode.extend(sampledVars)
-
-    self._ravenNodeDict['Samplers'] = [mcNode]
+    if self._analysisType.lower() == 'sensitivity':
+      mcNode = self.buildMonteCarloSampler('MC', self._limit)
+      mcNode.extend(sampledVars)
+      self._ravenNodeDict['Samplers'] = [mcNode]
+    elif self._analysisType.lower() == 'sparse_grid_construction':
+      sparseGridNode = self.buildSparseGridSampler('SparseGrid')
+      sparseGridNode.extend(sampledVars)
+      self._ravenNodeDict['Samplers'] = [sparseGridNode]
 
     # build MultiRun Input
     if 'Files' in self._ravenNodeDict:
@@ -198,9 +205,9 @@ class PoemTemplateInterface(object):
           inputDict[key] = node.text
         except IOError:
           pass
-    self._analysisType = inputDict['AnalysisType']
-    self._inputVarList = list(inputDict['Inputs'].split(','))
-    self._outputVarList = list(inputDict['Outputs'].split(','))
+    self._analysisType = inputDict['AnalysisType'].strip().lower()
+    self._inputVarList = poemUtils.convertNodeTextToList(inputDict['Inputs'])
+    self._outputVarList = poemUtils.convertNodeTextToList(inputDict['Outputs'])
     self._pivot = inputDict.get('pivot', self._pivot)
     self._limit = inputDict.get('limit', self._limit)
     if self._analysisType not in self.validAnalysis:
@@ -272,11 +279,19 @@ class PoemTemplateInterface(object):
       varDistList.append(subnode.attrib['name'])
     for inp in inputs:
       if inp not in varDistList:
-        raise IOError(f'Distribution of variable f{inp} is not defined in <Distribution> block!')
+        raise IOError(f'Distribution of variable {inp} is not defined in <Distribution> block!')
       varNode = xmlUtils.newNode(tag='variable', attrib={'name':inp})
       varNode.append(xmlUtils.newNode(tag='distribution', text=inp))
       varNodeList.append(varNode)
     return varNodeList
+
+  @staticmethod
+  def buildSparseGridSampler(name='SparseGrid'):
+    """
+    """
+    sgNode = xmlUtils.newNode(tag='SparseGridCollocation', attrib={'name':name})
+    sgNode.append(xmlUtils.newNode(tag='ROM', attrib={'class':'Models', 'type':'ROM'}, text='SparseGridRom'))
+    return sgNode
 
   @staticmethod
   def buildMonteCarloSampler(name, limit):
@@ -332,6 +347,6 @@ class PoemTemplateInterface(object):
       @ Out, subnode, xml.etree.ElementTree.Element, xml element node
     """
     subnode = xmlNode.find(nodeTag)
-    if subnode is None and nodeTag != 'RunInfo':
+    if subnode is None and nodeTag not in ['RunInfo', 'Files']:
       raise IOError('Required node ' + nodeTag + ' is not found in the input file!')
     return subnode

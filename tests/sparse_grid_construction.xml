@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>SparseGrid</WorkingDir>
+    <Sequence>SparseGridSampler, print</Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <GlobalSettings>
+    <AnalysisType>sparse_grid_construction</AnalysisType>
+    <Inputs>x, y</Inputs>
+    <Outputs>z1</Outputs>
+  </GlobalSettings>
+
+  <Distributions>
+    <Uniform name="x">
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
+    </Uniform>
+    <Uniform name="y">
+      <lowerBound>-10</lowerBound>
+      <upperBound>10</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Models>
+    <ExternalModel ModuleToLoad="../models/matyas" name="externalModel" subType="">
+      <inputs>x, y</inputs>
+      <outputs>z1</outputs>
+    </ExternalModel>
+  </Models>
+
+</Simulation>
