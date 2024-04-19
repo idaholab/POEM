@@ -12,7 +12,7 @@
     <MultiRun name="Sampling">
       <Input class="DataObjects" type="PointSet">dummyIN</Input>
       <Model class="Models" type="Dummy">Dummy</Model>
-      <Sampler class="Samplers" type="Stratified">LHS</Sampler>
+      <Sampler class="Samplers" type="Stratified">Sampler</Sampler>
       <Output class="DataObjects" type="PointSet">out</Output>
     </MultiRun>
 

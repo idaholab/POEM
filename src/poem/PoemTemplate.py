@@ -47,7 +47,7 @@ class PoemTemplate(TemplateBase):
     runInfo = template.find('RunInfo')
 
     for key, val in inputs.items():
-      if template.find(key) is not None:
+      if len(list(template.iter(key))) != 0:
         if key == 'RunInfo':
           for subnode in val:
             sub = runInfo.find(subnode.tag)
@@ -57,6 +57,7 @@ class PoemTemplate(TemplateBase):
               runInfo.append(subnode)
         else:
           for subnode in template.iter(key):
+            print(subnode, key)
             if len(val) > 0:
               subnode.extend(val)
           # Update Models info

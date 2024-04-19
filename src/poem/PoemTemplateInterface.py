@@ -75,11 +75,12 @@ class PoemTemplateInterface(object):
   lhModelNode.append(basisNode)
   lhExternalModelNode.append(lhModelNode)
 
-  validAnalysis = ['sensitivity', 'sparse_grid_construction', 'sparse_grid_rom', 'lhs', 'bayesian_optimization', 'model_calibration']
+  validAnalysis = ['sensitivity', 'sparse_grid_construction', 'sparse_grid_rom', 'lhs', 'mc', 'bayesian_optimization', 'model_calibration']
   analysisRequired ={'sensitivity':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'sparse_grid_construction':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'sparse_grid_rom':['RunInfo', 'Files', 'Models', 'Distributions'],
-                     'lhs':['RunInfo', 'Files', 'Distributions']}
+                     'lhs':['RunInfo', 'Files', 'Distributions'],
+                     'mc':['RunInfo', 'Files', 'Distributions']}
 
 
   def __init__(self, filename):
@@ -178,11 +179,11 @@ class PoemTemplateInterface(object):
     else:
       sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'])
     if self._analysisType in ['sensitivity', 'sparse_grid_rom', 'mc']:
-      mcNode = self.buildMonteCarloSampler('MC', self._limit)
+      mcNode = self.buildMonteCarloSampler('Sampler', self._limit)
       mcNode.extend(sampledVars)
       self._ravenNodeDict['Samplers'] = [mcNode]
     elif self._analysisType in ['lhs']:
-      lhsNode = xmlUtils.newNode(tag='Stratified', attrib={'name':'LHS'})
+      lhsNode = xmlUtils.newNode(tag='Stratified', attrib={'name':'Sampler'})
       lhsNode.extend(sampledVars)
       self._ravenNodeDict['Samplers'] = [lhsNode]
 

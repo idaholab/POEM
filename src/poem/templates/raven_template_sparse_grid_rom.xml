@@ -53,7 +53,7 @@
     <MultiRun name="RomSampling">
       <Input class="DataObjects" type="PointSet">dummyIN</Input>
       <Model class="Models" type="ROM">SparseGridRom</Model>
-      <Sampler class="Samplers" type="MonteCarlo">MC</Sampler>
+      <Sampler class="Samplers" type="MonteCarlo">Sampler</Sampler>
       <Output class="DataObjects" type="PointSet">outRomGrid</Output>
     </MultiRun>
 
