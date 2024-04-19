@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>GP</WorkingDir>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <GlobalSettings>
+    <AnalysisType>train_rom</AnalysisType>
+    <data>../LHS/sampling_dump.csv</data>
+    <limit>10</limit>
+    <Inputs>x, y</Inputs>
+    <Outputs>z1</Outputs>
+  </GlobalSettings>
+
+  <Distributions>
+    <Uniform name='x'>
+      <lowerBound>-10</lowerBound>
+      <upperBound>0</upperBound>
+    </Uniform>
+    <Uniform name='y'>
+      <lowerBound>-6.5</lowerBound>
+      <upperBound>0</upperBound>
+    </Uniform>
+  </Distributions>
+
+</Simulation>

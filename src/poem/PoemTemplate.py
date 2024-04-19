@@ -57,7 +57,6 @@ class PoemTemplate(TemplateBase):
               runInfo.append(subnode)
         else:
           for subnode in template.iter(key):
-            print(subnode, key)
             if len(val) > 0:
               subnode.extend(val)
           # Update Models info

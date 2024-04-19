@@ -75,19 +75,21 @@ class PoemTemplateInterface(object):
   lhModelNode.append(basisNode)
   lhExternalModelNode.append(lhModelNode)
 
-  validAnalysis = ['sensitivity', 'sparse_grid_construction', 'sparse_grid_rom', 'lhs', 'mc', 'bayesian_optimization', 'model_calibration']
+  validAnalysis = ['sensitivity', 'sparse_grid_construction', 'sparse_grid_rom', 'lhs', 'mc', 'train_rom', 'bayesian_optimization', 'model_calibration']
 
   analysisRequired ={'sensitivity':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'sparse_grid_construction':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'sparse_grid_rom':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'lhs':['RunInfo', 'Files', 'Distributions'],
-                     'mc':['RunInfo', 'Files', 'Distributions']}
+                     'mc':['RunInfo', 'Files', 'Distributions'],
+                     'train_rom':['RunInfo', 'Distributions']}
 
   analysisOptions ={'sensitivity':[],
                     'sparse_grid_construction':[],
                     'sparse_grid_rom':[],
                     'lhs':['Models'],
-                    'mc':['Models']}
+                    'mc':['Models'],
+                    'train_rom':[]}
 
 
   def __init__(self, filename):
@@ -120,6 +122,7 @@ class PoemTemplateInterface(object):
     self._statsVectorPrefix = ['nsen', 'sen', 'pearson', 'cov', 'vsen', 'spearman']
     self._polynomialOrder = '2'
     self._sparseGridData = None
+    self._data = None
     self._globalSettings = {}
     self._miscDict =  {'AnalysisType':'required',
                     'limit':self._limit,
@@ -127,7 +130,8 @@ class PoemTemplateInterface(object):
                     'Outputs':'required',
                     'pivot':self._pivot,
                     'PolynomialOrder':self._polynomialOrder,
-                    'SparseGridData':self._sparseGridData} # dictionary stores some default values and required inputs
+                    'SparseGridData':self._sparseGridData,
+                    'data': self._data} # dictionary stores some default values and required inputs
 
   def getTemplateFile(self):
     """
@@ -186,7 +190,7 @@ class PoemTemplateInterface(object):
     self._ravenNodeDict['VariableGroups'] = self._variableGroupsList
 
     # build Monte Carlo Sampler
-    if self._analysisType in ['lhs']:
+    if self._analysisType in ['lhs', 'train_rom']:
       sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'], grid=True)
     else:
       sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'])
@@ -194,7 +198,7 @@ class PoemTemplateInterface(object):
       mcNode = self.buildMonteCarloSampler('Sampler', self._limit)
       mcNode.extend(sampledVars)
       self._ravenNodeDict['Samplers'] = [mcNode]
-    elif self._analysisType in ['lhs']:
+    elif self._analysisType in ['lhs', 'train_rom']:
       lhsNode = xmlUtils.newNode(tag='Stratified', attrib={'name':'Sampler'})
       lhsNode.extend(sampledVars)
       self._ravenNodeDict['Samplers'] = [lhsNode]
@@ -225,6 +229,15 @@ class PoemTemplateInterface(object):
       else:
         self._ravenNodeDict['Files'].append(inputNode)
 
+
+    if self._analysisType in ['train_rom']:
+      if self._data is None:
+        raise IOError('Training data is required, please specify it in "GlobalSettings" using subnode "data"')
+      inputNode = xmlUtils.newNode(tag='Input', attrib={'name':'training_data', 'type':''}, text=self._data)
+      if 'Files' not in self._ravenNodeDict:
+        self._ravenNodeDict['Files'] = [inputNode]
+      else:
+        self._ravenNodeDict['Files'].append(inputNode)
     self.checkInput()
 
 
@@ -252,6 +265,7 @@ class PoemTemplateInterface(object):
     self._limit = self._globalSettings.get('limit', self._limit)
     self._polynomialOrder = self._globalSettings.get('PolynomialOrder', self._polynomialOrder)
     self._sparseGridData = self._globalSettings.get('SparseGridData', self._sparseGridData)
+    self._data = self._globalSettings.get('data', self._data)
 
     if self._analysisType not in self.validAnalysis:
       raise IOError(f'Invalid analysis type "{self._analysisType}" provided, please choose one of "{self.validAnalysis}" instead.')
