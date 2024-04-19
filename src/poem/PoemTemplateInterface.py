@@ -76,11 +76,18 @@ class PoemTemplateInterface(object):
   lhExternalModelNode.append(lhModelNode)
 
   validAnalysis = ['sensitivity', 'sparse_grid_construction', 'sparse_grid_rom', 'lhs', 'mc', 'bayesian_optimization', 'model_calibration']
+
   analysisRequired ={'sensitivity':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'sparse_grid_construction':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'sparse_grid_rom':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'lhs':['RunInfo', 'Files', 'Distributions'],
                      'mc':['RunInfo', 'Files', 'Distributions']}
+
+  analysisOptions ={'sensitivity':[],
+                    'sparse_grid_construction':[],
+                    'sparse_grid_rom':[],
+                    'lhs':['Models'],
+                    'mc':['Models']}
 
 
   def __init__(self, filename):
@@ -153,6 +160,7 @@ class PoemTemplateInterface(object):
     self._templateFile = templateConfig['templates'][self._analysisType]
     #
     requiredNode = self.analysisRequired[self._analysisType]
+    optionalNode = self.analysisOptions[self._analysisType]
     for node in requiredNode:
       xml = self.findRequiredNode(self._inputRoot, node)
       if xml is None:
@@ -161,6 +169,10 @@ class PoemTemplateInterface(object):
         self._ravenNodeDict[node] = [subnode for subnode in xml]
       else:
         raise IOError(f"Duplicate nodes are found in the input file {self._inputFile}")
+    for node in optionalNode:
+      xml = self._inputRoot.find(node)
+      if xml is not None:
+        self._ravenNodeDict[node] = [subnode for subnode in xml]
 
     ######################
     # Build the common blocks
