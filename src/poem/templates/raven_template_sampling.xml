@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>sampling</WorkingDir>
+    <Sequence>
+      Sampling, Print
+    </Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Steps>
+    <MultiRun name="Sampling">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="Dummy">Dummy</Model>
+      <Sampler class="Samplers" type="Stratified">LHS</Sampler>
+      <Output class="DataObjects" type="PointSet">out</Output>
+    </MultiRun>
+
+    <IOStep name="Print">
+      <Input class="DataObjects" type="PointSet">out</Input>
+      <Output class="OutStreams" type="Print">sampling_dump</Output>
+    </IOStep>
+  </Steps>
+
+  <Distributions>
+
+  </Distributions>
+
+  <Samplers>
+
+  </Samplers>
+
+  <Models>
+    <Dummy name="Dummy" subType=""/>
+  </Models>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>inputGroup</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="out">
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="sampling_dump">
+      <type>csv</type>
+      <source>out</source>
+      <what>input,output</what>
+    </Print>
+  </OutStreams>
+
+</Simulation>

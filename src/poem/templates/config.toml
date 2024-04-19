@@ -2,7 +2,8 @@
 sensitivity = "raven_template_sensitivity.xml"
 sparse_grid_construction = "raven_template_sparse_grid_construction.xml"
 sparse_grid_rom = "raven_template_sparse_grid_rom.xml"
+lhs = "raven_template_sampling.xml"
+
 
 bayesian_optimization = "raven_template_bayesian_optimization.xml"
 model_calibration = "raven_template_model_calibration.xml"
-sparse_grid = "raven_template_sparse_grid.xml"

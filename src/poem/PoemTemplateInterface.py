@@ -75,10 +75,11 @@ class PoemTemplateInterface(object):
   lhModelNode.append(basisNode)
   lhExternalModelNode.append(lhModelNode)
 
-  validAnalysis = ['sensitivity', 'sparse_grid_construction', 'sparse_grid_rom', 'bayesian_optimization', 'model_calibration']
+  validAnalysis = ['sensitivity', 'sparse_grid_construction', 'sparse_grid_rom', 'lhs', 'bayesian_optimization', 'model_calibration']
   analysisRequired ={'sensitivity':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'sparse_grid_construction':['RunInfo', 'Files', 'Models', 'Distributions'],
-                     'sparse_grid_rom':['RunInfo', 'Files', 'Models', 'Distributions']}
+                     'sparse_grid_rom':['RunInfo', 'Files', 'Models', 'Distributions'],
+                     'lhs':['RunInfo', 'Files', 'Distributions']}
 
 
   def __init__(self, filename):
@@ -172,11 +173,19 @@ class PoemTemplateInterface(object):
     self._ravenNodeDict['VariableGroups'] = self._variableGroupsList
 
     # build Monte Carlo Sampler
-    sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'])
-    if self._analysisType in ['sensitivity', 'sparse_grid_rom']:
+    if self._analysisType in ['lhs']:
+      sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'], grid=True)
+    else:
+      sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'])
+    if self._analysisType in ['sensitivity', 'sparse_grid_rom', 'mc']:
       mcNode = self.buildMonteCarloSampler('MC', self._limit)
       mcNode.extend(sampledVars)
       self._ravenNodeDict['Samplers'] = [mcNode]
+    elif self._analysisType in ['lhs']:
+      lhsNode = xmlUtils.newNode(tag='Stratified', attrib={'name':'LHS'})
+      lhsNode.extend(sampledVars)
+      self._ravenNodeDict['Samplers'] = [lhsNode]
+
     if self._analysisType in ['sparse_grid_construction', 'sparse_grid_rom']:
       sparseGridNode = self.buildSparseGridSampler('SparseGrid')
       sparseGridNode.extend(sampledVars)
@@ -289,8 +298,7 @@ class PoemTemplateInterface(object):
     printObj.append(xmlUtils.newNode(tag='what', text='input,output'))
     return printObj
 
-  @staticmethod
-  def buildSamplerVariable(inputs, distNode):
+  def buildSamplerVariable(self, inputs, distNode, grid=False):
     """
       build the sampler variable block
     """
@@ -303,6 +311,8 @@ class PoemTemplateInterface(object):
         raise IOError(f'Distribution of variable {inp} is not defined in <Distribution> block!')
       varNode = xmlUtils.newNode(tag='variable', attrib={'name':inp})
       varNode.append(xmlUtils.newNode(tag='distribution', text=inp))
+      if grid:
+        varNode.append(xmlUtils.newNode(tag='grid', attrib={'construction':'equal', 'steps':self._limit, 'type':'CDF'}, text='0.0 1.0'))
       varNodeList.append(varNode)
     return varNodeList
 
