@@ -83,7 +83,8 @@ class PoemTemplateInterface(object):
                      'lhs':['RunInfo', 'Files', 'Distributions'],
                      'mc':['RunInfo', 'Files', 'Distributions'],
                      'train_rom':['RunInfo', 'Distributions'],
-                     'bayesian_optimization':['RunInfo', 'Files', 'Models', 'Distributions']}
+                     'bayesian_optimization':['RunInfo', 'Files', 'Models', 'Distributions'],
+                     'model_calibration':['RunInfo', 'Files', 'Models', 'Distributions', 'LikelihoodModel']}
 
   analysisOptions ={'sensitivity':[],
                     'sparse_grid_construction':[],
@@ -91,7 +92,8 @@ class PoemTemplateInterface(object):
                     'lhs':['Models'],
                     'mc':['Models'],
                     'train_rom':[],
-                    'bayesian_optimization':['Functions']}
+                    'bayesian_optimization':['Functions'],
+                    'model_calibration':[]}
 
 
   def __init__(self, filename):
@@ -126,6 +128,10 @@ class PoemTemplateInterface(object):
     self._polynomialOrder = '2'
     self._sparseGridData = None
     self._data = None
+    self._expTargets = None
+    self._expCov = None
+    self._dynamic = False
+    self._initInputs = None
     self._globalSettings = {}
     self._miscDict =  {'AnalysisType':'required',
                     'limit':self._limit,
@@ -134,7 +140,11 @@ class PoemTemplateInterface(object):
                     'pivot':self._pivot,
                     'PolynomialOrder':self._polynomialOrder,
                     'SparseGridData':self._sparseGridData,
-                    'data': self._data} # dictionary stores some default values and required inputs
+                    'data': self._data,
+                    'expTargets': self._expTargets,
+                    'expCov': self._expCov,
+                    'InitialInputs': self._initInputs,
+                    'dynamic':self._dynamic} # dictionary stores some default values and required inputs
 
   def getTemplateFile(self):
     """
@@ -163,8 +173,10 @@ class PoemTemplateInterface(object):
     # process RunInfo
     globalSettings = self.findRequiredNode(self._inputRoot, 'GlobalSettings')
     self.readGlobalSettings(globalSettings)
-
-    self._templateFile = templateConfig['templates'][self._analysisType]
+    if self._dynamic:
+      self._templateFile = templateConfig['templates'][self._analysisType+'_dynamic']
+    else:
+      self._templateFile = templateConfig['templates'][self._analysisType]
     #
     requiredNode = self.analysisRequired[self._analysisType]
     optionalNode = self.analysisOptions[self._analysisType]
@@ -185,7 +197,10 @@ class PoemTemplateInterface(object):
     # Build the common blocks
     inputGroup = self.buildVariableGroup('inputGroup', self._inputVarList)
     self._variableGroupsList.append(inputGroup)
-    outputGroup = self.buildVariableGroup('outputGroup', self._outputVarList)
+    if self._dynamic:
+      outputGroup = self.buildVariableGroup('outputGroup', self._outputVarList+[self._pivot])
+    else:
+      outputGroup = self.buildVariableGroup('outputGroup', self._outputVarList)
     self._variableGroupsList.append(outputGroup)
     if self._analysisType == 'sensitivity':
       statsGroup = self.buildStatsGroup("statsGroup", self._inputVarList, self._outputVarList)
@@ -262,6 +277,14 @@ class PoemTemplateInterface(object):
           bayOptNodes.append(xmlUtils.newNode(tag='Constraint', attrib={'class':'Functions', 'type':'External'}, text=fun.attrib.get('name')))
       self._ravenNodeDict['BayesianOptimizer'] = bayOptNodes
 
+
+    # build model_calibration
+    if self._analysisType in ['model_calibration']:
+      calibNode = []
+      varList = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'], init=self._initInputs)
+      calibNode.extend(varList)
+      self._ravenNodeDict['AdaptiveMetropolis'] = calibNode
+
     self.checkInput()
 
 
@@ -285,8 +308,12 @@ class PoemTemplateInterface(object):
     self._analysisType = self._globalSettings['AnalysisType'].strip().lower()
     self._inputVarList = poemUtils.convertNodeTextToList(self._globalSettings['Inputs'])
     self._outputVarList = poemUtils.convertNodeTextToList(self._globalSettings['Outputs'])
+    if 'InitialInputs' in self._globalSettings:
+      self._initInputs = poemUtils.convertNodeTextToFloatList(self._globalSettings['InitialInputs'])
     self._pivot = self._globalSettings.get('pivot', self._pivot)
     self._limit = self._globalSettings.get('limit', self._limit)
+    if 'dynamic' in self._globalSettings:
+      self._dynamic = poemUtils.convertStringToBool(self._globalSettings.get('dynamic'))
     self._polynomialOrder = self._globalSettings.get('PolynomialOrder', self._polynomialOrder)
     self._sparseGridData = self._globalSettings.get('SparseGridData', self._sparseGridData)
     self._data = self._globalSettings.get('data', self._data)
@@ -349,7 +376,7 @@ class PoemTemplateInterface(object):
     printObj.append(xmlUtils.newNode(tag='what', text='input,output'))
     return printObj
 
-  def buildSamplerVariable(self, inputs, distNode, limit=20, grid=False):
+  def buildSamplerVariable(self, inputs, distNode, limit=20, grid=False, init=None):
     """
       build the sampler variable block
     """
@@ -357,11 +384,13 @@ class PoemTemplateInterface(object):
     varNodeList = []
     for subnode in distNode:
       varDistList.append(subnode.attrib['name'])
-    for inp in inputs:
+    for i, inp in enumerate(inputs):
       if inp not in varDistList:
         raise IOError(f'Distribution of variable {inp} is not defined in <Distribution> block!')
       varNode = xmlUtils.newNode(tag='variable', attrib={'name':inp})
       varNode.append(xmlUtils.newNode(tag='distribution', text=inp))
+      if init:
+        varNode.append(xmlUtils.newNode(tag='initial', text=str(init[i])))
       if grid:
         varNode.append(xmlUtils.newNode(tag='grid', attrib={'construction':'equal', 'steps':limit, 'type':'CDF'}, text='0.0 1.0'))
       varNodeList.append(varNode)

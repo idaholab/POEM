@@ -63,7 +63,7 @@ class PoemTemplate(TemplateBase):
           if key == 'Models':
             for multiRunNode in template.iter('MultiRun'):
               modelNode = multiRunNode.find('Model')
-              if modelNode.get('type') != 'ROM':
+              if modelNode.get('type') not in ['ROM', 'EnsembleModel']:
                 modelNode.text = val[0].get('name')
       else:
         extraNode = xmlUtils.newNode(tag=key)

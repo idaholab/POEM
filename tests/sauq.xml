@@ -9,6 +9,8 @@
   <GlobalSettings>
     <AnalysisType>sensitivity</AnalysisType>
     <limit>10</limit>
+    <pivot>time</pivot>
+    <dynamic>True</dynamic>
     <Inputs>damage</Inputs>
     <Outputs>RL</Outputs>
   </GlobalSettings>

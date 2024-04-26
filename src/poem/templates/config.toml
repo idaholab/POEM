@@ -6,6 +6,14 @@ lhs = "raven_template_sampling.xml"
 mc = "raven_template_sampling.xml"
 train_rom = "raven_template_train_rom.xml"
 bayesian_optimization = "raven_template_bayesian_optimization.xml"
-
-
 model_calibration = "raven_template_model_calibration.xml"
+
+# Time dependent analysis
+sensitivity_dynamic = "raven_template_sensitivity.xml"
+sparse_grid_construction_dynamic = "raven_template_sparse_grid_construction.xml"
+sparse_grid_rom_dynamic = "raven_template_sparse_grid_rom.xml"
+lhs_dynamic = "raven_template_sampling.xml"
+mc_dynamic = "raven_template_sampling.xml"
+train_rom_dynamic = "raven_template_train_rom.xml"
+bayesian_optimization_dynamic = "raven_template_bayesian_optimization.xml"
+model_calibration_dynamic = "raven_template_model_calibration.xml"
