@@ -5,7 +5,7 @@ sparse_grid_rom = "raven_template_sparse_grid_rom.xml"
 lhs = "raven_template_sampling.xml"
 mc = "raven_template_sampling.xml"
 train_rom = "raven_template_train_rom.xml"
-
-
 bayesian_optimization = "raven_template_bayesian_optimization.xml"
+
+
 model_calibration = "raven_template_model_calibration.xml"

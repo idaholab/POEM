@@ -82,14 +82,16 @@ class PoemTemplateInterface(object):
                      'sparse_grid_rom':['RunInfo', 'Files', 'Models', 'Distributions'],
                      'lhs':['RunInfo', 'Files', 'Distributions'],
                      'mc':['RunInfo', 'Files', 'Distributions'],
-                     'train_rom':['RunInfo', 'Distributions']}
+                     'train_rom':['RunInfo', 'Distributions'],
+                     'bayesian_optimization':['RunInfo', 'Files', 'Models', 'Distributions']}
 
   analysisOptions ={'sensitivity':[],
                     'sparse_grid_construction':[],
                     'sparse_grid_rom':[],
                     'lhs':['Models'],
                     'mc':['Models'],
-                    'train_rom':[]}
+                    'train_rom':[],
+                    'bayesian_optimization':['Functions']}
 
 
   def __init__(self, filename):
@@ -115,6 +117,7 @@ class PoemTemplateInterface(object):
     self._inputDict = {} # dictionary stores the user provided information, constructed from self._miscDict
     self._pivot = 'time'
     self._limit = 1000
+    self._initSamples = 20
     self._templateFile = None
     self._analysisType = None
     self._ravenNodeDict = {}
@@ -190,15 +193,18 @@ class PoemTemplateInterface(object):
     self._ravenNodeDict['VariableGroups'] = self._variableGroupsList
 
     # build Monte Carlo Sampler
-    if self._analysisType in ['lhs', 'train_rom']:
-      sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'], grid=True)
+    limit = self._limit
+    if self._analysisType in ['lhs', 'train_rom', 'bayesian_optimization']:
+      if self._analysisType in ['bayesian_optimization']:
+        limit = self._initSamples
+      sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'], limit=limit, grid=True)
     else:
       sampledVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'])
     if self._analysisType in ['sensitivity', 'sparse_grid_rom', 'mc']:
       mcNode = self.buildMonteCarloSampler('Sampler', self._limit)
       mcNode.extend(sampledVars)
       self._ravenNodeDict['Samplers'] = [mcNode]
-    elif self._analysisType in ['lhs', 'train_rom']:
+    elif self._analysisType in ['lhs', 'train_rom', 'bayesian_optimization']:
       lhsNode = xmlUtils.newNode(tag='Stratified', attrib={'name':'Sampler'})
       lhsNode.extend(sampledVars)
       self._ravenNodeDict['Samplers'] = [lhsNode]
@@ -230,7 +236,7 @@ class PoemTemplateInterface(object):
         self._ravenNodeDict['Files'].append(inputNode)
 
 
-    if self._analysisType in ['train_rom']:
+    if self._analysisType in ['train_rom', 'bayesian_optimization']:
       if self._data is None:
         raise IOError('Training data is required, please specify it in "GlobalSettings" using subnode "data"')
       inputNode = xmlUtils.newNode(tag='Input', attrib={'name':'training_data', 'type':''}, text=self._data)
@@ -238,6 +244,24 @@ class PoemTemplateInterface(object):
         self._ravenNodeDict['Files'] = [inputNode]
       else:
         self._ravenNodeDict['Files'].append(inputNode)
+
+    # build 'bayesian_optimization'
+    if self._analysisType in ['bayesian_optimization']:
+      bayOptNodes = []
+      if len(self._outputVarList) > 1:
+        raise IOError(f'Bayesian optimization currently only work with single objective, but got {self._outputVarList}')
+      optVars = self.buildSamplerVariable(self._inputVarList, self._ravenNodeDict['Distributions'])
+      bayOptNodes.extend(optVars)
+      bayOptNodes.append(xmlUtils.newNode(tag='objective', text=self._outputVarList[0]))
+      samplerInit = xmlUtils.newNode(tag='samplerInit')
+      samplerInit.append(xmlUtils.newNode(tag='limit', text=self._limit))
+      bayOptNodes.append(samplerInit)
+      if 'Functions' in self._ravenNodeDict:
+        funList = self._ravenNodeDict['Functions']
+        for fun in funList:
+          bayOptNodes.append(xmlUtils.newNode(tag='Constraint', attrib={'class':'Functions', 'type':'External'}, text=fun.attrib.get('name')))
+      self._ravenNodeDict['BayesianOptimizer'] = bayOptNodes
+
     self.checkInput()
 
 
@@ -325,7 +349,7 @@ class PoemTemplateInterface(object):
     printObj.append(xmlUtils.newNode(tag='what', text='input,output'))
     return printObj
 
-  def buildSamplerVariable(self, inputs, distNode, grid=False):
+  def buildSamplerVariable(self, inputs, distNode, limit=20, grid=False):
     """
       build the sampler variable block
     """
@@ -339,7 +363,7 @@ class PoemTemplateInterface(object):
       varNode = xmlUtils.newNode(tag='variable', attrib={'name':inp})
       varNode.append(xmlUtils.newNode(tag='distribution', text=inp))
       if grid:
-        varNode.append(xmlUtils.newNode(tag='grid', attrib={'construction':'equal', 'steps':self._limit, 'type':'CDF'}, text='0.0 1.0'))
+        varNode.append(xmlUtils.newNode(tag='grid', attrib={'construction':'equal', 'steps':limit, 'type':'CDF'}, text='0.0 1.0'))
       varNodeList.append(varNode)
     return varNodeList
 

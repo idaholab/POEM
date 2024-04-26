@@ -1,18 +1,18 @@
 <?xml version="1.0" ?>
 <Simulation verbosity="debug">
   <RunInfo>
-    <WorkingDir>GP</WorkingDir>
+    <WorkingDir>Optimization</WorkingDir>
     <Sequence>load_data, train, optimize, collect_final, print</Sequence>
     <batchSize>1</batchSize>
   </RunInfo>
 
   <Files>
-    <Input name="samples">LHS_dump.csv</Input>
+
   </Files>
 
   <Steps>
     <IOStep name="load_data">
-      <Input class="Files" type="">samples</Input>
+      <Input class="Files" type="">training_data</Input>
       <Output class="DataObjects" type="PointSet">samples</Output>
     </IOStep>
 
@@ -23,8 +23,8 @@
 
     <MultiRun name="optimize" >
       <Input class="DataObjects" type="PointSet">placeholder</Input>
-      <Model class="Models" type="ExternalModel">mishra</Model>
-      <Optimizer class="Optimizers" type="BayesianOptimizer">BOopt</Optimizer>
+      <Model class="Models" type="ExternalModel">externalModel</Model>
+      <Optimizer class="Optimizers" type="BayesianOptimizer">BayesianOptimizer</Optimizer>
       <SolutionExport class="DataObjects" type="PointSet">opt_export</SolutionExport>
       <Output class="DataObjects" type="PointSet">optOut</Output>
       <Output class="OutStreams" type="Print">opt_export</Output>
@@ -46,35 +46,11 @@
     </IOStep>
   </Steps>
 
-  <Distributions>
-    <Uniform name='mishra_dist_x'>
-      <lowerBound>-10</lowerBound>
-      <upperBound>0</upperBound>
-    </Uniform>
-    <Uniform name='mishra_dist_y'>
-      <lowerBound>-6.5</lowerBound>
-      <upperBound>0</upperBound>
-    </Uniform>
-  </Distributions>
-
   <Optimizers>
-    <BayesianOptimizer name="BOopt">
-      <objective>z</objective>
-      <variable name="x">
-        <distribution>mishra_dist_x</distribution>
-      </variable>
-      <variable name="y">
-        <distribution>mishra_dist_y</distribution>
-      </variable>
-      <TargetEvaluation class="DataObjects" type="PointSet">optOut</TargetEvaluation>
-      <samplerInit>
-        <limit>30</limit>
-        <initialSeed>42</initialSeed>
-        <writeSteps>every</writeSteps>
-      </samplerInit>
-      <Sampler    class="Samplers"  type="Stratified" >LHS_samp</Sampler>
+    <BayesianOptimizer name="BayesianOptimizer">
+      <Sampler    class="Samplers"  type="Stratified" >Sampler</Sampler>
       <ROM  class="Models" type="ROM">gpROM</ROM>
-      <Constraint class='Functions' type='External'>constraint1</Constraint>
+      <TargetEvaluation class="DataObjects" type="PointSet">optOut</TargetEvaluation>
       <ModelSelection>
         <Duration>1</Duration>
         <Method>Internal</Method>
@@ -92,30 +68,15 @@
     </BayesianOptimizer>
   </Optimizers>
 
+
   <Samplers>
-    <Stratified name="LHS_samp">
-      <samplerInit>
-        <initialSeed>42</initialSeed>
-      </samplerInit>
-      <variable name="x">
-        <distribution>mishra_dist_x</distribution>
-        <grid construction="equal" steps="2" type="CDF">0 1</grid>
-      </variable>
-      <variable name="y">
-        <distribution>mishra_dist_y</distribution>
-        <grid construction="equal" steps="2" type="CDF">0 1</grid>
-      </variable>
-    </Stratified>
+
   </Samplers>
 
   <Models>
-    <ExternalModel ModuleToLoad="../../../models/mishraBirdConstrained.py" name="mishra" subType="">
-      <inputs>x, y</inputs>
-      <outputs>z</outputs>
-    </ExternalModel>
     <ROM name="gpROM" subType="GaussianProcessRegressor">
-      <Features>x,y</Features>
-      <Target>z</Target>
+      <Features>inputGroup</Features>
+      <Target>outputGroup</Target>
       <alpha>1e-8</alpha>
       <n_restarts_optimizer>10</n_restarts_optimizer>
       <normalize_y>True</normalize_y>
@@ -130,29 +91,24 @@
     </PostProcessor>
   </Models>
 
-  <Functions>
-    <External file="../../../models/mishraBirdConstrained.py" name="constraint1">
-      <variables>x,y</variables>
-    </External>
-  </Functions>
 
   <DataObjects>
     <PointSet name="placeholder"/>
     <PointSet name="samples">
-      <Input>x,y</Input>
-      <Output>z</Output>
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
     </PointSet>
     <PointSet name="optOut">
-      <Input>x,y</Input>
-      <Output>z</Output>
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
     </PointSet>
     <PointSet name="opt_export">
       <Input>trajID</Input>
-      <Output>x,y,z,accepted,solutionValue</Output>
+      <Output>inputGroup,outputGroup,accepted,solutionValue</Output>
     </PointSet>
     <PointSet name="selected_index">
       <Input>trajID</Input>
-      <Output>x,y,z</Output>
+      <Output>inputGroup,outputGroup</Output>
     </PointSet>
   </DataObjects>
 
@@ -172,7 +128,7 @@
     </Print>
     <Plot name="opt_path" subType="OptPath">
       <source>opt_export</source>
-      <vars>x,y,z</vars>
+      <vars>outputGroup,inputGroup</vars>
     </Plot>
   </OutStreams>
 </Simulation>

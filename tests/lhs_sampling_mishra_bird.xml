@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>LHS_mishra</WorkingDir>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <GlobalSettings>
+    <AnalysisType>LHS</AnalysisType>
+    <limit>10</limit>
+    <Inputs>x, y</Inputs>
+    <Outputs>z</Outputs>
+  </GlobalSettings>
+
+  <Distributions>
+    <Uniform name='x'>
+      <lowerBound>-10</lowerBound>
+      <upperBound>0</upperBound>
+    </Uniform>
+    <Uniform name='y'>
+      <lowerBound>-6.5</lowerBound>
+      <upperBound>0</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Models>
+    <ExternalModel ModuleToLoad="../../models/mishraBirdConstrained" name="mishra" subType="">
+      <inputs>x, y</inputs>
+      <outputs>z</outputs>
+    </ExternalModel>
+  </Models>
+
+</Simulation>
