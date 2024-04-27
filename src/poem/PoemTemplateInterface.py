@@ -193,6 +193,9 @@ class PoemTemplateInterface(object):
       if xml is not None:
         self._ravenNodeDict[node] = [subnode for subnode in xml]
 
+    if self._dynamic and self._analysisType in ['bayesian_optimization']:
+      raise IOError('Not implemented for dynamic bayesian optimization yet!')
+
     ######################
     # Build the common blocks
     inputGroup = self.buildVariableGroup('inputGroup', self._inputVarList)
