@@ -205,6 +205,9 @@ class PoemTemplateInterface(object):
     if self._analysisType == 'sensitivity':
       statsGroup = self.buildStatsGroup("statsGroup", self._inputVarList, self._outputVarList)
       self._variableGroupsList.append(statsGroup)
+      if self._dynamic:
+        outStatGroup = self.buildVariableGroup('outputGroup_stat', self._outputVarList)
+        self._variableGroupsList.append(outStatGroup)
     self._ravenNodeDict['VariableGroups'] = self._variableGroupsList
 
     # build Monte Carlo Sampler
