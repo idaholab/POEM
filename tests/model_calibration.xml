@@ -8,57 +8,70 @@
 
   <GlobalSettings>
     <AnalysisType>model_calibration</AnalysisType>
-    <pivot>time</pivot>
-    <dynamic>True</dynamic>
-    <data>../LHS_mishra/sampling_dump.csv</data>
     <limit>100</limit>
-    <Inputs>alpha, beta, gamma</Inputs>
-    <InitialInputs>0.1, 4.0, -1.0</InitialInputs>
-    <Outputs>eta</Outputs>
+    <Inputs>alpha, beta</Inputs>
+    <InitialInputs>0.0, 0.0</InitialInputs>
+    <Outputs>zout</Outputs>
   </GlobalSettings>
 
   <LikelihoodModel>
-    <simTargets>eta</simTargets>
-    <expTargets shape="1,50" computeCov='False' correlation='False'>
-      -1.16074224 -1.10303445 -1.02830511 -0.89782965 -0.73765453 -0.7989537
-       -0.86163706 -1.02209944 -1.12444044 -1.23657398 -1.16081758 -1.01219869
-       -0.890747   -0.80444122 -0.70893668 -0.61012531 -0.65670863 -0.6768583
-       -0.74732441 -0.81448647 -0.73232671 -0.54989334 -0.39796749 -0.07894291
-        0.13067378  0.28999998  0.27418965  0.313329    0.32306704  0.2885684
-        0.32736775  0.52458854  0.69446572  0.82419521  1.04393683  1.00435818
-        1.0810376   0.97245373  0.82406522  0.76067559  0.70145544  0.79479965
-        0.88035895  0.97750307  1.11524353  1.17159017  1.18299222  1.07255006
-        1.02835909  0.90784132
+    <!-- targets of interest from simulation
+    Multiple targets can be provided, and they will be stacked together based on
+    their provided orders.
+    -->
+    <simTargets>zout</simTargets>
+    <expTargets shape="" computeCov='True' correlation='False'>
+      2.11500008,  0.14946724, -1.65039824,  4.35404944,  2.81822947,
+      6.54820123, -1.75704173,  2.25129699, -1.19830637,  3.76461502,
+      0.386274  ,  0.3026495 ,  1.6467714 , -0.18838893, -0.40815504,
+      2.11830326,  2.08114549,  2.4998607 ,  2.79584898,  3.88973006,
+     -2.7575892 , -0.04385282,  0.05381042, -1.46692956,  1.70190605,
+     -1.57171388,  4.11788556, -1.63605661,  3.80630774,  2.84303567,
+     -1.38054778, -1.21978835, -0.22892141,  4.32828596,  1.43980194,
+      3.2975833 ,  2.50307962,  3.99509689, -0.04558891, -2.93355096,
+      1.54869592,  0.82694381, -2.27505536,  2.10192782, -0.02294763,
+      1.36074938, -0.69042317,  1.80091876,  0.03907101, -2.38166576,
+      1.563129  ,  1.20795836,  2.29019786,  2.65269473,  0.85751374,
+     -0.59481231,  1.80102222,  0.02886628,  6.45080851,  4.07795272,
+      7.16290259,  1.35855176, -0.75228632,  1.65880613,  2.4717668 ,
+      1.10216817, -0.44061435, -1.92342245,  3.05321389,  0.89013387,
+     -1.05614164,  0.33685368,  1.65889606, -0.49594808,  6.63155206,
+      3.70915947, -0.46757349,  0.75459259, -0.87910652,  2.84513982,
+     -2.27714018,  2.16478883, -0.31847088,  5.61444774, -1.28556545,
+      2.6697912 ,  0.84654927,  8.2436798 ,  1.80816732,  3.72230814,
+      3.36955247,  0.72882023, -3.85778293, -1.2840472 ,  1.65360275,
+     -0.48916641,  2.25437166,  1.28519366, -3.07200649,  1.02090558
     </expTargets>
-    <expCov diag="True">
-         0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
-         0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
-         0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
-         0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
-         0.02, 0.02, 0.02, 0.02, 0.02, 0.02
-    </expCov>
-    <!-- <biasTargets></biasTargets>
-    <biasCov diag="False"></biasCov> -->
-    <!-- <romCov diag="True"></romCov> -->
+    <reduction>
+      <type>pca</type>
+      <!-- -1: no truncation
+           0: optimal rank is computed
+           >1: user-defined truncation rank
+           >0 and < 1: computed rank is the number of the biggest single value needed
+           to reach the energy identified by truncationRank-->
+      <truncationRank>0</truncationRank>
+    </reduction>
+    <!--
+    <expCov diag="False"></expCov>
+    <biasTargets></biasTargets>
+    <biasCov diag="False"></biasCov>
+    <romCov diag="False"></romCov>
+     -->
   </LikelihoodModel>
 
   <Distributions>
-    <Uniform name='alpha'>
-      <lowerBound>0.1</lowerBound>
-      <upperBound>0.3</upperBound>
-    </Uniform>
-    <Uniform name='beta'>
-      <lowerBound>4</lowerBound>
-      <upperBound>6</upperBound>
-    </Uniform>
-    <Uniform name='gamma'>
-      <lowerBound>-1</lowerBound>
-      <upperBound>1</upperBound>
-    </Uniform>
+    <Normal name="alpha">
+      <mean>0</mean>
+      <sigma>10</sigma>
+    </Normal>
+    <Normal name="beta">
+      <mean>0</mean>
+      <sigma>10</sigma>
+    </Normal>
   </Distributions>
 
   <Models>
-    <ExternalModel ModuleToLoad="../models/model_cal" name="model" subType="">
+    <ExternalModel ModuleToLoad="../models/simple" name="simple" subType="">
       <inputs>inputGroup</inputs>
       <outputs>outputGroup</outputs>
     </ExternalModel>

@@ -32,8 +32,8 @@
     <IOStep name="print">
       <Input class="DataObjects" type="PointSet">out_export</Input>
       <Input class="DataObjects" type="PointSet">outSet</Input>
-      <Output class="OutStreams" type="Print">dumpExport</Output>
-      <Output class="OutStreams" type="Print">dumpOut</Output>
+      <Output class="OutStreams" type="Print">posterior_dynamic_dump</Output>
+      <Output class="OutStreams" type="Print">samples_dynamic_dump</Output>
     </IOStep>
   </Steps>
 
@@ -61,12 +61,12 @@
   </Models>
 
   <OutStreams>
-    <Print name="dumpOut">
+    <Print name="samples_dynamic_dump">
       <type>csv</type>
       <source>outSet</source>
       <what>input, output</what>
     </Print>
-    <Print name="dumpExport">
+    <Print name="posterior_dynamic_dump">
       <type>csv</type>
       <source>out_export</source>
       <what>input, output</what>

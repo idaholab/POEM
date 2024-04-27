@@ -25,15 +25,15 @@
       <Model class="Models" type="EnsembleModel">EnsembleLH</Model>
       <Sampler class="Samplers" type="AdaptiveMetropolis">Metropolis</Sampler>
       <SolutionExport class="DataObjects" type="PointSet">out_export</SolutionExport>
-      <Output class="DataObjects" type="HistorySet">simData</Output>
-      <Output class="DataObjects" type="DataSet">lhData</Output>
+      <Output class="DataObjects" type="PointSet">simData</Output>
+      <Output class="DataObjects" type="PointSet">lhData</Output>
       <Output class="DataObjects" type="PointSet">outSet</Output>
     </MultiRun>
     <IOStep name="print">
       <Input class="DataObjects" type="PointSet">out_export</Input>
       <Input class="DataObjects" type="PointSet">outSet</Input>
-      <Output class="OutStreams" type="Print">dumpExport</Output>
-      <Output class="OutStreams" type="Print">dumpOut</Output>
+      <Output class="OutStreams" type="Print">posterior_dump</Output>
+      <Output class="OutStreams" type="Print">samples_dump</Output>
     </IOStep>
   </Steps>
 
@@ -50,23 +50,23 @@
       <Model class="Models" type="ExternalModel">
           model
         <Input class="DataObjects" type="PointSet">inputHolderGP</Input>
-        <TargetEvaluation class="DataObjects" type="HistorySet">simData</TargetEvaluation>
+        <TargetEvaluation class="DataObjects" type="PointSet">simData</TargetEvaluation>
       </Model>
       <Model class="Models" type="ExternalModel">
           likelihood
         <Input class="DataObjects" type="PointSet">inputHolderLikelihood</Input>
-        <TargetEvaluation class="DataObjects" type="DataSet">lhData</TargetEvaluation>
+        <TargetEvaluation class="DataObjects" type="PointSet">lhData</TargetEvaluation>
       </Model>
     </EnsembleModel>
   </Models>
 
   <OutStreams>
-    <Print name="dumpOut">
+    <Print name="samples_dump">
       <type>csv</type>
       <source>outSet</source>
       <what>input, output</what>
     </Print>
-    <Print name="dumpExport">
+    <Print name="posterior_dump">
       <type>csv</type>
       <source>out_export</source>
       <what>input, output</what>
@@ -93,22 +93,18 @@
       <Output>inputGroup</Output>
     </PointSet>
 
-    <HistorySet name="simData">
+    <PointSet name="simData">
       <!-- calibrated parameters -->
       <Input>inputGroup</Input>
       <!-- simulation targets that will be passed to likelihood model -->
       <Output>outputGroup</Output>
-      <options>
-        <pivotParameter>time</pivotParameter>
-      </options>
-    </HistorySet>
+    </PointSet>
 
-    <DataSet name="lhData">
+    <PointSet name="lhData">
       <!-- simulation targets -->
       <Input>outputGroup</Input>
       <Output>likelihood</Output>
-      <Index var='time'>outputGroup</Index>
-    </DataSet>
+    </PointSet>
   </DataObjects>
 
 </Simulation>

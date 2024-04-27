@@ -2,7 +2,7 @@
 <Simulation verbosity="debug">
 
   <RunInfo>
-    <WorkingDir>calibration</WorkingDir>
+    <WorkingDir>calibration_dynamic</WorkingDir>
     <batchSize>1</batchSize>
   </RunInfo>
 
@@ -10,7 +10,6 @@
     <AnalysisType>model_calibration</AnalysisType>
     <pivot>time</pivot>
     <dynamic>True</dynamic>
-    <data>../LHS_mishra/sampling_dump.csv</data>
     <limit>100</limit>
     <Inputs>alpha, beta, gamma</Inputs>
     <InitialInputs>0.1, 4.0, -1.0</InitialInputs>

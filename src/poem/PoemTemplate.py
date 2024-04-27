@@ -66,6 +66,13 @@ class PoemTemplate(TemplateBase):
               if modelNode.get('type') not in ['ROM', 'EnsembleModel']:
                 modelNode.text = val[0].get('name')
                 modelNode.attrib['type'] = val[0].tag
+            for subnode in template.iter(key):
+              ensemble = subnode.find('EnsembleModel')
+              if ensemble:
+                for m in ensemble.iter('Model'):
+                  if m.text.strip().lower() == 'model':
+                    m.text = val[0].get('name')
+                    m.attrib['type'] = val[0].tag
       else:
         extraNode = xmlUtils.newNode(tag=key)
         extraNode.extend(val)
