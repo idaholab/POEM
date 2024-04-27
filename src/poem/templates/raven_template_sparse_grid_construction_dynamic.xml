@@ -11,11 +11,11 @@
       <Input class="DataObjects" type="PointSet">dummyIN</Input>
       <Model class="Models" type="ExternalModel">externalModel</Model>
       <Sampler class="Samplers" type="SparseGridCollocation">SparseGrid</Sampler>
-      <Output class="DataObjects" type="PointSet">outGrid</Output>
+      <Output class="DataObjects" type="HistorySet">outGrid</Output>
     </MultiRun>
     <IOStep name="print">
-      <Input class="DataObjects" type="PointSet">outGrid</Input>
-      <Output class="OutStreams" type="Print">SparseGrid_dump</Output>
+      <Input class="DataObjects" type="HistorySet">outGrid</Input>
+      <Output class="OutStreams" type="Print">SparseGrid_dynamic_dump</Output>
     </IOStep>
   </Steps>
 
@@ -43,14 +43,17 @@
       <Input>inputGroup</Input>
       <Output>OutputPlaceHolder</Output>
     </PointSet>
-    <PointSet name="outGrid">
+    <HistorySet name="outGrid">
       <Input>inputGroup</Input>
       <Output>outputGroup</Output>
-    </PointSet>
+      <options>
+        <pivotParameter>time</pivotParameter>
+      </options>
+    </HistorySet>
   </DataObjects>
 
   <OutStreams>
-    <Print name="SparseGrid_dump">
+    <Print name="SparseGrid_dynamic_dump">
       <type>csv</type>
       <source>outGrid</source>
       <what>input,output</what>
