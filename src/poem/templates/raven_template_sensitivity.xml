@@ -6,8 +6,7 @@
   </RunInfo>
 
   <Models>
-    <PostProcessor name="stats" subType="BasicStatistics" verbosity="silent">
-      <pivotParameter>time</pivotParameter>
+    <PostProcessor name="stats" subType="BasicStatistics" verbosity="debug">
       <skewness prefix="skewness">outputGroup</skewness>
       <variationCoefficient prefix="variationCoefficient">outputGroup</variationCoefficient>
       <expectedValue prefix="mean">outputGroup</expectedValue>
@@ -59,18 +58,19 @@
   <Steps>
     <MultiRun name="sample" clearRunDir="False">
       <!-- <Input class="Files" type="">sauq</Input> -->
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
       <Model class="Models" type="Code">code</Model>
       <Sampler class="Samplers" type="MonteCarlo">Sampler</Sampler>
-      <Output class="DataObjects" type="HistorySet">samples</Output>
+      <Output class="DataObjects" type="PointSet">samples</Output>
     </MultiRun>
     <IOStep name="write">
-      <Input class="DataObjects" type="HistorySet">samples</Input>
+      <Input class="DataObjects" type="PointSet">samples</Input>
       <Output class="OutStreams" type="Print">dump_samples</Output>
     </IOStep>
     <PostProcess name="stats">
-      <Input class="DataObjects" type="HistorySet">samples</Input>
+      <Input class="DataObjects" type="PointSet">samples</Input>
       <Model class="Models" type="PostProcessor">stats</Model>
-      <Output class="DataObjects" type="HistorySet">stats_do</Output>
+      <Output class="DataObjects" type="PointSet">stats_do</Output>
       <Output class="OutStreams" type="Print">stats_dump</Output>
     </PostProcess>
   </Steps>
@@ -89,21 +89,19 @@
   </OutStreams>
 
   <DataObjects>
-    <HistorySet name="samples">
+    <PointSet name="dummyIN">
+      <Input>inputGroup</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="samples">
       <Input>inputGroup</Input>
       <Output>outputGroup</Output>
-      <options>
-        <pivotParameter>time</pivotParameter>
-      </options>
-    </HistorySet>
-    <HistorySet name="stats_do">
+    </PointSet>
+    <PointSet name="stats_do">
       <Output>
         statsGroup
       </Output>
-      <options>
-        <pivotParameter>time</pivotParameter>
-      </options>
-    </HistorySet>
+    </PointSet>
   </DataObjects>
 
 

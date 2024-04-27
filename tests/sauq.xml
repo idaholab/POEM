@@ -9,33 +9,26 @@
   <GlobalSettings>
     <AnalysisType>sensitivity</AnalysisType>
     <limit>10</limit>
-    <pivot>time</pivot>
-    <dynamic>True</dynamic>
-    <Inputs>damage</Inputs>
-    <Outputs>RL</Outputs>
+    <Inputs>x, y</Inputs>
+    <Outputs>z1</Outputs>
   </GlobalSettings>
 
-  <Files>
-    <Input name="sauq" type="">../../models/sauq.m</Input>
-    <Input name="rt" type="">../../models/RateTheory.m</Input>
-    <Input name="kc" type="">../../models/KlemensCallawayModel.m</Input>
-  </Files>
-
-  <Models>
-    <Code name="code" subType="GenericCode">
-      <executable>matlab</executable>
-      <shell>False</shell>
-      <outputFile>out_sauq.csv</outputFile>
-      <inputExtensions>.m</inputExtensions>
-      <clargs arg="-nosplash -nodesktop -r 'run ./sauq.m'" type="input" extension='.m'/>
-    </Code>
-  </Models>
-
   <Distributions>
-    <Uniform name="damage">
-      <lowerBound>0.0</lowerBound>
-      <upperBound>1.0</upperBound>
+    <Uniform name='x'>
+      <lowerBound>-10</lowerBound>
+      <upperBound>0</upperBound>
+    </Uniform>
+    <Uniform name='y'>
+      <lowerBound>-6.5</lowerBound>
+      <upperBound>0</upperBound>
     </Uniform>
   </Distributions>
+
+  <Models>
+    <ExternalModel ModuleToLoad="../models/matyas" name="externalModel" subType="">
+      <inputs>x, y</inputs>
+      <outputs>z1</outputs>
+    </ExternalModel>
+  </Models>
 
 </Simulation>

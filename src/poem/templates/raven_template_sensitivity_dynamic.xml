@@ -66,23 +66,23 @@
     </MultiRun>
     <IOStep name="write">
       <Input class="DataObjects" type="HistorySet">samples</Input>
-      <Output class="OutStreams" type="Print">dump_samples</Output>
+      <Output class="OutStreams" type="Print">samples_dynamic_dump</Output>
     </IOStep>
     <PostProcess name="stats">
       <Input class="DataObjects" type="HistorySet">samples</Input>
       <Model class="Models" type="PostProcessor">stats</Model>
       <Output class="DataObjects" type="HistorySet">stats_do</Output>
-      <Output class="OutStreams" type="Print">stats_dump</Output>
+      <Output class="OutStreams" type="Print">stats_dynamic_dump</Output>
     </PostProcess>
   </Steps>
 
   <OutStreams>
-    <Print name="dump_samples">
+    <Print name="samples_dynamic_dump">
       <type>csv</type>
       <source>samples</source>
       <what>input, output</what>
     </Print>
-    <Print name="stats_dump">
+    <Print name="stats_dynamic_dump">
       <type>csv</type>
       <source>stats_do</source>
       <what>input, output</what>
