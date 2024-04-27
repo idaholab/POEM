@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>sampling</WorkingDir>
+    <Sequence>
+      Sampling, Print
+    </Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Steps>
+    <MultiRun name="Sampling">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="Dummy">Dummy</Model>
+      <Sampler class="Samplers" type="Stratified">Sampler</Sampler>
+      <Output class="DataObjects" type="HistorySet">out</Output>
+    </MultiRun>
+
+    <IOStep name="Print">
+      <Input class="DataObjects" type="HistorySet">out</Input>
+      <Output class="OutStreams" type="Print">sampling_dynamic_dump</Output>
+    </IOStep>
+  </Steps>
+
+  <Distributions>
+
+  </Distributions>
+
+  <Samplers>
+
+  </Samplers>
+
+  <Models>
+    <Dummy name="Dummy" subType=""/>
+  </Models>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>inputGroup</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <HistorySet name="out">
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
+      <options>
+        <pivotParameter>time</pivotParameter>
+      </options>
+    </HistorySet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="sampling_dynamic_dump">
+      <type>csv</type>
+      <source>out</source>
+      <what>input,output</what>
+    </Print>
+  </OutStreams>
+
+</Simulation>

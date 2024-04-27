@@ -65,6 +65,7 @@ class PoemTemplate(TemplateBase):
               modelNode = multiRunNode.find('Model')
               if modelNode.get('type') not in ['ROM', 'EnsembleModel']:
                 modelNode.text = val[0].get('name')
+                modelNode.attrib['type'] = val[0].tag
       else:
         extraNode = xmlUtils.newNode(tag=key)
         extraNode.extend(val)
