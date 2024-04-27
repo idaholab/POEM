@@ -14,6 +14,8 @@ sparse_grid_construction_dynamic = "raven_template_sparse_grid_construction_dyna
 sparse_grid_rom_dynamic = "raven_template_sparse_grid_rom_dynamic.xml"
 lhs_dynamic = "raven_template_sampling_dynamic.xml"
 mc_dynamic = "raven_template_sampling_dynamic.xml"
-train_rom_dynamic = "raven_template_train_rom.xml"
+train_rom_dynamic = "raven_template_train_rom_dynamic.xml"
+
 bayesian_optimization_dynamic = "raven_template_bayesian_optimization.xml"
+
 model_calibration_dynamic = "raven_template_model_calibration_dynamic.xml"

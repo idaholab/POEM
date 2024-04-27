@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>GP_dynamic</WorkingDir>
+    <Sequence>
+      load_data, train, RomSampling, PrintRomSampling
+    </Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Files>
+
+  </Files>
+
+  <Steps>
+    <IOStep name="load_data">
+      <Input class="Files" type="">training_data</Input>
+      <Output class="DataObjects" type="HistorySet">samples</Output>
+    </IOStep>
+
+    <RomTrainer name="train">
+      <Input class="DataObjects" type="HistorySet">samples</Input>
+      <Output class="Models" type="ROM">gpROM</Output>
+    </RomTrainer>
+
+    <MultiRun name="RomSampling">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="ROM">gpROM</Model>
+      <Sampler class="Samplers" type="Stratified">Sampler</Sampler>
+      <Output class="DataObjects" type="HistorySet">outRom</Output>
+    </MultiRun>
+
+    <IOStep name="PrintRomSampling">
+      <Input class="DataObjects" type="HistorySet">outRom</Input>
+      <Output class="OutStreams" type="Print">rom_dynamic_dump</Output>
+    </IOStep>
+
+  </Steps>
+
+
+  <Samplers>
+
+  </Samplers>
+
+  <Models>
+    <ROM name="gpROM" subType="GaussianProcessRegressor">
+      <Features>inputGroup</Features>
+      <Target>outputGroup</Target>
+      <pivotParameter>time</pivotParameter>
+      <alpha>1e-8</alpha>
+      <n_restarts_optimizer>10</n_restarts_optimizer>
+      <normalize_y>True</normalize_y>
+      <random_state>42</random_state>
+      <kernel>Custom</kernel>
+      <custom_kernel>(Constant*Matern)</custom_kernel>
+      <anisotropic>True</anisotropic>
+      <multioutput>False</multioutput>
+    </ROM>
+  </Models>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>inputGroup</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <HistorySet name="samples">
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
+      <options>
+        <pivotParameter>time</pivotParameter>
+      </options>
+    </HistorySet>
+    <HistorySet name="outRom">
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
+      <options>
+        <pivotParameter>time</pivotParameter>
+      </options>
+    </HistorySet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="rom_dynamic_dump">
+      <type>csv</type>
+      <source>outRom</source>
+      <what>input,output</what>
+    </Print>
+  </OutStreams>
+
+</Simulation>
