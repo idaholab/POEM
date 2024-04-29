@@ -3,6 +3,22 @@
 
 An optimal experimental design platform powered with automated machine learning to automatically guides the design of experiment to be evaluated.
 
+## Installation
+
+```
+conda create -n poem_libs python=3.10
+conda activate poem_libs
+pip install raven-framework baycal-ravenframework
+```
+
+## Test
+
+```
+cd POEM/tests
+python ../poem.py -i lhs_sampling.xml
+raven_framework raven_lhs_sampling.xml
+```
+
 ## Capabilities
 
 - Material thermal property modeling
@@ -59,7 +75,7 @@ An optimal experimental design platform powered with automated machine learning 
 
 https://media.github.inl.gov/user/161/files/9021d2e6-b6b0-4c8f-96e0-3d0005f03cd4
 
-### Mishra 
+### Mishra
 
 
 
@@ -95,12 +111,12 @@ A python analytic problem with 50 responses, three input parameters with uniform
 ![image](https://media.github.inl.gov/user/161/files/08ba5691-f4cc-49d8-9d1e-034ba14f40c2)
 
 
-## Tasks 
+## Tasks
 
-- [x] Utilize Sparse Grid to accelerate Experimental Design, including Sparse Grid, Generalized Polynomial Chaos, Pareto Frontier 
+- [x] Utilize Sparse Grid to accelerate Experimental Design, including Sparse Grid, Generalized Polynomial Chaos, Pareto Frontier
 - [x] Bayesian Optimization to accelerate Experimental Design, including Gaussian process
-- [x] Sensivitiy/Uncertainty analysis, including ROM training, correlation, percentile and sensitivity 
-- [x] Model calibration, including Bayesian inference, generalized linear least square method 
+- [x] Sensivitiy/Uncertainty analysis, including ROM training, correlation, percentile and sensitivity
+- [x] Model calibration, including Bayesian inference, generalized linear least square method
 - [ ] Data mining such as clustering and classification
 - [ ] Material thermal properties modeling
 
