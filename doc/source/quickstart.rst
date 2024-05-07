@@ -159,7 +159,7 @@ and the ``path/to/file``.
 ^^^^^^^^^^^^^^^^^^^^^
 POEM leverages RAVEN (https://github.com/idaholab/raven) input structure to build customized workflows
 for model explorations and optimal experiment design. In this case, POEM provides support for all the
-probability distributions available in RAVEN. The following are the example for the distribution block.
+probability distributions available in RAVEN. The following are the example for the *Distributions* block.
 
 .. code:: xml
 
@@ -176,11 +176,14 @@ probability distributions available in RAVEN. The following are the example for 
 
 In this block, the users need to define ``distribution`` for each variables listed in
 ``GlobalSettings`` ``Inputs`` node, and ``name`` for the distribution should match the variable
-name listed under ``<GlobalSettings><Inputs>VariableList</Inputs></GlobalSettings>.
+name listed under ``<GlobalSettings><Inputs>VariableList</Inputs></GlobalSettings>``.
 
 
 <Models> block
 ^^^^^^^^^^^^^^
+Similar to ``<Distributions>`` block, POEM leverages RAVEN (https://github.com/idaholab/raven) ``<Models>``
+input structure. In this case, POEM provides support for all the
+models available in RAVEN. The following are the example for the *Models* block.
 
 .. code:: xml
 
