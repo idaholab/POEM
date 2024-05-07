@@ -19,9 +19,6 @@ POEM leverages RAVEN (a robust platform to support model explorations and decisi
 to allow for large scalability and reduction of the computational costs and provides
 access to complex physical models while performing optimal experimental design.
 
-POEM Input Structure
-++++++++++++++++++++
-
 POEM utilizes XML to define its input structure. The main input blocks are as follows:
 
 <Simulation> block
@@ -32,7 +29,35 @@ the ``Simulaiton`` block
 .. code:: xml
 
   <Simulation>
-    ...
+
+    <RunInfo>
+      ...
+    </RunInfo>
+
+    <GlobalSettings>
+      ...
+    </GlobalSettings>
+
+    <Distributions>
+      ...
+    </Distributions>
+
+    <Models>
+      ...
+    </Models>
+
+    <Files>
+      ...
+    </Files>
+
+    <Functions>
+      ...
+    </Functions>
+
+    <LikelihoodModel>
+      ...
+    </LikelihoodModel>
+
   </Simulation>
 
 <GlobalSettings> block
@@ -194,9 +219,29 @@ models available in RAVEN. The following are the example for the *Models* block.
     </ExternalModel>
   </Models>
 
+As the name suggests, an external model is an entity that is embedded at run time.
+This object allows the user to create a python module that is going to be
+treated as a predefined internal model object.
+
+The specifications of an External Model must be defined within the XML block
+``<ExternalModel>``.
+
+* ``inputs``: Each variable name needs to match a variable used/defined in the external python model.
+
+* ``outputs``: Each variable name needs to match a variable used/defined in the external python model.
+
+Each variable defined in the ``<ExternalModel>`` ``<inputs>`` and ``<outputs>`` block is available in the
+module (each method implemented) as a python ``self.`` member.
+
+
 <Functions> block
 ^^^^^^^^^^^^^^^^^
+POEM leverages RAVEN (https://github.com/idaholab/raven) ``<Functions>``
+input structure. In this case, POEM provides support for the usage of user-defined external
+functions. These functions are python modules, with a format is automatically interpretable by
+RAVEN software.
 
+The following are the example for the *Functions* block.
 
 .. code:: xml
 
@@ -206,10 +251,35 @@ models available in RAVEN. The following are the example for the *Models* block.
     </External>
   </Functions>
 
+In this section, the XML input syntax and the format of the accepted functions
+are fully specified. The specifications of an external function must be defined
+within the XML ``<External>`` block. This XML node requires the following attributes:
+
+* ``name``: user-defined name of this function.
+
+* ``file``: absolute or relative path specifying the code associated to this function.
+
+In order to make the code aware of the variables the user is going to
+manipulate/use in her/his own python function, the variables need to be
+specified in the ``<variables>`` subnode input block. The user needs to input,
+within this block, only the variables directly used by the external function.
+
+When the external function variables are defined, at runtime, the code initializes
+them and keeps track of their values during the simulation.
+Each variable defined in the ``<variables>`` block is available in the
+function as a python **self.** member. In the following, an example of a
+user-defined external function is reported. The method ``evaluate`` needs to be defined
+in the function file.
+
+.. code:: python
+
+  def evaluate(self):
+    return self.a * self.c
+
 
 <LikelihoodModel> block for Model Calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+This node is only used by model calibration analysis. An example is presented:
 
 .. code:: xml
 
@@ -237,3 +307,37 @@ models available in RAVEN. The following are the example for the *Models* block.
     <biasCov diag="False"></biasCov> -->
     <!-- <romCov diag="True"></romCov> -->
   </LikelihoodModel>
+
+The ``<LikelihoodModel>`` node accepts the following subnodes:
+
+* ``simTargets``: Targets of simulations that are used in the calibration.
+
+* ``expTargets``: Targets of experiments that are used in the calibration. Either variables or list of values.
+
+  * ``shape``: determine the number of targets and the number of experimental observations for each targets. For example, ``shape="3,2"`` will indicate 2 targets and 3 observations for each targets. While ``shape="10"`` will indicate one target with 10 observations. Omitting this optional attribute will result a single target with multiple observations instead.
+
+  * ``computeCov``: Indicate whether the experiment covariance matrix is provided or computed based on given experiment observations. If True, we will compute the covariance based on given observations, else, the user need to provide the covariance matrix.
+
+  * ``correlation``: Indicate whether the targets are correlated or not. If True, and ``compute`` is True, we will compute the covariance matrix, elif False and ``compute`` is True, we will only compute the variance of each target.
+
+* ``expCov``: Experiment covariance, i.e. measurement noise.
+
+  * ``diag``: If True, only variance for each target is required to provide, else, the user need to provide the full covariance matrix.
+
+* ``biasTargets``: Model uncertainty/discrepancy/bias/error in Targets that are used in calibration
+
+* ``biasCov``: Model covariance, model bias/discrepancy or model inadequacy caused by missing physics or numerical approximation
+
+  * ``diag``: If True, only variance for each target is required to provide, else, the user need to provide the full covariance matrix.
+
+* ``romCov``: Model uncertainty caused by surrogate model, such as interpolation
+
+  * ``diag``: If True, only variance for each target is required to provide, else, the user need to provide the full covariance matrix.
+
+* ``reduction``: Allows reduction on likelihood model construction
+
+  * ``type``: The method used for reduction, default is **PCA**
+
+  * ``basis``: user provided basis vector for reduction
+
+  * ``shape``: determine the basis vectors for reduction. For example, ``shape="10,2"`` will indicate 2 basis vectors with dimension 10
