@@ -113,6 +113,32 @@ Specifies the calculation settings (woring directory, number of parallel simulat
     <batchSize>1</batchSize>
   </RunInfo>
 
+* ``WorkingDir``: specifies the absolute or relative path to a directory that will store all the
+  results of the calculations.
+
+* ``batchSize``: specifies the number of parallel executed simultaneously.
+
+* ``JobName``: specifies the name to use for the job when submitting to a pbs queue.
+
+*RunInfo for Cluster Usage*
+
+.. code:: xml
+
+  <RunInfo>
+    <WorkingDir>FirstMF</WorkingDir>
+    <batchSize>3</batchSize>
+    <clusterParameters>-W block=true</clusterParameters>
+    <NumThreads>4</NumThreads>
+    <mode>
+      mpi
+      <runQSUB/>
+    </mode>
+    <NodeParameter> </NodeParameter>
+    <NumMPI>2</NumMPI>
+    <expectedTime>0:10:00</expectedTime>
+    <JobName>test_qsub</JobName>
+  </RunInfo>
+
 <Files> block
 ^^^^^^^^^^^^^
 Specifies the files to be used for the <Models> block as input. Users can specify
@@ -131,6 +157,9 @@ and the ``path/to/file``.
 
 <Distributions> block
 ^^^^^^^^^^^^^^^^^^^^^
+POEM leverages RAVEN (https://github.com/idaholab/raven) input structure to build customized workflows
+for model explorations and optimal experiment design. In this case, POEM provides support for all the
+probability distributions available in RAVEN. The following are the example for the distribution block.
 
 .. code:: xml
 
@@ -144,6 +173,10 @@ and the ``path/to/file``.
       <upperBound>0</upperBound>
     </Uniform>
   </Distributions>
+
+In this block, the users need to define ``distribution`` for each variables listed in
+``GlobalSettings`` ``Inputs`` node, and ``name`` for the distribution should match the variable
+name listed under ``<GlobalSettings><Inputs>VariableList</Inputs></GlobalSettings>.
 
 
 <Models> block
