@@ -3,6 +3,19 @@
 
 An optimal experimental design platform powered with automated machine learning to automatically guides the design of experiment to be evaluated.
 
+## How to build html?
+
+```bash
+  pip install sphinx sphinx_rtd_theme nbsphinx sphinx-copybutton sphinx-autoapi
+  conda install pandoc
+  cd doc
+  make html
+  cd build/html
+  python3 -m http.server
+```
+
+open your brower to: http://localhost:8000
+
 ## Installation
 
 ```
