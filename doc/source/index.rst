@@ -16,6 +16,18 @@ Welcome to POEM's documentation!
 
    mc
 
+   lhs
+
+   rom
+
+   sparsegrid
+
+   sen
+
+   bayesian
+
+   calibration
+
    support
 
 .. toctree::

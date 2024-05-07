@@ -1,0 +1,51 @@
+
+.. _bayopt:
+
+Bayesian Optimization
+=====================
+
+Bayesian optimization for optimal experimental design:
+
+.. code:: xml
+
+  <?xml version="1.0" ?>
+  <Simulation verbosity="debug">
+    <RunInfo>
+      <WorkingDir>Optimization</WorkingDir>
+      <batchSize>1</batchSize>
+    </RunInfo>
+
+    <GlobalSettings>
+      <AnalysisType>bayesian_optimization</AnalysisType>
+      <data>../LHS_mishra/sampling_dump.csv</data>
+      <limit>10</limit>
+      <Inputs>x, y</Inputs>
+      <Outputs>z</Outputs>
+    </GlobalSettings>
+
+    <Distributions>
+      <Uniform name='x'>
+        <lowerBound>-10</lowerBound>
+        <upperBound>0</upperBound>
+      </Uniform>
+      <Uniform name='y'>
+        <lowerBound>-6.5</lowerBound>
+        <upperBound>0</upperBound>
+      </Uniform>
+    </Distributions>
+
+    <Models>
+      <ExternalModel ModuleToLoad="../../models/mishraBirdConstrained.py" name="mishra" subType="">
+        <inputs>x, y</inputs>
+        <outputs>z</outputs>
+      </ExternalModel>
+
+    </Models>
+
+    <Functions>
+      <External file="../../models/mishraBirdConstrained.py" name="constraint1">
+        <variables>x,y</variables>
+      </External>
+    </Functions>
+
+  </Simulation>

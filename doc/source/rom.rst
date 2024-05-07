@@ -1,0 +1,49 @@
+.. _rom:
+
+Train ROM
+=========
+
+Train reduced order models (ROM) or machine learning models.
+
+.. code:: xml
+
+  <?xml version="1.0" ?>
+  <Simulation>
+    <RunInfo>
+      <WorkingDir>GP_dynamic</WorkingDir>
+      <batchSize>1</batchSize>
+    </RunInfo>
+
+    <GlobalSettings>
+      <AnalysisType>train_rom</AnalysisType>
+      <data>../LHS/sampling_dynamic_dump.csv</data>
+      <limit>10</limit>
+      <Inputs>x0, y0, z0</Inputs>
+      <pivot>time</pivot>
+      <dynamic>True</dynamic>
+      <Outputs>x,y,z</Outputs>
+    </GlobalSettings>
+
+    <Distributions>
+      <Normal name="x0">
+        <mean>4</mean>
+        <sigma>1</sigma>
+      </Normal>
+      <Normal name="y0">
+        <mean>4</mean>
+        <sigma>1</sigma>
+      </Normal>
+      <Normal name="z0">
+        <mean>4</mean>
+        <sigma>1</sigma>
+      </Normal>
+    </Distributions>
+
+    <Models>
+      <ExternalModel ModuleToLoad="../models/lorentzAttractor.py" name="lorentzAttractor" subType="">
+        <inputs>inputGroup</inputs>
+        <outputs>outputGroup</outputs>
+      </ExternalModel>
+    </Models>
+
+  </Simulation>

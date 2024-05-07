@@ -1,8 +1,8 @@
 .. _mc:
 
+Monte Carlo Sampling
+====================
 Random model explorations for experiment design
-===============================================
-
 
 .. code:: xml
 
