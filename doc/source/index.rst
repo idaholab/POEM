@@ -10,7 +10,17 @@ Welcome to POEM's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   install
+   quickstart
+   support
 
+.. toctree::
+   :maxdepth: 2
+   :titlesonly:
+   :hidden:
+   :caption: More documentation
+
+   contributors
 
 Indices and tables
 ==================
@@ -18,3 +28,11 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Contributions
+=============
+
+All contributions are welcome. You can help this project grow in multiple ways,
+from creating an issue, reporting an improvement or a bug, and creating a pull
+request to the development branch. The people involved at some point in the
+development of the package can be found in the :doc:`contributors page <contributors>`.
