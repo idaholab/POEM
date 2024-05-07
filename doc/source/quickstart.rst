@@ -1,7 +1,7 @@
 .. _quickstart:
 
 Quick Start
-============
+===========
 
 POEM is a platform for optimal experiment management, powered with automated machine
 learning to accelerate the discovery of optimal solutions, and automatically guide
@@ -19,8 +19,92 @@ POEM leverages RAVEN (a robust platform to support model explorations and decisi
 to allow for large scalability and reduction of the computational costs and provides
 access to complex physical models while performing optimal experimental design.
 
-RunInfo for the calculations:
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+POEM Input Structure:
++++++++++++++++++++++
+
+POEM utilizes XML to define its input structure. The main input blocks are as follows:
+
+<Simulation> block:
+^^^^^^^^^^^^^^^^^^^
+The root node containing the entire input, all of the following blocks fit inside
+the ``Simulaiton`` block
+
+.. code:: xml
+
+  <Simulation>
+    ...
+  </Simulation>
+
+<GlobalSettings> block:
+^^^^^^^^^^^^^^^^^^^^^^^
+Specifies the global settings for the calculations. In general, this block accepts
+the following subnodes:
+
+.. code:: xml
+
+  <GlobalSettings>
+    <!-- Required Nodes -->
+    <AnalysisType>LHS</AnalysisType>
+    <limit>10</limit>
+    <Inputs>x, y</Inputs>
+    <Outputs>OutputPlaceHolder</Outputs>
+
+    <!-- Optional Nodes -->
+    <pivot>time</pivot>
+    <dynamic>True</dynamic>
+
+    <!-- Optional Nodes, uses for certain analysis -->
+    <SparseGridData>path/to/data.csv</SparseGridData>
+    <data>path/to/data.csv</data>
+    <InitialInputs>0.1, 4.0, -1.0</InitialInputs>
+    <PolynomialOrder>3</PolynomialOrder>
+  </GlobalSettings>
+
+* Required Nodes
+
+  * ``AnalysisType``: The type of analysis, it accepts the following keywords:
+
+    * ``mc``: Simple Monte Carlo analysis for given model.
+
+    * ``lhs``: Sample given model using Latin Hyper-cube Sampling (LHS) strategy.
+
+    * ``sensitivity``: Perform sensitivity analysis for given model. The ``mean, variance, 95/95 percentile, correlation, spearman correlation, sensitivity coefficients, etc.`` will be computed.
+
+    * ``sparse_grid_construction``: Generate sparse grid locations to guide experiments. These locations can be used to efficiently construct high-order Gaussian Polynomial Chaos surrogate model.
+
+    * ``sparse_grid_rom``: Train a multi-variate high-order Gaussian Polynomial Chaos ROM/surrogate based on user provided experimental data.
+
+    * ``train_rom``: Train a Gaussian Process ROM based on user provided data.
+
+    * ``bayesian_optimization``: Perform Bayesian optimization based on user provided data and simulation model.
+
+    * ``model_calibration``: Perform model calibration utilizing Bayesian inference based on user provided data and simulation model.
+
+  * ``limit``: The total number of model executions or the number of samples to generate.
+
+  * ``Inputs``: The list of input variables
+
+  * ``Outputs``: The list of output variables. If no output variables, ``OutputPlaceHolder`` can be used.
+
+* Optional Nodes
+
+  * ``dynamic``: True if the user wants to perform time-dependent analysis, such as time-dependent ROM construction, sensitivity analysis, model calibration etc.
+
+  * ``pivot``: Required if ``dynamic`` is True. The pivot variable for dynamic analysis. Default is ``time``.
+
+* Optional Nodes for Certain Analysis
+
+  * ``SparseGridData``: The experimental data that can be used to train Gaussian Polynomial Chaos ROM. Only used by ``sparse_grid_construction`` and ``sparse_grid_rom``.
+
+  * ``PolynomialOrder``: The highest order for the Gaussian Polynomial Chaos ROM. Only used by ``sparse_grid_construction`` and ``sparse_grid_rom``
+
+  * ``data``: The experimental data that can be used to train Gaussian Process ROM. Only used by ``train_rom`` and ``bayesian_optimization``.
+
+  * ``InitialInputs``: The initial values for the input variables listed by ``<Inputs>`` in the ``<GlobalSettings>``
+
+<RunInfo> block:
+^^^^^^^^^^^^^^^^
+Specifies the calculation settings (woring directory, number of parallel simulations, etc.)
 
 .. code:: xml
 
@@ -29,20 +113,24 @@ RunInfo for the calculations:
     <batchSize>1</batchSize>
   </RunInfo>
 
-GlobalSettings to define the global settings for the calculations:
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<Files> block:
+^^^^^^^^^^^^^^
+Specifies the files to be used for the <Models> block as input. Users can specify
+as many input files as they need, and utilize <Input> node to specify the ``name``,
+and the ``path/to/file``.
 
 .. code:: xml
 
-  <GlobalSettings>
-    <AnalysisType>LHS</AnalysisType>
-    <limit>10</limit>
-    <Inputs>x, y</Inputs>
-    <Outputs>OutputPlaceHolder</Outputs>
-  </GlobalSettings>
+  <Files>
+    <Input name="sauq" type="">../../models/sauq.m</Input>
+    <Input name="rt" type="">../../models/RateTheory.m</Input>
+    <Input name="kc" type="">../../models/KlemensCallawayModel.m</Input>
+  </Files>
 
-Distributions for the calculations:
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+<Distributions> block:
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: xml
 
@@ -56,6 +144,64 @@ Distributions for the calculations:
       <upperBound>0</upperBound>
     </Uniform>
   </Distributions>
+
+
+<Models> block:
+^^^^^^^^^^^^^^^
+
+.. code:: xml
+
+  <Models>
+    <ExternalModel ModuleToLoad="../../models/mishraBirdConstrained.py" name="mishra" subType="">
+      <inputs>x, y</inputs>
+      <outputs>z</outputs>
+    </ExternalModel>
+  </Models>
+
+<Functions> block:
+^^^^^^^^^^^^^^^^^^
+
+
+.. code:: xml
+
+  <Functions>
+    <External file="../../models/mishraBirdConstrained.py" name="constraint1">
+      <variables>x,y</variables>
+    </External>
+  </Functions>
+
+
+<LikelihoodModel> block for Model Calibration:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. code:: xml
+
+  <LikelihoodModel>
+    <simTargets>eta</simTargets>
+    <expTargets shape="1,50" computeCov='False' correlation='False'>
+      -1.16074224 -1.10303445 -1.02830511 -0.89782965 -0.73765453 -0.7989537
+       -0.86163706 -1.02209944 -1.12444044 -1.23657398 -1.16081758 -1.01219869
+       -0.890747   -0.80444122 -0.70893668 -0.61012531 -0.65670863 -0.6768583
+       -0.74732441 -0.81448647 -0.73232671 -0.54989334 -0.39796749 -0.07894291
+        0.13067378  0.28999998  0.27418965  0.313329    0.32306704  0.2885684
+        0.32736775  0.52458854  0.69446572  0.82419521  1.04393683  1.00435818
+        1.0810376   0.97245373  0.82406522  0.76067559  0.70145544  0.79479965
+        0.88035895  0.97750307  1.11524353  1.17159017  1.18299222  1.07255006
+        1.02835909  0.90784132
+    </expTargets>
+    <expCov diag="True">
+         0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
+         0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
+         0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
+         0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
+         0.02, 0.02, 0.02, 0.02, 0.02, 0.02
+    </expCov>
+    <!-- <biasTargets></biasTargets>
+    <biasCov diag="False"></biasCov> -->
+    <!-- <romCov diag="True"></romCov> -->
+  </LikelihoodModel>
+
 
 Random model explorations for experiment design:
 ++++++++++++++++++++++++++++++++++++++++++++++++
@@ -304,3 +450,4 @@ Bayesian optimization for optimal experimental design:
 
 
 
+The POEM code has several fixed calculation flows.

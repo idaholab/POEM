@@ -11,7 +11,11 @@ Welcome to POEM's documentation!
    :caption: Contents:
 
    install
+
    quickstart
+
+   mc
+
    support
 
 .. toctree::
