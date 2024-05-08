@@ -10,6 +10,8 @@ Welcome to POEM's documentation!
    :maxdepth: 4
    :caption: Contents:
 
+   introduction
+
    install
 
    quickstart
