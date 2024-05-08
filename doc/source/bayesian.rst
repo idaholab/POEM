@@ -5,6 +5,9 @@ Bayesian Optimization
 =====================
 Bayesian optimization for optimal experimental design.
 
+Example
+^^^^^^^
+
 In this analysis, set ``<AnalysisType>bayesian_optimization</AnalysisType>``.
 The existing experiment data can be provided through ``<data>`` in ``<GlobalSettings>``.
 For example:
