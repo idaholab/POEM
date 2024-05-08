@@ -2,8 +2,11 @@
 
 Model Calibration
 =================
-
 Model calibrations via Bayesian inference to integrate experiments to improve model performance:
+In this analysis, set ``<AnalysisType>model_calibration</AnalysisType>``.
+When a dynamic model is provided, the users need to set ``<pivot>`` and ``<dynamic>`` node in the
+``<GlobalSettings>``. As illustrated in the following example.
+In addition, the initial values for input variables can be provided via ``<InitialInputs>``.
 
 .. code:: xml
 

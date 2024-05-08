@@ -3,6 +3,9 @@
 Quick Start
 ===========
 
+Introduction
+++++++++++++
+
 POEM is a platform for optimal experiment management, powered with automated machine
 learning to accelerate the discovery of optimal solutions, and automatically guide
 the design of experiments to be evaluated. POEM currently supports 1) random model
@@ -18,6 +21,9 @@ the technological output from research activities.
 POEM leverages RAVEN (a robust platform to support model explorations and decision making)
 to allow for large scalability and reduction of the computational costs and provides
 access to complex physical models while performing optimal experimental design.
+
+Input Structure
++++++++++++++++
 
 POEM utilizes XML to define its input structure. The main input blocks are as follows:
 
