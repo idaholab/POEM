@@ -96,21 +96,21 @@ Specifies the global settings for the calculations. For example:
 
   * ``AnalysisType``: The type of analysis, it accepts the following keywords:
 
-    * ``mc``: Simple Monte Carlo analysis for given model.
+    * ``mc``: Simple Monte Carlo analysis for given model. See :ref:`mc`.
 
-    * ``lhs``: Sample given model using Latin Hyper-cube Sampling (LHS) strategy.
+    * ``lhs``: Sample given model using Latin Hyper-cube Sampling (LHS) strategy. See :ref:`lhs`.
 
-    * ``sensitivity``: Perform sensitivity analysis for given model. The ``mean, variance, 95/95 percentile, correlation, spearman correlation, sensitivity coefficients, etc.`` will be computed.
+    * ``sensitivity``: Perform sensitivity analysis for given model. The ``mean, variance, 95/95 percentile, correlation, spearman correlation, sensitivity coefficients, etc.`` will be computed. See :ref:`sen`.
 
-    * ``sparse_grid_construction``: Generate sparse grid locations to guide experiments. These locations can be used to efficiently construct high-order Gaussian Polynomial Chaos surrogate model.
+    * ``sparse_grid_construction``: Generate sparse grid locations to guide experiments. These locations can be used to efficiently construct high-order Gaussian Polynomial Chaos surrogate model. See :ref:`sparsegrid`.
 
-    * ``sparse_grid_rom``: Train a multi-variate high-order Gaussian Polynomial Chaos ROM/surrogate based on user provided experimental data.
+    * ``sparse_grid_rom``: Train a multi-variate high-order Gaussian Polynomial Chaos ROM/surrogate based on user provided experimental data. See :ref:`rom`.
 
-    * ``train_rom``: Train a Gaussian Process ROM based on user provided data.
+    * ``train_rom``: Train a Gaussian Process ROM based on user provided data. See :ref:`rom`.
 
-    * ``bayesian_optimization``: Perform Bayesian optimization based on user provided data and simulation model.
+    * ``bayesian_optimization``: Perform Bayesian optimization based on user provided data and simulation model. See :ref:`bayopt`.
 
-    * ``model_calibration``: Perform model calibration utilizing Bayesian inference based on user provided data and simulation model.
+    * ``model_calibration``: Perform model calibration utilizing Bayesian inference based on user provided data and simulation model. See :ref:`cal`.
 
   * ``limit``: The total number of model executions or the number of samples to generate.
 
