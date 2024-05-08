@@ -21,8 +21,8 @@ access to complex physical models while performing optimal experimental design.
 
 POEM utilizes XML to define its input structure. The main input blocks are as follows:
 
-<Simulation> block
-^^^^^^^^^^^^^^^^^^
+Simulation block
+^^^^^^^^^^^^^^^^
 The root node containing the entire input, all of the following blocks fit inside
 the ``Simulaiton`` block
 
@@ -60,10 +60,9 @@ the ``Simulaiton`` block
 
   </Simulation>
 
-<GlobalSettings> block
-^^^^^^^^^^^^^^^^^^^^^^
-Specifies the global settings for the calculations. In general, this block accepts
-the following subnodes:
+GlobalSettings block
+^^^^^^^^^^^^^^^^^^^^
+Specifies the global settings for the calculations. For example:
 
 .. code:: xml
 
@@ -84,6 +83,8 @@ the following subnodes:
     <InitialInputs>0.1, 4.0, -1.0</InitialInputs>
     <PolynomialOrder>3</PolynomialOrder>
   </GlobalSettings>
+
+**In general, this block accepts the following subnodes:**
 
 * Required Nodes
 
@@ -127,8 +128,8 @@ the following subnodes:
 
   * ``InitialInputs``: The initial values for the input variables listed by ``<Inputs>`` in the ``<GlobalSettings>``
 
-<RunInfo> block
-^^^^^^^^^^^^^^^
+RunInfo block
+^^^^^^^^^^^^^
 Specifies the calculation settings (woring directory, number of parallel simulations, etc.)
 
 .. code:: xml
@@ -138,6 +139,8 @@ Specifies the calculation settings (woring directory, number of parallel simulat
     <batchSize>1</batchSize>
   </RunInfo>
 
+**In general, this block accepts the following subnodes:**
+
 * ``WorkingDir``: specifies the absolute or relative path to a directory that will store all the
   results of the calculations.
 
@@ -145,7 +148,7 @@ Specifies the calculation settings (woring directory, number of parallel simulat
 
 * ``JobName``: specifies the name to use for the job when submitting to a pbs queue.
 
-*RunInfo for Cluster Usage*
+**RunInfo for Cluster Usage**
 
 .. code:: xml
 
@@ -164,8 +167,8 @@ Specifies the calculation settings (woring directory, number of parallel simulat
     <JobName>test_qsub</JobName>
   </RunInfo>
 
-<Files> block
-^^^^^^^^^^^^^
+Files block
+^^^^^^^^^^^
 Specifies the files to be used for the <Models> block as input. Users can specify
 as many input files as they need, and utilize <Input> node to specify the ``name``,
 and the ``path/to/file``.
@@ -180,8 +183,8 @@ and the ``path/to/file``.
 
 
 
-<Distributions> block
-^^^^^^^^^^^^^^^^^^^^^
+Distributions block
+^^^^^^^^^^^^^^^^^^^
 POEM leverages RAVEN (https://github.com/idaholab/raven) input structure to build customized workflows
 for model explorations and optimal experiment design. In this case, POEM provides support for all the
 probability distributions available in RAVEN. The following are the example for the *Distributions* block.
@@ -204,8 +207,8 @@ In this block, the users need to define ``distribution`` for each variables list
 name listed under ``<GlobalSettings><Inputs>VariableList</Inputs></GlobalSettings>``.
 
 
-<Models> block
-^^^^^^^^^^^^^^
+Models block
+^^^^^^^^^^^^
 Similar to ``<Distributions>`` block, POEM leverages RAVEN (https://github.com/idaholab/raven) ``<Models>``
 input structure. In this case, POEM provides support for all the
 models available in RAVEN. The following are the example for the *Models* block.
@@ -224,7 +227,7 @@ This object allows the user to create a python module that is going to be
 treated as a predefined internal model object.
 
 The specifications of an External Model must be defined within the XML block
-``<ExternalModel>``.
+``<ExternalModel>``. This blocks accepts the following subnodes:
 
 * ``inputs``: Each variable name needs to match a variable used/defined in the external python model.
 
@@ -234,8 +237,8 @@ Each variable defined in the ``<ExternalModel>`` ``<inputs>`` and ``<outputs>`` 
 module (each method implemented) as a python ``self.`` member.
 
 
-<Functions> block
-^^^^^^^^^^^^^^^^^
+Functions block
+^^^^^^^^^^^^^^^
 POEM leverages RAVEN (https://github.com/idaholab/raven) ``<Functions>``
 input structure. In this case, POEM provides support for the usage of user-defined external
 functions. These functions are python modules, with a format is automatically interpretable by
@@ -277,8 +280,8 @@ in the function file.
     return self.a * self.c
 
 
-<LikelihoodModel> block for Model Calibration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+LikelihoodModel block for Model Calibration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 This node is only used by model calibration analysis. An example is presented:
 
 .. code:: xml
@@ -312,7 +315,7 @@ The ``<LikelihoodModel>`` node accepts the following subnodes:
 
 * ``simTargets``: Targets of simulations that are used in the calibration.
 
-* ``expTargets``: Targets of experiments that are used in the calibration. Either variables or list of values.
+* ``expTargets``: Targets of experiments that are used in the calibration. Either variables or list of values. This node accepts the following attributes:
 
   * ``shape``: determine the number of targets and the number of experimental observations for each targets. For example, ``shape="3,2"`` will indicate 2 targets and 3 observations for each targets. While ``shape="10"`` will indicate one target with 10 observations. Omitting this optional attribute will result a single target with multiple observations instead.
 
@@ -320,21 +323,21 @@ The ``<LikelihoodModel>`` node accepts the following subnodes:
 
   * ``correlation``: Indicate whether the targets are correlated or not. If True, and ``compute`` is True, we will compute the covariance matrix, elif False and ``compute`` is True, we will only compute the variance of each target.
 
-* ``expCov``: Experiment covariance, i.e. measurement noise.
+* ``expCov``: Experiment covariance, i.e. measurement noise. This node accepts the following attribute:
 
   * ``diag``: If True, only variance for each target is required to provide, else, the user need to provide the full covariance matrix.
 
 * ``biasTargets``: Model uncertainty/discrepancy/bias/error in Targets that are used in calibration
 
-* ``biasCov``: Model covariance, model bias/discrepancy or model inadequacy caused by missing physics or numerical approximation
+* ``biasCov``: Model covariance, model bias/discrepancy or model inadequacy caused by missing physics or numerical approximation. This node accepts the following attribute:
 
   * ``diag``: If True, only variance for each target is required to provide, else, the user need to provide the full covariance matrix.
 
-* ``romCov``: Model uncertainty caused by surrogate model, such as interpolation
+* ``romCov``: Model uncertainty caused by surrogate model, such as interpolation. This node accepts the following attribute:
 
   * ``diag``: If True, only variance for each target is required to provide, else, the user need to provide the full covariance matrix.
 
-* ``reduction``: Allows reduction on likelihood model construction
+* ``reduction``: Allows reduction on likelihood model construction. This node accepts the following attributes:
 
   * ``type``: The method used for reduction, default is **PCA**
 
