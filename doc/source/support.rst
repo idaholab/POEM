@@ -11,3 +11,8 @@ The mailing list at ... is also available for support.
 Developer:
 ----------
 * Congjian, Wang: congjian.wang@inl.gov
+
+Copyright:
+----------
+
+Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved

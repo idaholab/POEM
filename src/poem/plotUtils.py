@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from matplotlib.lines import Line2D

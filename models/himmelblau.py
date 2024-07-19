@@ -1,10 +1,4 @@
-# from https://en.wikipedia.org/wiki/Test_functions_for_optimization
-#
-# takes input parameters x,y
-# returns value in "ans"
-# optimal minimum at f(3,2) = 0, f(-2.805118, 3.131312) = 0
-# f(-3.779310, -3.283186) = 0, f(3.584428, -3.283186) = 0
-# parameter range is -5 <= x,y <= 5
+# Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved
 
 def evaluate(x,y):
   """

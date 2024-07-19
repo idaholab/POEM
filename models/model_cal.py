@@ -1,5 +1,4 @@
-# Copyright 2022 Battelle Energy Alliance, LLC
-# ALL RIGHTS RESERVED
+# Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved
 
 import scipy.stats as st
 import numpy as np

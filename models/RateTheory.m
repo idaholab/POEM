@@ -1,14 +1,15 @@
+% Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved
 function [Npds,Rl,Nl] = RateTheory(Em,D0,Tirr,dmg,doserate,a,roM)
 % Input:
 % Em - migration energies [eV] for each defect, input as a vector in the
 % order of [V_U V_O U_I O_I] (read as uranium (U) vacancy (V), oxygen (O)
-% vacancy, uranium interstital (I), oxygen interstital). 
+% vacancy, uranium interstital (I), oxygen interstital).
 % D0 - diffusion prefactors [unitless] same vector input as listed above
 % Tirr - irradiation temperauture [C]
 % dmg - irradiation damage [dpa]
 % dose - irradiation dose [dpa/s]
 % ------------------------------------------
-% Output: 
+% Output:
 % Npds - point defect concentrations [1/atoms] for each defect, output as a
 % vector in similar format to migration energies
 % Rl - size of dislocation loops [nm]
@@ -38,7 +39,7 @@ xo(2) = GO*to;
 xo(3) = xo(1);
 xo(4) = xo(2);
 xo(5) = 1e-12/omega;
-xo(6) = sqrt(n*omega/(pi*b)); % initial loop radii 
+xo(6) = sqrt(n*omega/(pi*b)); % initial loop radii
 % --------------- Integration ---------------
 [t,y] = ode15s(@Diff,tspan,xo); % (1:5) [1/cm^3] / (6) [cm]
 yy = y*omega; % (1:5) & [1/At]

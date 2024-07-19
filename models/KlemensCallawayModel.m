@@ -1,3 +1,4 @@
+% Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved
 function [k] = KlemensCallawayModel(C,Rl,Nl,Temp,S2)
 % Input:
 % C - concentration of defects [1/atoms] for each defect, input as a vector in the
