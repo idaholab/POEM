@@ -25,6 +25,24 @@ fh.setFormatter(formatter)
 # add the handlers to the logger
 logger.addHandler(fh)
 
+def runWorkflow(destination):
+  """
+    Runs the workflow at the destination.
+    @ In, destination, str, path and filename of RAVEN input file
+    @ Out, res, int, system results of running the code
+  """
+  # where are we putting the file?
+  destDir = os.path.dirname(os.path.normpath(destination))
+  workflow = os.path.basename(destination)
+  cwd = os.getcwd()
+  os.chdir(destDir)
+  raven = 'raven_framework'
+  command = '{command} {workflow}'.format(command=raven,
+                                          workflow=workflow)
+  res = os.system(command)
+  os.chdir(cwd)
+  return res
+
 
 if __name__ == '__main__':
   logger.info('Welcome to the POEM!')
@@ -32,6 +50,7 @@ if __name__ == '__main__':
   parser.add_argument('-i', '--input', nargs=1, required=True, help='POEM input filename')
   # parser.add_argument('-t', '--template', nargs=1, required=True, help='POEM template filename')
   parser.add_argument('-o', '--output', nargs=1, help='POEM output filename')
+  parser.add_argument('-r', '--run', action='store_true', help='Run POEM')
 
   args = parser.parse_args()
   args = vars(args)
@@ -45,6 +64,8 @@ if __name__ == '__main__':
   else:
     outFile = 'raven_' + inFile.strip()
     logger.warning('Output file is not specifies, default output file with name ' + outFile + ' will be used')
+
+  run = args['run']
 
   # read capital budgeting input file
   templateInterface = PoemTemplateInterface(inFile)
@@ -62,7 +83,13 @@ if __name__ == '__main__':
   logger.info(' ... workflow successfully modified ...')
   # write files
   here = os.path.abspath(os.path.dirname(inFile))
-  templateClass.writeWorkflow(template, os.path.join(here, outFile), run=False)
+  # TODO: There is a problem with RAVEN template class when run=True
+  ravenInput = os.path.join(here, outFile)
+  templateClass.writeWorkflow(template, ravenInput, run=False)
+  # Temp solution, directly run it
+  if run:
+    runWorkflow(ravenInput)
+
   logger.info('')
   logger.info(' ... workflow successfully created and run ...')
   logger.info(' ... Complete!')
