@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved
 """
 Created on April 1, 2024
 @author: wangc
@@ -10,8 +11,8 @@ import sys
 import logging
 import argparse
 
-from src.poem.PoemTemplate import PoemTemplate
-from src.poem.PoemTemplateInterface import PoemTemplateInterface
+from poem.PoemTemplate import PoemTemplate
+from poem.PoemTemplateInterface import PoemTemplateInterface
 
 logging.basicConfig(format='%(asctime)s %(name)-20s %(levelname)-8s %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.DEBUG)
 # To enable the logging to both file and console, the logger for the main should be the root,
@@ -51,7 +52,7 @@ def main():
   parser.add_argument('-i', '--input', nargs=1, required=True, help='POEM input filename')
   # parser.add_argument('-t', '--template', nargs=1, required=True, help='POEM template filename')
   parser.add_argument('-o', '--output', nargs=1, help='POEM output filename')
-  parser.add_argument('-r', '--run', action='store_true', help='Run POEM')
+  parser.add_argument('-nr', '--norun', action='store_true', help='Run POEM')
 
   args = parser.parse_args()
   args = vars(args)
@@ -66,7 +67,7 @@ def main():
     outFile = 'raven_' + inFile.strip()
     logger.warning('Output file is not specifies, default output file with name ' + outFile + ' will be used')
 
-  run = args['run']
+  norun = args['norun']
 
   # read capital budgeting input file
   templateInterface = PoemTemplateInterface(inFile)
@@ -88,7 +89,7 @@ def main():
   ravenInput = os.path.join(here, outFile)
   templateClass.writeWorkflow(template, ravenInput, run=False)
   # Temp solution, directly run it
-  if run:
+  if not norun:
     runWorkflow(ravenInput)
 
   logger.info('')
