@@ -11,8 +11,10 @@ import sys
 import logging
 import argparse
 
-from poem.PoemTemplate import PoemTemplate
-from poem.PoemTemplateInterface import PoemTemplateInterface
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+
+from POEM.src.poem.PoemTemplate import PoemTemplate
+from POEM.src.poem.PoemTemplateInterface import PoemTemplateInterface
 
 logging.basicConfig(format='%(asctime)s %(name)-20s %(levelname)-8s %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.DEBUG)
 # To enable the logging to both file and console, the logger for the main should be the root,
