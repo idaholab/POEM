@@ -1,3 +1,4 @@
 include POEM/LICENSE
 include POEM/NOTICE.txt
 include POEM/README.md
+recursive-include POEM/src/poem/templates *.xml *toml *py

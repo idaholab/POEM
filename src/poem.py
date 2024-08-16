@@ -6,6 +6,7 @@ This module is the POEM Template interface, which use the user provided input XM
 file to construct the corresponding RAVEN workflows i.e. RAVEN input XML file.
 """
 import os
+import sys
 import logging
 import argparse
 
@@ -44,7 +45,7 @@ def runWorkflow(destination):
   return res
 
 
-if __name__ == '__main__':
+def main():
   logger.info('Welcome to the POEM!')
   parser = argparse.ArgumentParser(description='POEM Templated RAVEN Runner')
   parser.add_argument('-i', '--input', nargs=1, required=True, help='POEM input filename')
@@ -93,3 +94,6 @@ if __name__ == '__main__':
   logger.info('')
   logger.info(' ... workflow successfully created and run ...')
   logger.info(' ... Complete!')
+
+if __name__ == '__main__':
+  sys.exit(main())
