@@ -1,0 +1,131 @@
+[Tests]
+  [./test_bayesian_optimization]
+    type = 'PoemRun'
+    input = 'bayesian_optimization.xml'
+    inputArg = '-i'
+    output = 'Optimization/final_opt.csv Optimization/opt_export.csv'
+    skip_if_OS = mac
+  [../]
+
+  [./test_lhs_sampling]
+    type = 'PoemRun'
+    input = 'lhs_sampling.xml'
+    inputArg = '-i'
+    output = 'LHS/sampling_dump.csv'
+  [../]
+
+  [./test_lhs_sampling_mishra_bird]
+    type = 'PoemRun'
+    input = 'lhs_sampling_mishra_bird.xml'
+    inputArg = '-i'
+    output = 'LHS_mishra/sampling_dump.csv'
+  [../]
+
+  [./test_lhs_sampling_model]
+    type = 'PoemRun'
+    input = 'lhs_sampling_model.xml'
+    inputArg = '-i'
+    output = 'LHS/sampling_dump.csv'
+  [../]
+
+  [./test_lhs_sampling_model_dynamic]
+    type = 'PoemRun'
+    input = 'lhs_sampling_model_dynamic.xml'
+    inputArg = '-i'
+    output = 'LHS/sampling_dynamic_dump.csv LHS/sampling_dynamic_dump_0.csv'
+  [../]
+
+  [./test_mc_sampling]
+    type = 'PoemRun'
+    input = 'mc_sampling.xml'
+    inputArg = '-i'
+    output = 'MC/sampling_dump.csv'
+  [../]
+
+  [./test_mc_sampling_dynamic]
+    type = 'PoemRun'
+    input = 'mc_sampling_dynamic.xml'
+    inputArg = '-i'
+    output = 'MC/sampling_dynamic_dump.csv MC/sampling_dynamic_dump_0.csv'
+  [../]
+
+  [./test_model_calibration]
+    type = 'PoemRun'
+    input = 'model_calibration.xml'
+    inputArg = '-i'
+    output = 'calibration/posterior_dump.csv'
+  [../]
+
+  [./test_model_calibration_dynamic]
+    type = 'PoemRun'
+    input = 'model_calibration_dynamic.xml'
+    inputArg = '-i'
+    output = 'calibration_dynamic/posterior_dump.csv calibration_dynamic/samples_dump.csv'
+  [../]
+
+  [./test_sauq]
+    type = 'PoemRun'
+    input = 'sauq.xml'
+    inputArg = '-i'
+    output = 'sauq_runs/dump_samples.csv sauq_runs/stats_dump.csv'
+  [../]
+
+  [./test_sauq_dynamic]
+    type = 'PoemRun'
+    input = 'sauq_dynamic.xml'
+    inputArg = '-i'
+    skip = 'require matlab'
+  [../]
+
+  [./test_sauq_dynamic_external_model]
+    type = 'PoemRun'
+    input = 'sauq_dynamic_external_model.xml'
+    inputArg = '-i'
+    output = 'sauq_dynamic_external/samples_dynamic_dump.csv sauq_dynamic_external/stats_dynamic_dump_0.csv sauq_dynamic_external/stats_dynamic_dump.csv'
+  [../]
+
+  [./test_sparse_grid_construction]
+    type = 'PoemRun'
+    input = 'sparse_grid_construction.xml'
+    inputArg = '-i'
+    output = 'SparseGrid/SparseGrid_dump.csv'
+  [../]
+
+  [./test_sparse_grid_construction_dynamic]
+    type = 'PoemRun'
+    input = 'sparse_grid_construction_dynamic.xml'
+    inputArg = '-i'
+    output = 'SparseGrid/SparseGrid_dynamic_dump.csv SparseGrid/SparseGrid_dynamic_dump_0.csv'
+  [../]
+
+  [./test_sparse_grid_rom]
+    type = 'PoemRun'
+    input = 'sparse_grid_rom.xml'
+    inputArg = '-i'
+    output = 'SparseGrid/SparseGridRom_pk SparseGrid/romstats_dump.xml'
+  [../]
+
+  [./test_sparse_grid_rom_dynamic]
+    type = 'PoemRun'
+    input = 'sparse_grid_rom_dynamic.xml'
+    inputArg = '-i'
+    prereq = test_sparse_grid_construction_dynamic
+    output = 'SparseGridDynamic/SparseGridRom_dynamic_pk SparseGridDynamic/romstats_dynamic_dump.xml'
+  [../]
+
+  [./test_train_gp_rom]
+    type = 'PoemRun'
+    input = 'train_gp_rom.xml'
+    inputArg = '-i'
+    output = 'GP/rom_dump.csv'
+  [../]
+
+  [./test_train_gp_rom_dynamic]
+    type = 'PoemRun'
+    input = 'train_gp_rom_dynamic.xml'
+    inputArg = '-i'
+    output = 'GP_dynamic/rom_dynamic_dump.csv GP_dynamic/rom_dynamic_dump_0.csv'
+    prereq = test_lhs_sampling_model_dynamic
+  [../]
+
+[]

@@ -29,12 +29,12 @@ try:
   from ravenframework.utils import xmlUtils
 except ImportError:
   try:
-    from ._utils import get_raven_loc
+    from .._utils import get_raven_loc
     # from ._utils import get_raven_loc
     logger.info('Import "get_raven_loc" from "_utils"')
   except ImportError:
     logger.info('Import "get_raven_loc" from "POEM.src._utils"')
-    from src.poem._utils import get_raven_loc
+    from POEM.src._utils import get_raven_loc
 
   ## We need to add raven to the system path, since this file will be executed before RAVEN
   ## Otherwise, an ModuleNotFoundError will be raised to complain no module named 'ravenframework'
