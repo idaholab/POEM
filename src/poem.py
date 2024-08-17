@@ -59,6 +59,9 @@ def main():
   args = parser.parse_args()
   args = vars(args)
   inFile = args['input'][0]
+  baseName = os.path.basename(inFile)
+  workDir = os.path.dirname(os.path.abspath(os.path.normpath(inFile)))
+  # print(workDir, baseName)
   logger.info('POEM input file: %s', inFile)
   # tempFile = args['template'][0]
   # logger.info('POEM template file: %s', tempFile)
@@ -66,7 +69,7 @@ def main():
     outFile = args['output'][0]
     logger.info('POEM output file: %s', outFile)
   else:
-    outFile = 'raven_' + inFile.strip()
+    outFile = os.path.join(workDir, 'raven_' + baseName)
     logger.warning('Output file is not specifies, default output file with name ' + outFile + ' will be used')
 
   norun = args['norun']
