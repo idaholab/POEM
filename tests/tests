@@ -102,7 +102,7 @@
     type = 'PoemRun'
     input = 'sparse_grid_rom.xml'
     inputArg = '-i'
-    output = 'SparseGrid/SparseGrid_dump.csv'
+    output = 'SparseGrid/SparseGridRom_pk SparseGrid/romstats_dump.xml'
   [../]
 
   [./test_sparse_grid_rom_dynamic]
