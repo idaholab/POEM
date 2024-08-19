@@ -16,6 +16,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 from POEM.src.poem.PoemTemplate import PoemTemplate
 from POEM.src.poem.PoemTemplateInterface import PoemTemplateInterface
 
+import POEM.src._utils as POEM_utils
+RAVEN_FRAMEWORK_LOC = POEM_utils.get_raven_loc()
+sys.path.append(RAVEN_FRAMEWORK_LOC)
+
 logging.basicConfig(format='%(asctime)s %(name)-20s %(levelname)-8s %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.DEBUG)
 # To enable the logging to both file and console, the logger for the main should be the root,
 # otherwise, a function to add the file handler and stream handler need to be created and called by each module.
@@ -40,7 +44,8 @@ def runWorkflow(destination):
   workflow = os.path.basename(destination)
   cwd = os.getcwd()
   os.chdir(destDir)
-  raven = 'raven_framework'
+  raven = os.path.join(RAVEN_FRAMEWORK_LOC, 'raven_framework')
+  # raven = '/Users/wangc/projects/raven/raven_framework'
   command = '{command} {workflow}'.format(command=raven,
                                           workflow=workflow)
   res = os.system(command)

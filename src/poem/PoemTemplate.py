@@ -7,6 +7,11 @@ This module inherits from base Template class for Input Templates, which use an 
 template as an accelerated way to write new RAVEN workflows.
 """
 import logging
+import sys
+
+import POEM.src._utils as POEM_utils
+RAVEN_FRAMEWORK_LOC = POEM_utils.get_raven_loc()
+sys.path.append(RAVEN_FRAMEWORK_LOC)
 
 from ravenframework.InputTemplates.TemplateBaseClass import Template as TemplateBase
 from ravenframework.utils import xmlUtils

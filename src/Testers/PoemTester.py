@@ -10,7 +10,7 @@ sys.path.append(POEM_LOC)
 import POEM.src._utils as POEM_utils
 
 # get RAVEN base testers
-RAVEN_FRAMEWORK_LOC = POEM_utils.getRavenLoc()
+RAVEN_FRAMEWORK_LOC = POEM_utils.get_raven_loc()
 TESTER_LOC = os.path.join(RAVEN_FRAMEWORK_LOC, 'scripts', 'TestHarness', 'testers')
 sys.path.append(TESTER_LOC)
 from RavenFramework import RavenFramework as RavenTester
@@ -31,7 +31,7 @@ class PoemRun(RavenTester):
     params = RavenTester.get_valid_params()
     params.add_param('inputArg', '-i', 'Input argument to POEM')
     # params.add_param('output', '-o', 'Output argument to POEM')
-    params.add_param('norun', '-nr', 'Argument "norun" to POEM')
+    params.add_param('norun', '', 'Argument "norun" to POEM') # valid keyword "-nr"
     return params
 
   def __init__(self, name, param):
@@ -42,7 +42,7 @@ class PoemRun(RavenTester):
       @ Out, None
     """
     RavenTester.__init__(self, name, param)
-    self.peom_driver = os.path.join(POEM_LOC, 'POEM', 'src', 'peom.py')
+    self.poem_driver = os.path.join(POEM_LOC, 'POEM', 'src', 'poem.py')
 
   def get_command(self):
     """
@@ -52,8 +52,10 @@ class PoemRun(RavenTester):
     """
     cmd = ''
     pythonCmd = self._get_python_command()
-    cmd = pythonCmd + " " + self.peom_driver + " " + self.specs["inputArg"] + " " + self.specs["input"]
-    if self.specs['norun']:
+    cmd = pythonCmd + " " + self.poem_driver + " " + self.specs["inputArg"] + " " + self.specs["input"]
+    print('norun', self.specs['norun'])
+    if self.specs['norun'].lower() == '-nr':
       cmd = cmd + " " + self.specs['norun']
 
+    print(cmd)
     return cmd
