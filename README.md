@@ -35,23 +35,14 @@ raven_framework raven_lhs_sampling.xml
 ## Capabilities
 
 - Material thermal property modeling
-
 - Design parameter optimization with multiple objectives
-
 - Determining where to obtain new data in order to build accurate surrogate model
-
 - Dynamic sensitivity and uncertainty analysis
-
 - Model calibration through Bayesian inference
-
 - Data adjustment through generalized linear least square method
-
 - Machine learning aided parameter space exploration
-
 - Bayesian optimization for optimal experimental design
-
 - Pareto Frontier to guide the design of experiment to be evaluated
-
 - Sparse grid stochastic collocation to accelerate experimental design
 
 ## Accelerate Experimental Design via Sparse Grid Stochastic Collocation Method
@@ -73,12 +64,8 @@ raven_framework raven_lhs_sampling.xml
 ### Matyas Function
 - LHS pre-samplings to simulate experiments
 ![LHS_sampling_scatter](https://media.github.inl.gov/user/161/files/eb50562d-a312-454b-ad58-f048c24614f2)
-
-
 - Train Gaussian Process model with LHS samples, and use Grid approach to sample the trained Gaussian Process model
 ![Grid_rom_sampling_scatter](https://media.github.inl.gov/user/161/files/9648983f-625e-4260-9abf-63bb4a66e284)
-
-
 - Utilize Bayesian Optimization with pre-trained Gaussian Process model to optimize the experimental design
 
 <div align="center">
@@ -90,16 +77,12 @@ https://media.github.inl.gov/user/161/files/9021d2e6-b6b0-4c8f-96e0-3d0005f03cd4
 
 ### Mishra
 
-
-
 Bird Constrained Function
 
 - LHS pre-samplings to simulate experiments
 ![LHS_sampling_scatter](https://media.github.inl.gov/user/161/files/427e246a-6cfc-4cdc-bf69-1e048b20c365)
-
 - Train Gaussian Process model with LHS samples, and use Grid approach to sample the trained Gaussian Process model
 ![Grid_rom_sampling_scatter](https://media.github.inl.gov/user/161/files/21033f59-8d70-4666-afde-bdb8fe2e6a62)
-
 - Utilize Bayesian Optimization with pre-trained Gaussian Process model to optimize the experimental design
 
 <div align="center">
@@ -122,15 +105,5 @@ https://media.github.inl.gov/user/161/files/86dc8928-7017-4a4b-893c-f77286ded0d4
 A python analytic problem with 50 responses, three input parameters with uniform prior distributions.
 
 ![image](https://media.github.inl.gov/user/161/files/08ba5691-f4cc-49d8-9d1e-034ba14f40c2)
-
-
-## Tasks
-
-- [x] Utilize Sparse Grid to accelerate Experimental Design, including Sparse Grid, Generalized Polynomial Chaos, Pareto Frontier
-- [x] Bayesian Optimization to accelerate Experimental Design, including Gaussian process
-- [x] Sensivitiy/Uncertainty analysis, including ROM training, correlation, percentile and sensitivity
-- [x] Model calibration, including Bayesian inference, generalized linear least square method
-- [ ] Data mining such as clustering and classification
-- [ ] Material thermal properties modeling
 
 
