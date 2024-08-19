@@ -21,15 +21,28 @@ open your brower to: http://localhost:8000
 ```
 conda create -n poem_libs python=3.10
 conda activate poem_libs
-pip install raven-framework baycal-ravenframework
+pip install poem-ravenframework
+```
+
+## Git Clone Repository
+
+```
+git clone git@github.com:idaholab/POEM.git
 ```
 
 ## Test
 
 ```
 cd POEM/tests
-python ../poem.py -i lhs_sampling.xml
-raven_framework raven_lhs_sampling.xml
+poem -i lhs_sampling.xml
+```
+or test without run
+```
+poem -i lhs_sampling.xml -nr
+```
+or
+```
+poem -i lhs_sampling.xml --norun
 ```
 
 ## Capabilities
