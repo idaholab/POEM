@@ -42,7 +42,7 @@ class PoemRun(RavenTester):
       @ Out, None
     """
     RavenTester.__init__(self, name, param)
-    self.poem_driver = os.path.join(POEM_LOC, 'POEM', 'src', 'poem.py')
+    self.poem_driver = os.path.join(POEM_LOC, 'POEM', 'src', 'main.py')
 
   def get_command(self):
     """
