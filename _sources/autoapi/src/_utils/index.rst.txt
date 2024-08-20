@@ -1,0 +1,48 @@
+src._utils
+==========
+
+.. py:module:: src._utils
+
+.. autoapi-nested-parse::
+
+   utilities for use within POEM
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src._utils.argvs
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src._utils.get_raven_loc
+   src._utils.get_plugin_loc
+
+
+Module Contents
+---------------
+
+.. py:function:: get_raven_loc()
+
+   Return RAVEN location: read from POEM/.ravenconfig.xml
+   @ In, None
+   @ Out, loc, string, absolute location of RAVEN
+
+
+.. py:function:: get_plugin_loc(plugin, raven_path=None)
+
+   Get plugin location in installed RAVEN
+   @ In, plugin, string, the plugin name
+   @ In, raven_path, string, optional, if given then start with this path
+   @ Out, plugin_loc, string, location of plugin
+
+
+.. py:data:: argvs
+

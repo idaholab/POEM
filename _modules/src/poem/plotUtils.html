@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.poem.plotUtils &mdash; POEM 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=359c27e9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            POEM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mc.html">Monte Carlo Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lhs.html">Latin Hypercube Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rom.html">Train ROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sparsegrid.html">Generate Sparse Grid Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sen.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bayesian.html">Bayesian Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../calibration.html">Model Calibration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../support.html">Support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">POEM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.poem.plotUtils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.poem.plotUtils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">animation</span>
+<span class="kn">from</span> <span class="nn">matplotlib.lines</span> <span class="kn">import</span> <span class="n">Line2D</span>
+<span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="k">as</span> <span class="nn">colors</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pk</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<div class="viewcode-block" id="markerMap"><a class="viewcode-back" href="../../../autoapi/src/poem/plotUtils/index.html#src.poem.plotUtils.markerMap">[docs]</a><span class="n">markerMap</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;first&#39;</span><span class="p">:</span> <span class="s1">&#39;yo&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;accepted&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;rejected&#39;</span><span class="p">:</span> <span class="s1">&#39;rx&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;pre-existing&#39;</span><span class="p">:</span> <span class="s1">&#39;c^&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;final&#39;</span><span class="p">:</span> <span class="s1">&#39;mo&#39;</span><span class="p">}</span></div>
+<div class="viewcode-block" id="markers"><a class="viewcode-back" href="../../../autoapi/src/poem/plotUtils/index.html#src.poem.plotUtils.markers">[docs]</a><span class="n">markers</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="s1">&#39;k.&#39;</span><span class="p">,</span> <span class="n">markerMap</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="addPoint"><a class="viewcode-back" href="../../../autoapi/src/poem/plotUtils/index.html#src.poem.plotUtils.addPoint">[docs]</a><span class="k">def</span> <span class="nf">addPoint</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">accepted</span><span class="p">):</span>
+  <span class="n">lines</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">markers</span><span class="p">[</span><span class="n">accepted</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">lines</span></div>
+
+<div class="viewcode-block" id="plotFunction"><a class="viewcode-back" href="../../../autoapi/src/poem/plotUtils/index.html#src.poem.plotUtils.plotFunction">[docs]</a><span class="k">def</span> <span class="nf">plotFunction</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">constraint</span><span class="p">,</span><span class="n">xscale</span><span class="p">,</span><span class="n">yscale</span><span class="p">,</span><span class="n">cscale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">samps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">yp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots a 2D function as a colormap.  Returns parameters suitable to plotting in a pcolormesh call.</span>
+<span class="sd">    @ In, title, string, title name for figure</span>
+<span class="sd">    @ In, method, function, method to call with x,y to get z result</span>
+<span class="sd">    @ In, constraint, function, boolean method that determines acceptability</span>
+<span class="sd">    @ In, xscale, tuple(float), low/hi value for x</span>
+<span class="sd">    @ In, yscale, tuple(float), low/hi value for y</span>
+<span class="sd">    @ In, cscale, tuple(float), optional, low and high values for the color map</span>
+<span class="sd">    @ In, log, bool, optional, if False will not lognormalize the color map</span>
+<span class="sd">    @ In, samps, int</span>
+<span class="sd">    @ In, extData, pandas.Dataframe</span>
+<span class="sd">    @ Out, X, np.array(np.array(float)), mesh grid of X values</span>
+<span class="sd">    @ Out, Y, np.array(np.array(float)), mesh grid of Y values</span>
+<span class="sd">    @ Out, Z, np.array(np.array(float)), mesh grid of Z (response) values</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;plotting&#39;</span><span class="p">,</span><span class="n">title</span><span class="p">)</span>
+  <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+  <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xscale</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">xscale</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">samps</span><span class="p">)</span>
+  <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">yscale</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">yscale</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">samps</span><span class="p">)</span>
+  <span class="n">X</span><span class="p">,</span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">ys</span><span class="p">)</span>
+  <span class="n">Z</span> <span class="o">=</span> <span class="n">method</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+  <span class="c1">#Z[np.where(not constraint(X,Y))] = np.nan</span>
+  <span class="c1"># constraint function from optimization, Negative for violated constraint</span>
+  <span class="k">if</span> <span class="n">constraint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">xs</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ys</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">constraint</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">:</span>
+          <span class="n">Z</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">Zm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">Z</span><span class="p">),</span><span class="n">Z</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">Zm</span> <span class="o">=</span> <span class="n">Z</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;min: </span><span class="si">{}</span><span class="s1">, max:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">Z</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">Z</span><span class="p">)))</span>
+  <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">cscale</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">Z</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span> <span class="o">=</span> <span class="n">cscale</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LogNorm</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
+    <span class="n">axPlot</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Zm</span><span class="p">,</span><span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">axPlot</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Zm</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">xp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">yp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="n">markerMap</span><span class="p">[</span><span class="s1">&#39;pre-existing&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">markerMap</span><span class="p">[</span><span class="s1">&#39;pre-existing&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">axPlot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">title</span><span class="o">+</span><span class="s1">&#39;.pk&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">pk</span><span class="o">.</span><span class="n">dump</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Zm</span><span class="p">),</span><span class="n">file</span><span class="p">)</span>
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">title</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
+
+<div class="viewcode-block" id="animate"><a class="viewcode-back" href="../../../autoapi/src/poem/plotUtils/index.html#src.poem.plotUtils.animate">[docs]</a><span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+  <span class="n">mk</span> <span class="o">=</span> <span class="n">markers</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">n</span><span class="p">]]</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">mk</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">ax</span></div>
+
+<div class="viewcode-block" id="animatePlot"><a class="viewcode-back" href="../../../autoapi/src/poem/plotUtils/index.html#src.poem.plotUtils.animatePlot">[docs]</a><span class="k">def</span> <span class="nf">animatePlot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">constraint</span><span class="p">,</span><span class="n">xscale</span><span class="p">,</span><span class="n">yscale</span><span class="p">,</span><span class="n">cscale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">samps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">yp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plotFunction</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">constraint</span><span class="p">,</span><span class="n">xscale</span><span class="p">,</span><span class="n">yscale</span><span class="p">,</span><span class="n">cscale</span><span class="p">,</span><span class="n">log</span><span class="p">,</span> <span class="n">samps</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">)</span>
+  <span class="n">lns</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="n">markerMap</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">lns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">markerMap</span><span class="p">[</span><span class="n">cond</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="n">markerMap</span><span class="p">[</span><span class="n">cond</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+  <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">lns</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">markerMap</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+              <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center right&#39;</span><span class="p">,</span>
+              <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+              <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Legend&#39;</span><span class="p">)</span>
+  <span class="n">ani</span><span class="o">=</span><span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="n">animate</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">fargs</span><span class="o">=</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">),</span> <span class="n">interval</span><span class="o">=</span><span class="mi">5000000</span><span class="p">)</span>
+  <span class="n">Writer</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">writers</span><span class="p">[</span><span class="s1">&#39;ffmpeg&#39;</span><span class="p">]</span>
+  <span class="n">writer</span> <span class="o">=</span> <span class="n">Writer</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">bitrate</span><span class="o">=</span><span class="mi">1800</span><span class="p">)</span>
+  <span class="n">ani</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">title</span><span class="o">+</span><span class="s1">&#39;.mp4&#39;</span><span class="p">,</span><span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="optPath"><a class="viewcode-back" href="../../../autoapi/src/poem/plotUtils/index.html#src.poem.plotUtils.optPath">[docs]</a><span class="k">def</span> <span class="nf">optPath</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">constraint</span><span class="p">,</span><span class="n">xscale</span><span class="p">,</span><span class="n">yscale</span><span class="p">,</span><span class="n">cscale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">samps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">yp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plotFunction</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">constraint</span><span class="p">,</span><span class="n">xscale</span><span class="p">,</span><span class="n">yscale</span><span class="p">,</span><span class="n">cscale</span><span class="p">,</span><span class="n">log</span><span class="p">,</span> <span class="n">samps</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+    <span class="n">mk</span> <span class="o">=</span> <span class="n">markers</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">mk</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+  <span class="n">lns</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="n">markerMap</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">lns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">markerMap</span><span class="p">[</span><span class="n">cond</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="n">markerMap</span><span class="p">[</span><span class="n">cond</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+  <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">lns</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">markerMap</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+              <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center right&#39;</span><span class="p">,</span>
+              <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+              <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Legend&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">title</span><span class="o">+</span><span class="s1">&#39;_opt_path.png&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Congjian Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+src.poem.templates
+==================
+
+.. py:module:: src.poem.templates
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.poem.templates.configFileName
+   src.poem.templates.path
+   src.poem.templates.templateConfig
+
+
+Package Contents
+----------------
+
+.. py:data:: configFileName
+   :value: 'config.toml'
+
+
+.. py:data:: path
+
+.. py:data:: templateConfig
+

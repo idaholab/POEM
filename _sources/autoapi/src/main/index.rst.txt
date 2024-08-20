@@ -1,0 +1,55 @@
+src.main
+========
+
+.. py:module:: src.main
+
+.. autoapi-nested-parse::
+
+   Created on April 1, 2024
+   @author: wangc
+
+   This module is the POEM Template interface, which use the user provided input XML
+   file to construct the corresponding RAVEN workflows i.e. RAVEN input XML file.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.main.RAVEN_FRAMEWORK_LOC
+   src.main.logger
+   src.main.fh
+   src.main.formatter
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.main.runWorkflow
+   src.main.main
+
+
+Module Contents
+---------------
+
+.. py:data:: RAVEN_FRAMEWORK_LOC
+
+.. py:data:: logger
+
+.. py:data:: fh
+
+.. py:data:: formatter
+
+.. py:function:: runWorkflow(destination)
+
+   Runs the workflow at the destination.
+   @ In, destination, str, path and filename of RAVEN input file
+   @ Out, res, int, system results of running the code
+
+
+.. py:function:: main()
+

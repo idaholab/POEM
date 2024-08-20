@@ -1,0 +1,59 @@
+src.poem.plotUtils
+==================
+
+.. py:module:: src.poem.plotUtils
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.poem.plotUtils.markerMap
+   src.poem.plotUtils.markers
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.poem.plotUtils.addPoint
+   src.poem.plotUtils.plotFunction
+   src.poem.plotUtils.animate
+   src.poem.plotUtils.animatePlot
+   src.poem.plotUtils.optPath
+
+
+Module Contents
+---------------
+
+.. py:data:: markerMap
+
+.. py:data:: markers
+
+.. py:function:: addPoint(ax, x, y, accepted)
+
+.. py:function:: plotFunction(fig, title, method, constraint, xscale, yscale, cscale=None, log=False, samps=500, xp=None, yp=None)
+
+   Plots a 2D function as a colormap.  Returns parameters suitable to plotting in a pcolormesh call.
+   @ In, title, string, title name for figure
+   @ In, method, function, method to call with x,y to get z result
+   @ In, constraint, function, boolean method that determines acceptability
+   @ In, xscale, tuple(float), low/hi value for x
+   @ In, yscale, tuple(float), low/hi value for y
+   @ In, cscale, tuple(float), optional, low and high values for the color map
+   @ In, log, bool, optional, if False will not lognormalize the color map
+   @ In, samps, int
+   @ In, extData, pandas.Dataframe
+   @ Out, X, np.array(np.array(float)), mesh grid of X values
+   @ Out, Y, np.array(np.array(float)), mesh grid of Y values
+   @ Out, Z, np.array(np.array(float)), mesh grid of Z (response) values
+
+
+.. py:function:: animate(n, ax, x, y, a)
+
+.. py:function:: animatePlot(x, y, a, fig, title, method, constraint, xscale, yscale, cscale=None, log=False, samps=500, xp=None, yp=None)
+
+.. py:function:: optPath(x, y, a, fig, title, method, constraint, xscale, yscale, cscale=None, log=False, samps=500, xp=None, yp=None)
+

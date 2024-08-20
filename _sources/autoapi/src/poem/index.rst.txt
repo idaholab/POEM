@@ -1,0 +1,27 @@
+src.poem
+========
+
+.. py:module:: src.poem
+
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/poem/templates/index
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/poem/PoemTemplate/index
+   /autoapi/src/poem/PoemTemplateInterface/index
+   /autoapi/src/poem/plotUtils/index
+   /autoapi/src/poem/poemUtils/index
+
+

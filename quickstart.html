@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start &mdash; POEM 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=359c27e9"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Monte Carlo Sampling" href="mc.html" />
+    <link rel="prev" title="Installation" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            POEM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-structure">Input Structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simulation-block">Simulation block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#globalsettings-block">GlobalSettings block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runinfo-block">RunInfo block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#files-block">Files block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#distributions-block">Distributions block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#models-block">Models block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#functions-block">Functions block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#likelihoodmodel-block-for-model-calibration">LikelihoodModel block for Model Calibration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mc.html">Monte Carlo Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lhs.html">Latin Hypercube Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rom.html">Train ROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparsegrid.html">Generate Sparse Grid Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sen.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bayesian.html">Bayesian Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Model Calibration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">POEM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<span id="quickstart"></span><h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading">¶</a></h1>
+<section id="input-structure">
+<h2>Input Structure<a class="headerlink" href="#input-structure" title="Permalink to this heading">¶</a></h2>
+<p>POEM utilizes XML to define its input structure. The main input blocks are as follows:</p>
+<section id="simulation-block">
+<h3>Simulation block<a class="headerlink" href="#simulation-block" title="Permalink to this heading">¶</a></h3>
+<p>The root node containing the entire input, all of the following blocks fit inside
+the <code class="docutils literal notranslate"><span class="pre">Simulaiton</span></code> block</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Simulation&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;RunInfo&gt;</span>
+<span class="w">    </span>...
+<span class="w">  </span><span class="nt">&lt;/RunInfo&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;GlobalSettings&gt;</span>
+<span class="w">    </span>...
+<span class="w">  </span><span class="nt">&lt;/GlobalSettings&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;Distributions&gt;</span>
+<span class="w">    </span>...
+<span class="w">  </span><span class="nt">&lt;/Distributions&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;Models&gt;</span>
+<span class="w">    </span>...
+<span class="w">  </span><span class="nt">&lt;/Models&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;Files&gt;</span>
+<span class="w">    </span>...
+<span class="w">  </span><span class="nt">&lt;/Files&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;Functions&gt;</span>
+<span class="w">    </span>...
+<span class="w">  </span><span class="nt">&lt;/Functions&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;LikelihoodModel&gt;</span>
+<span class="w">    </span>...
+<span class="w">  </span><span class="nt">&lt;/LikelihoodModel&gt;</span>
+
+<span class="nt">&lt;/Simulation&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="globalsettings-block">
+<h3>GlobalSettings block<a class="headerlink" href="#globalsettings-block" title="Permalink to this heading">¶</a></h3>
+<p>Specifies the global settings for the calculations. For example:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;GlobalSettings&gt;</span>
+<span class="w">  </span><span class="cm">&lt;!-- Required Nodes --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;AnalysisType&gt;</span>LHS<span class="nt">&lt;/AnalysisType&gt;</span>
+<span class="w">  </span><span class="nt">&lt;limit&gt;</span>10<span class="nt">&lt;/limit&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Inputs&gt;</span>x,<span class="w"> </span>y<span class="nt">&lt;/Inputs&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Outputs&gt;</span>OutputPlaceHolder<span class="nt">&lt;/Outputs&gt;</span>
+
+<span class="w">  </span><span class="cm">&lt;!-- Optional Nodes --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;pivot&gt;</span>time<span class="nt">&lt;/pivot&gt;</span>
+<span class="w">  </span><span class="nt">&lt;dynamic&gt;</span>True<span class="nt">&lt;/dynamic&gt;</span>
+
+<span class="w">  </span><span class="cm">&lt;!-- Optional Nodes, uses for certain analysis --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;SparseGridData&gt;</span>path/to/data.csv<span class="nt">&lt;/SparseGridData&gt;</span>
+<span class="w">  </span><span class="nt">&lt;data&gt;</span>path/to/data.csv<span class="nt">&lt;/data&gt;</span>
+<span class="w">  </span><span class="nt">&lt;InitialInputs&gt;</span>0.1,<span class="w"> </span>4.0,<span class="w"> </span>-1.0<span class="nt">&lt;/InitialInputs&gt;</span>
+<span class="w">  </span><span class="nt">&lt;PolynomialOrder&gt;</span>3<span class="nt">&lt;/PolynomialOrder&gt;</span>
+<span class="nt">&lt;/GlobalSettings&gt;</span>
+</pre></div>
+</div>
+<p><strong>In general, this block accepts the following subnodes:</strong></p>
+<ul class="simple">
+<li><p>Required Nodes</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">AnalysisType</span></code>: The type of analysis, it accepts the following keywords:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mc</span></code>: Simple Monte Carlo analysis for given model. See <a class="reference internal" href="mc.html#mc"><span class="std std-ref">Monte Carlo Sampling</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lhs</span></code>: Sample given model using Latin Hyper-cube Sampling (LHS) strategy. See <a class="reference internal" href="lhs.html#lhs"><span class="std std-ref">Latin Hypercube Sampling</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensitivity</span></code>: Perform sensitivity analysis for given model. The <code class="docutils literal notranslate"><span class="pre">mean,</span> <span class="pre">variance,</span> <span class="pre">95/95</span> <span class="pre">percentile,</span> <span class="pre">correlation,</span> <span class="pre">spearman</span> <span class="pre">correlation,</span> <span class="pre">sensitivity</span> <span class="pre">coefficients,</span> <span class="pre">etc.</span></code> will be computed. See <a class="reference internal" href="sen.html#sen"><span class="std std-ref">Sensitivity Analysis</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sparse_grid_construction</span></code>: Generate sparse grid locations to guide experiments. These locations can be used to efficiently construct high-order Gaussian Polynomial Chaos surrogate model. See <a class="reference internal" href="sparsegrid.html#sparsegrid"><span class="std std-ref">Generate Sparse Grid Locations</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sparse_grid_rom</span></code>: Train a multi-variate high-order Gaussian Polynomial Chaos ROM/surrogate based on user provided experimental data. See <a class="reference internal" href="rom.html#rom"><span class="std std-ref">Train ROM</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">train_rom</span></code>: Train a Gaussian Process ROM based on user provided data. See <a class="reference internal" href="rom.html#rom"><span class="std std-ref">Train ROM</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bayesian_optimization</span></code>: Perform Bayesian optimization based on user provided data and simulation model. See <a class="reference internal" href="bayesian.html#bayopt"><span class="std std-ref">Bayesian Optimization</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model_calibration</span></code>: Perform model calibration utilizing Bayesian inference based on user provided data and simulation model. See <a class="reference internal" href="calibration.html#cal"><span class="std std-ref">Model Calibration</span></a>.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code>: The total number of model executions or the number of samples to generate.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Inputs</span></code>: The list of input variables</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Outputs</span></code>: The list of output variables. If no output variables, <code class="docutils literal notranslate"><span class="pre">OutputPlaceHolder</span></code> can be used.</p></li>
+</ul>
+</li>
+<li><p>Optional Nodes</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">dynamic</span></code>: True if the user wants to perform time-dependent analysis, such as time-dependent ROM construction, sensitivity analysis, model calibration etc.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pivot</span></code>: Required if <code class="docutils literal notranslate"><span class="pre">dynamic</span></code> is True. The pivot variable for dynamic analysis. Default is <code class="docutils literal notranslate"><span class="pre">time</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Optional Nodes for Certain Analysis</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">SparseGridData</span></code>: The experimental data that can be used to train Gaussian Polynomial Chaos ROM. Only used by <code class="docutils literal notranslate"><span class="pre">sparse_grid_construction</span></code> and <code class="docutils literal notranslate"><span class="pre">sparse_grid_rom</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PolynomialOrder</span></code>: The highest order for the Gaussian Polynomial Chaos ROM. Only used by <code class="docutils literal notranslate"><span class="pre">sparse_grid_construction</span></code> and <code class="docutils literal notranslate"><span class="pre">sparse_grid_rom</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: The experimental data that can be used to train Gaussian Process ROM. Only used by <code class="docutils literal notranslate"><span class="pre">train_rom</span></code> and <code class="docutils literal notranslate"><span class="pre">bayesian_optimization</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InitialInputs</span></code>: The initial values for the input variables listed by <code class="docutils literal notranslate"><span class="pre">&lt;Inputs&gt;</span></code> in the <code class="docutils literal notranslate"><span class="pre">&lt;GlobalSettings&gt;</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="runinfo-block">
+<h3>RunInfo block<a class="headerlink" href="#runinfo-block" title="Permalink to this heading">¶</a></h3>
+<p>Specifies the calculation settings (woring directory, number of parallel simulations, etc.)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;RunInfo&gt;</span>
+<span class="w">  </span><span class="nt">&lt;WorkingDir&gt;</span>LHS<span class="nt">&lt;/WorkingDir&gt;</span>
+<span class="w">  </span><span class="nt">&lt;batchSize&gt;</span>1<span class="nt">&lt;/batchSize&gt;</span>
+<span class="nt">&lt;/RunInfo&gt;</span>
+</pre></div>
+</div>
+<p><strong>In general, this block accepts the following subnodes:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">WorkingDir</span></code>: specifies the absolute or relative path to a directory that will store all the
+results of the calculations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batchSize</span></code>: specifies the number of parallel executed simultaneously.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JobName</span></code>: specifies the name to use for the job when submitting to a pbs queue.</p></li>
+</ul>
+<p><strong>RunInfo for Cluster Usage</strong></p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;RunInfo&gt;</span>
+<span class="w">  </span><span class="nt">&lt;WorkingDir&gt;</span>FirstMF<span class="nt">&lt;/WorkingDir&gt;</span>
+<span class="w">  </span><span class="nt">&lt;batchSize&gt;</span>3<span class="nt">&lt;/batchSize&gt;</span>
+<span class="w">  </span><span class="nt">&lt;clusterParameters&gt;</span>-W<span class="w"> </span>block=true<span class="nt">&lt;/clusterParameters&gt;</span>
+<span class="w">  </span><span class="nt">&lt;NumThreads&gt;</span>4<span class="nt">&lt;/NumThreads&gt;</span>
+<span class="w">  </span><span class="nt">&lt;mode&gt;</span>
+<span class="w">    </span>mpi
+<span class="w">    </span><span class="nt">&lt;runQSUB/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/mode&gt;</span>
+<span class="w">  </span><span class="nt">&lt;NodeParameter&gt;</span><span class="w"> </span><span class="nt">&lt;/NodeParameter&gt;</span>
+<span class="w">  </span><span class="nt">&lt;NumMPI&gt;</span>2<span class="nt">&lt;/NumMPI&gt;</span>
+<span class="w">  </span><span class="nt">&lt;expectedTime&gt;</span>0:10:00<span class="nt">&lt;/expectedTime&gt;</span>
+<span class="w">  </span><span class="nt">&lt;JobName&gt;</span>test_qsub<span class="nt">&lt;/JobName&gt;</span>
+<span class="nt">&lt;/RunInfo&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="files-block">
+<h3>Files block<a class="headerlink" href="#files-block" title="Permalink to this heading">¶</a></h3>
+<p>Specifies the files to be used for the &lt;Models&gt; block as input. Users can specify
+as many input files as they need, and utilize &lt;Input&gt; node to specify the <code class="docutils literal notranslate"><span class="pre">name</span></code>,
+and the <code class="docutils literal notranslate"><span class="pre">path/to/file</span></code>.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Files&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Input</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sauq&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>../../models/sauq.m<span class="nt">&lt;/Input&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Input</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;rt&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>../../models/RateTheory.m<span class="nt">&lt;/Input&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Input</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;kc&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>../../models/KlemensCallawayModel.m<span class="nt">&lt;/Input&gt;</span>
+<span class="nt">&lt;/Files&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="distributions-block">
+<h3>Distributions block<a class="headerlink" href="#distributions-block" title="Permalink to this heading">¶</a></h3>
+<p>POEM leverages RAVEN (<a class="reference external" href="https://github.com/idaholab/raven">https://github.com/idaholab/raven</a>) input structure to build customized workflows
+for model explorations and optimal experiment design. In this case, POEM provides support for all the
+probability distributions available in RAVEN. The following are the example for the <em>Distributions</em> block.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Distributions&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Uniform</span><span class="w"> </span><span class="na">name=</span><span class="s">&#39;x&#39;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;lowerBound&gt;</span>-10<span class="nt">&lt;/lowerBound&gt;</span>
+<span class="w">    </span><span class="nt">&lt;upperBound&gt;</span>0<span class="nt">&lt;/upperBound&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/Uniform&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Uniform</span><span class="w"> </span><span class="na">name=</span><span class="s">&#39;y&#39;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;lowerBound&gt;</span>-6.5<span class="nt">&lt;/lowerBound&gt;</span>
+<span class="w">    </span><span class="nt">&lt;upperBound&gt;</span>0<span class="nt">&lt;/upperBound&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/Uniform&gt;</span>
+<span class="nt">&lt;/Distributions&gt;</span>
+</pre></div>
+</div>
+<p>In this block, the users need to define <code class="docutils literal notranslate"><span class="pre">distribution</span></code> for each variables listed in
+<code class="docutils literal notranslate"><span class="pre">GlobalSettings</span></code> <code class="docutils literal notranslate"><span class="pre">Inputs</span></code> node, and <code class="docutils literal notranslate"><span class="pre">name</span></code> for the distribution should match the variable
+name listed under <code class="docutils literal notranslate"><span class="pre">&lt;GlobalSettings&gt;&lt;Inputs&gt;VariableList&lt;/Inputs&gt;&lt;/GlobalSettings&gt;</span></code>.</p>
+</section>
+<section id="models-block">
+<h3>Models block<a class="headerlink" href="#models-block" title="Permalink to this heading">¶</a></h3>
+<p>Similar to <code class="docutils literal notranslate"><span class="pre">&lt;Distributions&gt;</span></code> block, POEM leverages RAVEN (<a class="reference external" href="https://github.com/idaholab/raven">https://github.com/idaholab/raven</a>) <code class="docutils literal notranslate"><span class="pre">&lt;Models&gt;</span></code>
+input structure. In this case, POEM provides support for all the
+models available in RAVEN. The following are the example for the <em>Models</em> block.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Models&gt;</span>
+<span class="w">  </span><span class="nt">&lt;ExternalModel</span><span class="w"> </span><span class="na">ModuleToLoad=</span><span class="s">&quot;../../models/mishraBirdConstrained.py&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;mishra&quot;</span><span class="w"> </span><span class="na">subType=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;inputs&gt;</span>x,<span class="w"> </span>y<span class="nt">&lt;/inputs&gt;</span>
+<span class="w">    </span><span class="nt">&lt;outputs&gt;</span>z<span class="nt">&lt;/outputs&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/ExternalModel&gt;</span>
+<span class="nt">&lt;/Models&gt;</span>
+</pre></div>
+</div>
+<p>As the name suggests, an external model is an entity that is embedded at run time.
+This object allows the user to create a python module that is going to be
+treated as a predefined internal model object.</p>
+<p>The specifications of an External Model must be defined within the XML block
+<code class="docutils literal notranslate"><span class="pre">&lt;ExternalModel&gt;</span></code>. This blocks accepts the following subnodes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">inputs</span></code>: Each variable name needs to match a variable used/defined in the external python model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outputs</span></code>: Each variable name needs to match a variable used/defined in the external python model.</p></li>
+</ul>
+<p>Each variable defined in the <code class="docutils literal notranslate"><span class="pre">&lt;ExternalModel&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;inputs&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;outputs&gt;</span></code> block is available in the
+module (each method implemented) as a python <code class="docutils literal notranslate"><span class="pre">self.</span></code> member.</p>
+</section>
+<section id="functions-block">
+<h3>Functions block<a class="headerlink" href="#functions-block" title="Permalink to this heading">¶</a></h3>
+<p>POEM leverages RAVEN (<a class="reference external" href="https://github.com/idaholab/raven">https://github.com/idaholab/raven</a>) <code class="docutils literal notranslate"><span class="pre">&lt;Functions&gt;</span></code>
+input structure. In this case, POEM provides support for the usage of user-defined external
+functions. These functions are python modules, with a format is automatically interpretable by
+RAVEN software.</p>
+<p>The following are the example for the <em>Functions</em> block.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Functions&gt;</span>
+<span class="w">  </span><span class="nt">&lt;External</span><span class="w"> </span><span class="na">file=</span><span class="s">&quot;../../models/mishraBirdConstrained.py&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;constraint1&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;variables&gt;</span>x,y<span class="nt">&lt;/variables&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/External&gt;</span>
+<span class="nt">&lt;/Functions&gt;</span>
+</pre></div>
+</div>
+<p>In this section, the XML input syntax and the format of the accepted functions
+are fully specified. The specifications of an external function must be defined
+within the XML <code class="docutils literal notranslate"><span class="pre">&lt;External&gt;</span></code> block. This XML node requires the following attributes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: user-defined name of this function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">file</span></code>: absolute or relative path specifying the code associated to this function.</p></li>
+</ul>
+<p>In order to make the code aware of the variables the user is going to
+manipulate/use in her/his own python function, the variables need to be
+specified in the <code class="docutils literal notranslate"><span class="pre">&lt;variables&gt;</span></code> subnode input block. The user needs to input,
+within this block, only the variables directly used by the external function.</p>
+<p>When the external function variables are defined, at runtime, the code initializes
+them and keeps track of their values during the simulation.
+Each variable defined in the <code class="docutils literal notranslate"><span class="pre">&lt;variables&gt;</span></code> block is available in the
+function as a python <strong>self.</strong> member. In the following, an example of a
+user-defined external function is reported. The method <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> needs to be defined
+in the function file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span>
+</pre></div>
+</div>
+</section>
+<section id="likelihoodmodel-block-for-model-calibration">
+<h3>LikelihoodModel block for Model Calibration<a class="headerlink" href="#likelihoodmodel-block-for-model-calibration" title="Permalink to this heading">¶</a></h3>
+<p>This node is only used by model calibration analysis. An example is presented:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;LikelihoodModel&gt;</span>
+<span class="w">  </span><span class="nt">&lt;simTargets&gt;</span>eta<span class="nt">&lt;/simTargets&gt;</span>
+<span class="w">  </span><span class="nt">&lt;expTargets</span><span class="w"> </span><span class="na">shape=</span><span class="s">&quot;1,50&quot;</span><span class="w"> </span><span class="na">computeCov=</span><span class="s">&#39;False&#39;</span><span class="w"> </span><span class="na">correlation=</span><span class="s">&#39;False&#39;</span><span class="nt">&gt;</span>
+<span class="w">    </span>-1.16074224<span class="w"> </span>-1.10303445<span class="w"> </span>-1.02830511<span class="w"> </span>-0.89782965<span class="w"> </span>-0.73765453<span class="w"> </span>-0.7989537
+<span class="w">     </span>-0.86163706<span class="w"> </span>-1.02209944<span class="w"> </span>-1.12444044<span class="w"> </span>-1.23657398<span class="w"> </span>-1.16081758<span class="w"> </span>-1.01219869
+<span class="w">     </span>-0.890747<span class="w">   </span>-0.80444122<span class="w"> </span>-0.70893668<span class="w"> </span>-0.61012531<span class="w"> </span>-0.65670863<span class="w"> </span>-0.6768583
+<span class="w">     </span>-0.74732441<span class="w"> </span>-0.81448647<span class="w"> </span>-0.73232671<span class="w"> </span>-0.54989334<span class="w"> </span>-0.39796749<span class="w"> </span>-0.07894291
+<span class="w">      </span>0.13067378<span class="w">  </span>0.28999998<span class="w">  </span>0.27418965<span class="w">  </span>0.313329<span class="w">    </span>0.32306704<span class="w">  </span>0.2885684
+<span class="w">      </span>0.32736775<span class="w">  </span>0.52458854<span class="w">  </span>0.69446572<span class="w">  </span>0.82419521<span class="w">  </span>1.04393683<span class="w">  </span>1.00435818
+<span class="w">      </span>1.0810376<span class="w">   </span>0.97245373<span class="w">  </span>0.82406522<span class="w">  </span>0.76067559<span class="w">  </span>0.70145544<span class="w">  </span>0.79479965
+<span class="w">      </span>0.88035895<span class="w">  </span>0.97750307<span class="w">  </span>1.11524353<span class="w">  </span>1.17159017<span class="w">  </span>1.18299222<span class="w">  </span>1.07255006
+<span class="w">      </span>1.02835909<span class="w">  </span>0.90784132
+<span class="w">  </span><span class="nt">&lt;/expTargets&gt;</span>
+<span class="w">  </span><span class="nt">&lt;expCov</span><span class="w"> </span><span class="na">diag=</span><span class="s">&quot;True&quot;</span><span class="nt">&gt;</span>
+<span class="w">       </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,
+<span class="w">       </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,
+<span class="w">       </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,
+<span class="w">       </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,
+<span class="w">       </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02,<span class="w"> </span>0.02
+<span class="w">  </span><span class="nt">&lt;/expCov&gt;</span>
+<span class="w">  </span><span class="cm">&lt;!-- &lt;biasTargets&gt;&lt;/biasTargets&gt;</span>
+<span class="cm">  &lt;biasCov diag=&quot;False&quot;&gt;&lt;/biasCov&gt; --&gt;</span>
+<span class="w">  </span><span class="cm">&lt;!-- &lt;romCov diag=&quot;True&quot;&gt;&lt;/romCov&gt; --&gt;</span>
+<span class="nt">&lt;/LikelihoodModel&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;LikelihoodModel&gt;</span></code> node accepts the following subnodes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">simTargets</span></code>: Targets of simulations that are used in the calibration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expTargets</span></code>: Targets of experiments that are used in the calibration. Either variables or list of values. This node accepts the following attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">shape</span></code>: determine the number of targets and the number of experimental observations for each targets. For example, <code class="docutils literal notranslate"><span class="pre">shape=&quot;3,2&quot;</span></code> will indicate 2 targets and 3 observations for each targets. While <code class="docutils literal notranslate"><span class="pre">shape=&quot;10&quot;</span></code> will indicate one target with 10 observations. Omitting this optional attribute will result a single target with multiple observations instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">computeCov</span></code>: Indicate whether the experiment covariance matrix is provided or computed based on given experiment observations. If True, we will compute the covariance based on given observations, else, the user need to provide the covariance matrix.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">correlation</span></code>: Indicate whether the targets are correlated or not. If True, and <code class="docutils literal notranslate"><span class="pre">compute</span></code> is True, we will compute the covariance matrix, elif False and <code class="docutils literal notranslate"><span class="pre">compute</span></code> is True, we will only compute the variance of each target.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expCov</span></code>: Experiment covariance, i.e. measurement noise. This node accepts the following attribute:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">diag</span></code>: If True, only variance for each target is required to provide, else, the user need to provide the full covariance matrix.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">biasTargets</span></code>: Model uncertainty/discrepancy/bias/error in Targets that are used in calibration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">biasCov</span></code>: Model covariance, model bias/discrepancy or model inadequacy caused by missing physics or numerical approximation. This node accepts the following attribute:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">diag</span></code>: If True, only variance for each target is required to provide, else, the user need to provide the full covariance matrix.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">romCov</span></code>: Model uncertainty caused by surrogate model, such as interpolation. This node accepts the following attribute:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">diag</span></code>: If True, only variance for each target is required to provide, else, the user need to provide the full covariance matrix.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reduction</span></code>: Allows reduction on likelihood model construction. This node accepts the following attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: The method used for reduction, default is <strong>PCA</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">basis</span></code>: user provided basis vector for reduction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shape</span></code>: determine the basis vectors for reduction. For example, <code class="docutils literal notranslate"><span class="pre">shape=&quot;10,2&quot;</span></code> will indicate 2 basis vectors with dimension 10</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mc.html" class="btn btn-neutral float-right" title="Monte Carlo Sampling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Congjian Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

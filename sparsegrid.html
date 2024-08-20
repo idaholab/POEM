@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generate Sparse Grid Locations &mdash; POEM 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=359c27e9"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sensitivity Analysis" href="sen.html" />
+    <link rel="prev" title="Train ROM" href="rom.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            POEM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mc.html">Monte Carlo Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lhs.html">Latin Hypercube Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rom.html">Train ROM</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Generate Sparse Grid Locations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#static-model">Static Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dynamic-model">Dynamic Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sen.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bayesian.html">Bayesian Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration.html">Model Calibration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">POEM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Generate Sparse Grid Locations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sparsegrid.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="generate-sparse-grid-locations">
+<span id="sparsegrid"></span><h1>Generate Sparse Grid Locations<a class="headerlink" href="#generate-sparse-grid-locations" title="Permalink to this heading">¶</a></h1>
+<p>Sparse grid model explorations with Gaussian Polynomial Chaos surrogate model to accelerate experiment design:</p>
+<p>When generating sparse grid locations, the users can also set the highest order of the Gaussian Polynomial Chaos expansions.
+The higher of the Polynomial order, the more sparse grid locations will be generated.
+Just set <code class="docutils literal notranslate"><span class="pre">&lt;PolynomialOrder&gt;</span></code> in <code class="docutils literal notranslate"><span class="pre">&lt;GlobalSettings&gt;</span></code>.</p>
+<p>Once the experiment data are generated at given sparse grid locations, the Gaussian Polynomial Chaos surrogate
+can be automatically constructed. See the <code class="docutils literal notranslate"><span class="pre">Train</span> <span class="pre">ROM</span></code> section on how to train Gaussian Polynomial Chaos surrogate
+model.</p>
+<section id="static-model">
+<h2>Static Model<a class="headerlink" href="#static-model" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Simulation&gt;</span>
+<span class="w">  </span><span class="nt">&lt;RunInfo&gt;</span>
+<span class="w">    </span><span class="nt">&lt;WorkingDir&gt;</span>SparseGrid<span class="nt">&lt;/WorkingDir&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Sequence&gt;</span>SparseGridSampler,<span class="w"> </span>print<span class="nt">&lt;/Sequence&gt;</span>
+<span class="w">    </span><span class="nt">&lt;batchSize&gt;</span>1<span class="nt">&lt;/batchSize&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/RunInfo&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;GlobalSettings&gt;</span>
+<span class="w">    </span><span class="nt">&lt;AnalysisType&gt;</span>sparse_grid_construction<span class="nt">&lt;/AnalysisType&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Inputs&gt;</span>x,<span class="w"> </span>y<span class="nt">&lt;/Inputs&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Outputs&gt;</span>z1<span class="nt">&lt;/Outputs&gt;</span>
+<span class="w">    </span><span class="nt">&lt;PolynomialOrder&gt;</span>3<span class="nt">&lt;/PolynomialOrder&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/GlobalSettings&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;Distributions&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Uniform</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;x&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;lowerBound&gt;</span>-10<span class="nt">&lt;/lowerBound&gt;</span>
+<span class="w">      </span><span class="nt">&lt;upperBound&gt;</span>10<span class="nt">&lt;/upperBound&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Uniform&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Uniform</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;y&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;lowerBound&gt;</span>-10<span class="nt">&lt;/lowerBound&gt;</span>
+<span class="w">      </span><span class="nt">&lt;upperBound&gt;</span>10<span class="nt">&lt;/upperBound&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Uniform&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/Distributions&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;Models&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ExternalModel</span><span class="w"> </span><span class="na">ModuleToLoad=</span><span class="s">&quot;../models/matyas&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;externalModel&quot;</span><span class="w"> </span><span class="na">subType=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;inputs&gt;</span>x,<span class="w"> </span>y<span class="nt">&lt;/inputs&gt;</span>
+<span class="w">      </span><span class="nt">&lt;outputs&gt;</span>z1<span class="nt">&lt;/outputs&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/ExternalModel&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/Models&gt;</span>
+
+<span class="nt">&lt;/Simulation&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="dynamic-model">
+<h2>Dynamic Model<a class="headerlink" href="#dynamic-model" title="Permalink to this heading">¶</a></h2>
+<p>When a dynamic model is provided, the users need to set <code class="docutils literal notranslate"><span class="pre">&lt;pivot&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;dynamic&gt;</span></code> node in the
+<code class="docutils literal notranslate"><span class="pre">&lt;GlobalSettings&gt;</span></code>. As illustrated in the following example.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>
+<span class="nt">&lt;Simulation&gt;</span>
+<span class="w">  </span><span class="nt">&lt;RunInfo&gt;</span>
+<span class="w">    </span><span class="nt">&lt;WorkingDir&gt;</span>SparseGrid<span class="nt">&lt;/WorkingDir&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Sequence&gt;</span>SparseGridSampler,<span class="w"> </span>print<span class="nt">&lt;/Sequence&gt;</span>
+<span class="w">    </span><span class="nt">&lt;batchSize&gt;</span>1<span class="nt">&lt;/batchSize&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/RunInfo&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;GlobalSettings&gt;</span>
+<span class="w">    </span><span class="nt">&lt;AnalysisType&gt;</span>sparse_grid_construction<span class="nt">&lt;/AnalysisType&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Inputs&gt;</span>x0,<span class="w"> </span>y0,<span class="w"> </span>z0<span class="nt">&lt;/Inputs&gt;</span>
+<span class="w">    </span><span class="nt">&lt;pivot&gt;</span>time<span class="nt">&lt;/pivot&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dynamic&gt;</span>True<span class="nt">&lt;/dynamic&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Outputs&gt;</span>x,y,z<span class="nt">&lt;/Outputs&gt;</span>
+<span class="w">    </span><span class="nt">&lt;PolynomialOrder&gt;</span>3<span class="nt">&lt;/PolynomialOrder&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/GlobalSettings&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;Distributions&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Normal</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;x0&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;mean&gt;</span>4<span class="nt">&lt;/mean&gt;</span>
+<span class="w">      </span><span class="nt">&lt;sigma&gt;</span>1<span class="nt">&lt;/sigma&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Normal&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Normal</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;y0&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;mean&gt;</span>4<span class="nt">&lt;/mean&gt;</span>
+<span class="w">      </span><span class="nt">&lt;sigma&gt;</span>1<span class="nt">&lt;/sigma&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Normal&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Normal</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;z0&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;mean&gt;</span>4<span class="nt">&lt;/mean&gt;</span>
+<span class="w">      </span><span class="nt">&lt;sigma&gt;</span>1<span class="nt">&lt;/sigma&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Normal&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/Distributions&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;Models&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ExternalModel</span><span class="w"> </span><span class="na">ModuleToLoad=</span><span class="s">&quot;../models/lorentzAttractor.py&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;lorentzAttractor&quot;</span><span class="w"> </span><span class="na">subType=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;inputs&gt;</span>inputGroup<span class="nt">&lt;/inputs&gt;</span>
+<span class="w">      </span><span class="nt">&lt;outputs&gt;</span>outputGroup<span class="nt">&lt;/outputs&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/ExternalModel&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/Models&gt;</span>
+
+<span class="nt">&lt;/Simulation&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rom.html" class="btn btn-neutral float-left" title="Train ROM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sen.html" class="btn btn-neutral float-right" title="Sensitivity Analysis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Congjian Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

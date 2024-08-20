@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.poem.PoemTemplate &mdash; POEM 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=359c27e9"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            POEM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mc.html">Monte Carlo Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lhs.html">Latin Hypercube Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rom.html">Train ROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sparsegrid.html">Generate Sparse Grid Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sen.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bayesian.html">Bayesian Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../calibration.html">Model Calibration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../support.html">Support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">POEM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.poem.PoemTemplate</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.poem.PoemTemplate</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on April 1, 2024</span>
+<span class="sd">@author: wangc</span>
+
+<span class="sd">This module inherits from base Template class for Input Templates, which use an established input</span>
+<span class="sd">template as an accelerated way to write new RAVEN workflows.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">POEM.src._utils</span> <span class="k">as</span> <span class="nn">POEM_utils</span>
+<div class="viewcode-block" id="RAVEN_FRAMEWORK_LOC"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.RAVEN_FRAMEWORK_LOC">[docs]</a><span class="n">RAVEN_FRAMEWORK_LOC</span> <span class="o">=</span> <span class="n">POEM_utils</span><span class="o">.</span><span class="n">get_raven_loc</span><span class="p">()</span></div>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RAVEN_FRAMEWORK_LOC</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">ravenframework.InputTemplates.TemplateBaseClass</span> <span class="kn">import</span> <span class="n">Template</span> <span class="k">as</span> <span class="n">TemplateBase</span>
+<span class="kn">from</span> <span class="nn">ravenframework.utils</span> <span class="kn">import</span> <span class="n">xmlUtils</span>
+
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PoemTemplate"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate">[docs]</a><span class="k">class</span> <span class="nc">PoemTemplate</span><span class="p">(</span><span class="n">TemplateBase</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot; POEM: Template Class &quot;&quot;&quot;</span>
+
+  <span class="c1">###############</span>
+  <span class="c1"># API METHODS #</span>
+  <span class="c1">###############</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      Constructor.</span>
+<span class="sd">      @ In, None</span>
+<span class="sd">      @ Out, None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">TemplateBase</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<div class="viewcode-block" id="PoemTemplate._validEntities"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate._validEntities">[docs]</a>    <span class="bp">self</span><span class="o">.</span><span class="n">_validEntities</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RunInfo&#39;</span><span class="p">,</span> <span class="s1">&#39;Files&#39;</span><span class="p">,</span> <span class="s1">&#39;Models&#39;</span><span class="p">,</span> <span class="s1">&#39;Distributions&#39;</span><span class="p">,</span> <span class="s1">&#39;Samplers&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimizers&#39;</span><span class="p">,</span> <span class="s1">&#39;DataObjects&#39;</span><span class="p">,</span> <span class="s1">&#39;OutStreams&#39;</span><span class="p">,</span> <span class="s1">&#39;Functions&#39;</span><span class="p">,</span> <span class="s1">&#39;Steps&#39;</span><span class="p">,</span> <span class="s1">&#39;Metrics&#39;</span><span class="p">,</span> <span class="s1">&#39;VariableGroups&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PoemTemplate.loadTemplate"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.loadTemplate">[docs]</a>  <span class="k">def</span> <span class="nf">loadTemplate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      Loads template file statefully.</span>
+<span class="sd">      @ In, filename, str, name of file to load (xml)</span>
+<span class="sd">      @ Out, None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_template</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">xmlUtils</span><span class="o">.</span><span class="n">loadToTree</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PoemTemplate.createWorkflow"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.createWorkflow">[docs]</a>  <span class="k">def</span> <span class="nf">createWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">miscDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      creates a new RAVEN workflow based on the information in dicitonary &quot;inputs&quot;.</span>
+<span class="sd">      @ In, inputs, dict, dictionary that contains xml node info that need to append, i.e. {RavenXMLNodeTag: ListOfNodes}</span>
+<span class="sd">      @ In, miscDict, dict, dictionary that contains xml node text info that need to update, i.e. {RavenXMLNodeTag: value}</span>
+<span class="sd">      @ Out, xml.etree.ElementTree.Element, modified copy of template ready to run</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># call the base class to read in the template; this just creates a copy of the XML tree in self._template.</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">TemplateBase</span><span class="o">.</span><span class="n">createWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="n">runInfo</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;RunInfo&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">inputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;RunInfo&#39;</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">subnode</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="n">sub</span> <span class="o">=</span> <span class="n">runInfo</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">subnode</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sub</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+              <span class="n">sub</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">subnode</span><span class="o">.</span><span class="n">text</span>
+            <span class="k">else</span><span class="p">:</span>
+              <span class="n">runInfo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subnode</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">subnode</span> <span class="ow">in</span> <span class="n">template</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+              <span class="n">subnode</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+          <span class="c1"># Update Models info</span>
+          <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;Models&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">multiRunNode</span> <span class="ow">in</span> <span class="n">template</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s1">&#39;MultiRun&#39;</span><span class="p">):</span>
+              <span class="n">modelNode</span> <span class="o">=</span> <span class="n">multiRunNode</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span>
+              <span class="k">if</span> <span class="n">modelNode</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ROM&#39;</span><span class="p">,</span> <span class="s1">&#39;EnsembleModel&#39;</span><span class="p">]:</span>
+                <span class="n">modelNode</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+                <span class="n">modelNode</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tag</span>
+            <span class="k">for</span> <span class="n">subnode</span> <span class="ow">in</span> <span class="n">template</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+              <span class="n">ensemble</span> <span class="o">=</span> <span class="n">subnode</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;EnsembleModel&#39;</span><span class="p">)</span>
+              <span class="k">if</span> <span class="n">ensemble</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ensemble</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">):</span>
+                  <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;model&#39;</span><span class="p">:</span>
+                    <span class="n">m</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+                    <span class="n">m</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tag</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">extraNode</span> <span class="o">=</span> <span class="n">xmlUtils</span><span class="o">.</span><span class="n">newNode</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">extraNode</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">template</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extraNode</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">miscDict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">for</span> <span class="n">subnode</span> <span class="ow">in</span> <span class="n">template</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">val</span><span class="p">:</span>
+          <span class="n">subnode</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="k">return</span> <span class="n">template</span></div>
+
+<div class="viewcode-block" id="PoemTemplate.writeWorkflow"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.writeWorkflow">[docs]</a>  <span class="k">def</span> <span class="nf">writeWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      Writes a template to file.</span>
+<span class="sd">      @ In, template, xml.etree.ElementTree.Element, file to write</span>
+<span class="sd">      @ In, destination, str, path and filename to write to</span>
+<span class="sd">      @ In, run, bool, optional, if True then run the workflow after writing? good idea?</span>
+<span class="sd">      @ Out, errors, int, 0 if successfully wrote [and run] and nonzero if there was a problem</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">TemplateBase</span><span class="o">.</span><span class="n">writeWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PoemTemplate.runWorkflow"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.runWorkflow">[docs]</a>  <span class="k">def</span> <span class="nf">runWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      Runs the workflow at the destination.</span>
+<span class="sd">      @ In, destination, str, path and filename of RAVEN input file</span>
+<span class="sd">      @ Out, res, int, system results of running the code</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">TemplateBase</span><span class="o">.</span><span class="n">runWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Congjian Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

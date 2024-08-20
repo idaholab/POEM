@@ -1,0 +1,68 @@
+PoemTester
+==========
+
+.. py:module:: PoemTester
+
+.. autoapi-nested-parse::
+
+   Tests by running an executable.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   PoemTester.POEM_LOC
+   PoemTester.RAVEN_FRAMEWORK_LOC
+   PoemTester.TESTER_LOC
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   PoemTester.PoemRun
+
+
+Module Contents
+---------------
+
+.. py:data:: POEM_LOC
+
+.. py:data:: RAVEN_FRAMEWORK_LOC
+
+.. py:data:: TESTER_LOC
+
+.. py:class:: PoemRun(name, param)
+
+   Bases: :py:obj:`RavenFramework.RavenFramework`
+
+
+   A POEM stand-alone test interface.
+
+
+   .. py:method:: get_valid_params()
+      :staticmethod:
+
+
+      Return a list of valid parameters and their descriptions for this type
+      of test.
+      @ In, None
+      @ Out, params, _ValidParameters, the parameters for this class.
+
+
+
+   .. py:attribute:: poem_driver
+
+
+   .. py:method:: get_command()
+
+      Return the command this test will run.
+      @ In, None
+      @ Out, cmd, string, command to run
+
+
+

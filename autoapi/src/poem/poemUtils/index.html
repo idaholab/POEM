@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.poem.poemUtils &mdash; POEM 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=359c27e9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="src._utils" href="../../_utils/index.html" />
+    <link rel="prev" title="src.poem.plotUtils" href="../plotUtils/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            POEM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mc.html">Monte Carlo Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lhs.html">Latin Hypercube Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rom.html">Train ROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sparsegrid.html">Generate Sparse Grid Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sen.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bayesian.html">Bayesian Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../calibration.html">Model Calibration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../support.html">Support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">src</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">src.poem</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../templates/index.html">src.poem.templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../PoemTemplate/index.html">src.poem.PoemTemplate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../PoemTemplateInterface/index.html">src.poem.PoemTemplateInterface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plotUtils/index.html">src.poem.plotUtils</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">src.poem.poemUtils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../_utils/index.html">src._utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../main/index.html">src.main</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../PoemTester/index.html">PoemTester</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">POEM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">src</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">src.poem</a></li>
+      <li class="breadcrumb-item active">src.poem.poemUtils</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/src/poem/poemUtils/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-src.poem.poemUtils">
+<span id="src-poem-poemutils"></span><h1>src.poem.poemUtils<a class="headerlink" href="#module-src.poem.poemUtils" title="Permalink to this heading">¶</a></h1>
+<p>Created on April 1, 2024
+&#64;author: wangc</p>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.poem.poemUtils.logger" title="src.poem.poemUtils.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.poem.poemUtils.convertNodeTextToList" title="src.poem.poemUtils.convertNodeTextToList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convertNodeTextToList</span></code></a>(nodeText[, sep])</p></td>
+<td><p>Convert space or comma separated string to list of string</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.poem.poemUtils.convertNodeTextToFloatList" title="src.poem.poemUtils.convertNodeTextToFloatList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convertNodeTextToFloatList</span></code></a>(nodeText[, sep])</p></td>
+<td><p>Convert space or comma separated string to list of float</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.poem.poemUtils.convertStringToFloat" title="src.poem.poemUtils.convertStringToFloat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convertStringToFloat</span></code></a>(xmlNode)</p></td>
+<td><p>Convert xml node text to float</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.poem.poemUtils.convertStringToInt" title="src.poem.poemUtils.convertStringToInt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convertStringToInt</span></code></a>(xmlNode)</p></td>
+<td><p>Convert xml node text to integer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.poem.poemUtils.toString" title="src.poem.poemUtils.toString"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toString</span></code></a>(s)</p></td>
+<td><p>Method aimed to convert a string in type str</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.poem.poemUtils.convertStringToBool" title="src.poem.poemUtils.convertStringToBool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convertStringToBool</span></code></a>(nodeText)</p></td>
+<td><p>Convert string to bool</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="src.poem.poemUtils.logger">
+<span class="sig-prename descclassname"><span class="pre">src.poem.poemUtils.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../_modules/src/poem/poemUtils.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.poemUtils.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.poem.poemUtils.convertNodeTextToList">
+<span class="sig-prename descclassname"><span class="pre">src.poem.poemUtils.</span></span><span class="sig-name descname"><span class="pre">convertNodeTextToList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodeText</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/poemUtils.html#convertNodeTextToList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.poemUtils.convertNodeTextToList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert space or comma separated string to list of string
+&#64; In, nodeText, str, string from xml node text
+&#64; Out, listData, list, list of strings</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.poem.poemUtils.convertNodeTextToFloatList">
+<span class="sig-prename descclassname"><span class="pre">src.poem.poemUtils.</span></span><span class="sig-name descname"><span class="pre">convertNodeTextToFloatList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodeText</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/poemUtils.html#convertNodeTextToFloatList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.poemUtils.convertNodeTextToFloatList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert space or comma separated string to list of float
+&#64; In, nodeText, str, string from xml node text
+&#64; Out, listData, list, list of floats</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.poem.poemUtils.convertStringToFloat">
+<span class="sig-prename descclassname"><span class="pre">src.poem.poemUtils.</span></span><span class="sig-name descname"><span class="pre">convertStringToFloat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmlNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/poemUtils.html#convertStringToFloat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.poemUtils.convertStringToFloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert xml node text to float
+&#64; In, xmlNode, xml.etree.ElementTree.Element, xml element
+&#64; Out, val, float, value of xml element text</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.poem.poemUtils.convertStringToInt">
+<span class="sig-prename descclassname"><span class="pre">src.poem.poemUtils.</span></span><span class="sig-name descname"><span class="pre">convertStringToInt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmlNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/poemUtils.html#convertStringToInt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.poemUtils.convertStringToInt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert xml node text to integer.
+&#64; In, xmlNode, xml.etree.ElementTree.Element, xml element
+&#64; Out, val, integer, value of xml element text</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.poem.poemUtils.toString">
+<span class="sig-prename descclassname"><span class="pre">src.poem.poemUtils.</span></span><span class="sig-name descname"><span class="pre">toString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/poemUtils.html#toString"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.poemUtils.toString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method aimed to convert a string in type str
+&#64; In, s, string,  string to be converted
+&#64; Out, s, string, the casted value</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.poem.poemUtils.convertStringToBool">
+<span class="sig-prename descclassname"><span class="pre">src.poem.poemUtils.</span></span><span class="sig-name descname"><span class="pre">convertStringToBool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodeText</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/poemUtils.html#convertStringToBool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.poemUtils.convertStringToBool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert string to bool
+&#64; In, nodeText, str, string from xml node text
+&#64; Out, val, bool, True or False</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../plotUtils/index.html" class="btn btn-neutral float-left" title="src.poem.plotUtils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../_utils/index.html" class="btn btn-neutral float-right" title="src._utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Congjian Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

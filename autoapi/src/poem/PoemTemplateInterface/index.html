@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.poem.PoemTemplateInterface &mdash; POEM 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=359c27e9"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="src.poem.plotUtils" href="../plotUtils/index.html" />
+    <link rel="prev" title="src.poem.PoemTemplate" href="../PoemTemplate/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            POEM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mc.html">Monte Carlo Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lhs.html">Latin Hypercube Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rom.html">Train ROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sparsegrid.html">Generate Sparse Grid Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sen.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bayesian.html">Bayesian Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../calibration.html">Model Calibration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../support.html">Support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">src</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">src.poem</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../templates/index.html">src.poem.templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../PoemTemplate/index.html">src.poem.PoemTemplate</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">src.poem.PoemTemplateInterface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plotUtils/index.html">src.poem.plotUtils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../poemUtils/index.html">src.poem.poemUtils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../_utils/index.html">src._utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../main/index.html">src.main</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../PoemTester/index.html">PoemTester</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">POEM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">src</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">src.poem</a></li>
+      <li class="breadcrumb-item active">src.poem.PoemTemplateInterface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/src/poem/PoemTemplateInterface/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-src.poem.PoemTemplateInterface">
+<span id="src-poem-poemtemplateinterface"></span><h1>src.poem.PoemTemplateInterface<a class="headerlink" href="#module-src.poem.PoemTemplateInterface" title="Permalink to this heading">¶</a></h1>
+<p>Created on April 1, 2024
+&#64;author: wangc</p>
+<p>This module is the POEM Template interface, which use the user provided input XML
+file to construct the corresponding RAVEN workflows i.e. RAVEN input XML file.</p>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.poem.PoemTemplateInterface.logger" title="src.poem.PoemTemplateInterface.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.poem.PoemTemplateInterface.fh" title="src.poem.PoemTemplateInterface.fh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fh</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.poem.PoemTemplateInterface.formatter" title="src.poem.PoemTemplateInterface.formatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">formatter</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.poem.PoemTemplateInterface.ravenFrameworkPath" title="src.poem.PoemTemplateInterface.ravenFrameworkPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ravenFrameworkPath</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface" title="src.poem.PoemTemplateInterface.PoemTemplateInterface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PoemTemplateInterface</span></code></a></p></td>
+<td><p>POEM Template Interface</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.logger">
+<span class="sig-prename descclassname"><span class="pre">src.poem.PoemTemplateInterface.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.fh">
+<span class="sig-prename descclassname"><span class="pre">src.poem.PoemTemplateInterface.</span></span><span class="sig-name descname"><span class="pre">fh</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#fh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.fh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.formatter">
+<span class="sig-prename descclassname"><span class="pre">src.poem.PoemTemplateInterface.</span></span><span class="sig-name descname"><span class="pre">formatter</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#formatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.formatter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.ravenFrameworkPath">
+<span class="sig-prename descclassname"><span class="pre">src.poem.PoemTemplateInterface.</span></span><span class="sig-name descname"><span class="pre">ravenFrameworkPath</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#ravenFrameworkPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.ravenFrameworkPath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.poem.PoemTemplateInterface.</span></span><span class="sig-name descname"><span class="pre">PoemTemplateInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>POEM Template Interface</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.uniformDistNode">
+<span class="sig-name descname"><span class="pre">uniformDistNode</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.uniformDistNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.uniformDistNode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.samplerVarNode">
+<span class="sig-name descname"><span class="pre">samplerVarNode</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.samplerVarNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.samplerVarNode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.externalModelNode">
+<span class="sig-name descname"><span class="pre">externalModelNode</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.externalModelNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.externalModelNode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.lhExternalModelNode">
+<span class="sig-name descname"><span class="pre">lhExternalModelNode</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.lhExternalModelNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.lhExternalModelNode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.lhModelNode">
+<span class="sig-name descname"><span class="pre">lhModelNode</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.lhModelNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.lhModelNode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.reductionNode">
+<span class="sig-name descname"><span class="pre">reductionNode</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.reductionNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.reductionNode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.basisNode">
+<span class="sig-name descname"><span class="pre">basisNode</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.basisNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.basisNode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.validAnalysis">
+<span class="sig-name descname"><span class="pre">validAnalysis</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['sensitivity',</span> <span class="pre">'sparse_grid_construction',</span> <span class="pre">'sparse_grid_rom',</span> <span class="pre">'lhs',</span> <span class="pre">'mc',</span> <span class="pre">'train_rom',...</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.validAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.validAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.analysisRequired">
+<span class="sig-name descname"><span class="pre">analysisRequired</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.analysisRequired"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.analysisRequired" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.analysisOptions">
+<span class="sig-name descname"><span class="pre">analysisOptions</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.analysisOptions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.analysisOptions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._inputFile">
+<span class="sig-name descname"><span class="pre">_inputFile</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._inputFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._inputFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._filenameRoot">
+<span class="sig-name descname"><span class="pre">_filenameRoot</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._filenameRoot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._filenameRoot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._inputVarList">
+<span class="sig-name descname"><span class="pre">_inputVarList</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._inputVarList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._inputVarList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._outputVarList">
+<span class="sig-name descname"><span class="pre">_outputVarList</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._outputVarList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._outputVarList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._externalModelList">
+<span class="sig-name descname"><span class="pre">_externalModelList</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._externalModelList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._externalModelList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._externalModelInputDict">
+<span class="sig-name descname"><span class="pre">_externalModelInputDict</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._externalModelInputDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._externalModelInputDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._externalModelOutputDict">
+<span class="sig-name descname"><span class="pre">_externalModelOutputDict</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._externalModelOutputDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._externalModelOutputDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._distList">
+<span class="sig-name descname"><span class="pre">_distList</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._distList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._distList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._samplerList">
+<span class="sig-name descname"><span class="pre">_samplerList</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._samplerList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._samplerList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._ensembleModelList">
+<span class="sig-name descname"><span class="pre">_ensembleModelList</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._ensembleModelList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._ensembleModelList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._dsList">
+<span class="sig-name descname"><span class="pre">_dsList</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._dsList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._dsList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._printList">
+<span class="sig-name descname"><span class="pre">_printList</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._printList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._printList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._variableGroupsList">
+<span class="sig-name descname"><span class="pre">_variableGroupsList</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._variableGroupsList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._variableGroupsList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._inputDict">
+<span class="sig-name descname"><span class="pre">_inputDict</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._inputDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._inputDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._pivot">
+<span class="sig-name descname"><span class="pre">_pivot</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'time'</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._pivot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._pivot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._limit">
+<span class="sig-name descname"><span class="pre">_limit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._limit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._initSamples">
+<span class="sig-name descname"><span class="pre">_initSamples</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._initSamples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._initSamples" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._templateFile">
+<span class="sig-name descname"><span class="pre">_templateFile</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._templateFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._templateFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._analysisType">
+<span class="sig-name descname"><span class="pre">_analysisType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._analysisType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._analysisType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._ravenNodeDict">
+<span class="sig-name descname"><span class="pre">_ravenNodeDict</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._ravenNodeDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._ravenNodeDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._statsPrefix">
+<span class="sig-name descname"><span class="pre">_statsPrefix</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['skewness',</span> <span class="pre">'variationCoefficient',</span> <span class="pre">'mean',</span> <span class="pre">'kurtosis',</span> <span class="pre">'median',</span> <span class="pre">'max',</span> <span class="pre">'min',</span> <span class="pre">'var',</span> <span class="pre">'sigma']</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._statsPrefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._statsPrefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._statsVectorPrefix">
+<span class="sig-name descname"><span class="pre">_statsVectorPrefix</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['nsen',</span> <span class="pre">'sen',</span> <span class="pre">'pearson',</span> <span class="pre">'cov',</span> <span class="pre">'vsen',</span> <span class="pre">'spearman']</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._statsVectorPrefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._statsVectorPrefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._polynomialOrder">
+<span class="sig-name descname"><span class="pre">_polynomialOrder</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'2'</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._polynomialOrder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._polynomialOrder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._sparseGridData">
+<span class="sig-name descname"><span class="pre">_sparseGridData</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._sparseGridData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._sparseGridData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._data">
+<span class="sig-name descname"><span class="pre">_data</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._expTargets">
+<span class="sig-name descname"><span class="pre">_expTargets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._expTargets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._expTargets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._expCov">
+<span class="sig-name descname"><span class="pre">_expCov</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._expCov"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._expCov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._dynamic">
+<span class="sig-name descname"><span class="pre">_dynamic</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._dynamic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._dynamic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._initInputs">
+<span class="sig-name descname"><span class="pre">_initInputs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._initInputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._initInputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._globalSettings">
+<span class="sig-name descname"><span class="pre">_globalSettings</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._globalSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._globalSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface._miscDict">
+<span class="sig-name descname"><span class="pre">_miscDict</span></span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface._miscDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface._miscDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.getTemplateFile">
+<span class="sig-name descname"><span class="pre">getTemplateFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.getTemplateFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.getTemplateFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.getOutput">
+<span class="sig-name descname"><span class="pre">getOutput</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.getOutput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.getOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the processed outputs from this class: PoemTemplateInterface
+&#64; In, None
+&#64; Out, (outputDict, miscDict), tuple, first dictionary contains the whole element that need to be appended in</p>
+<blockquote>
+<div><p>the templated input, while the second dictionary contains only the values that need to be replaced.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.readInput">
+<span class="sig-name descname"><span class="pre">readInput</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.readInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.readInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the POEM input files, and construct corresponding ET elements
+&#64; In, None
+&#64; Out, None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.readGlobalSettings">
+<span class="sig-name descname"><span class="pre">readGlobalSettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmlNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.readGlobalSettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.readGlobalSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the RunInfo XML node from the input root
+&#64; In, xmlNode, xml.etree.ElementTree.Element, the input root xml
+&#64; Out, None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.checkInput">
+<span class="sig-name descname"><span class="pre">checkInput</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.checkInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.checkInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the consistency of user provided inputs
+&#64; In, None
+&#64; Out, None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.buildPointSet">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">buildPointSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.buildPointSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildPointSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build single PointSet XML node
+&#64; In, name, str, the name for the PointSet
+&#64; In, inputs, str, string that contains the list of input variables
+&#64; In, outputs, str, string that contains the list of output variables
+&#64; out, pointSet, xml.etree.ElementTree.Element, the constructed PointSet XML node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.buildHistorySet">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">buildHistorySet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pivot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'time'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.buildHistorySet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildHistorySet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build single HistorySet XML node
+&#64; In, name, str, the name for the PointSet
+&#64; In, inputs, str, string that contains the list of input variables
+&#64; In, outputs, str, string that contains the list of output variables
+&#64; out, historySet, xml.etree.ElementTree.Element, the constructed HistorySet XML node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.buildPrint">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">buildPrint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.buildPrint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildPrint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build single OutStream Print XML node
+&#64; In, name, str, the name for the PointSet
+&#64; In, source, str, string that contains name of Data Object
+&#64; out, printObj, xml.etree.ElementTree.Element, the constructed print XML node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.buildSamplerVariable">
+<span class="sig-name descname"><span class="pre">buildSamplerVariable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distNode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.buildSamplerVariable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildSamplerVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>build the sampler variable block</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.buildSparseGridSampler">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">buildSparseGridSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SparseGrid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.buildSparseGridSampler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildSparseGridSampler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.buildMonteCarloSampler">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">buildMonteCarloSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.buildMonteCarloSampler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildMonteCarloSampler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.buildVariableGroup">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">buildVariableGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">varList</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.buildVariableGroup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildVariableGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build variable group node
+&#64; In, name, str, the name for the variable group
+&#64; In, varList, list, list of variables
+&#64; out, group, xml.etree.ElementTree.Element, the constructed variable group XML node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.buildStatsGroup">
+<span class="sig-name descname"><span class="pre">buildStatsGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.buildStatsGroup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildStatsGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build basic statistic variable group node
+&#64; In, name, str, the name for the variable group
+&#64; In, inputs, list, list of input variables
+&#64; In, outputs, list, list of output variables
+&#64; out, group, xml.etree.ElementTree.Element, the constructed variable group XML node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.poem.PoemTemplateInterface.PoemTemplateInterface.findRequiredNode">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">findRequiredNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmlNode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodeTag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/src/poem/PoemTemplateInterface.html#PoemTemplateInterface.findRequiredNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.poem.PoemTemplateInterface.PoemTemplateInterface.findRequiredNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the required xml node
+&#64; In, xmlNode, xml.etree.ElementTree.Element, xml element node
+&#64; In, nodeTag, str, node tag that is used to find the node
+&#64; Out, subnode, xml.etree.ElementTree.Element, xml element node</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../PoemTemplate/index.html" class="btn btn-neutral float-left" title="src.poem.PoemTemplate" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../plotUtils/index.html" class="btn btn-neutral float-right" title="src.poem.plotUtils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Congjian Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

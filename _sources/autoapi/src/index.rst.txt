@@ -1,0 +1,25 @@
+src
+===
+
+.. py:module:: src
+
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/poem/index
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/_utils/index
+   /autoapi/src/main/index
+
+

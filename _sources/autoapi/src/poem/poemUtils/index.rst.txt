@@ -1,0 +1,80 @@
+src.poem.poemUtils
+==================
+
+.. py:module:: src.poem.poemUtils
+
+.. autoapi-nested-parse::
+
+   Created on April 1, 2024
+   @author: wangc
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.poem.poemUtils.logger
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.poem.poemUtils.convertNodeTextToList
+   src.poem.poemUtils.convertNodeTextToFloatList
+   src.poem.poemUtils.convertStringToFloat
+   src.poem.poemUtils.convertStringToInt
+   src.poem.poemUtils.toString
+   src.poem.poemUtils.convertStringToBool
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:function:: convertNodeTextToList(nodeText, sep=None)
+
+   Convert space or comma separated string to list of string
+   @ In, nodeText, str, string from xml node text
+   @ Out, listData, list, list of strings
+
+
+.. py:function:: convertNodeTextToFloatList(nodeText, sep=None)
+
+   Convert space or comma separated string to list of float
+   @ In, nodeText, str, string from xml node text
+   @ Out, listData, list, list of floats
+
+
+.. py:function:: convertStringToFloat(xmlNode)
+
+   Convert xml node text to float
+   @ In, xmlNode, xml.etree.ElementTree.Element, xml element
+   @ Out, val, float, value of xml element text
+
+
+.. py:function:: convertStringToInt(xmlNode)
+
+   Convert xml node text to integer.
+   @ In, xmlNode, xml.etree.ElementTree.Element, xml element
+   @ Out, val, integer, value of xml element text
+
+
+.. py:function:: toString(s)
+
+   Method aimed to convert a string in type str
+   @ In, s, string,  string to be converted
+   @ Out, s, string, the casted value
+
+
+.. py:function:: convertStringToBool(nodeText)
+
+   Convert string to bool
+   @ In, nodeText, str, string from xml node text
+   @ Out, val, bool, True or False
+
+

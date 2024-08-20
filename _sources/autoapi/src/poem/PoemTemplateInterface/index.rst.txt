@@ -1,0 +1,352 @@
+src.poem.PoemTemplateInterface
+==============================
+
+.. py:module:: src.poem.PoemTemplateInterface
+
+.. autoapi-nested-parse::
+
+   Created on April 1, 2024
+   @author: wangc
+
+   This module is the POEM Template interface, which use the user provided input XML
+   file to construct the corresponding RAVEN workflows i.e. RAVEN input XML file.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.poem.PoemTemplateInterface.logger
+   src.poem.PoemTemplateInterface.fh
+   src.poem.PoemTemplateInterface.formatter
+   src.poem.PoemTemplateInterface.ravenFrameworkPath
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.poem.PoemTemplateInterface.PoemTemplateInterface
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:data:: fh
+
+.. py:data:: formatter
+
+.. py:data:: ravenFrameworkPath
+
+.. py:class:: PoemTemplateInterface(filename)
+
+   Bases: :py:obj:`object`
+
+
+   POEM Template Interface
+
+
+   .. py:attribute:: uniformDistNode
+
+
+   .. py:attribute:: samplerVarNode
+
+
+   .. py:attribute:: externalModelNode
+
+
+   .. py:attribute:: lhExternalModelNode
+
+
+   .. py:attribute:: lhModelNode
+
+
+   .. py:attribute:: reductionNode
+
+
+   .. py:attribute:: basisNode
+
+
+   .. py:attribute:: validAnalysis
+      :value: ['sensitivity', 'sparse_grid_construction', 'sparse_grid_rom', 'lhs', 'mc', 'train_rom',...
+
+
+
+   .. py:attribute:: analysisRequired
+
+
+   .. py:attribute:: analysisOptions
+
+
+   .. py:attribute:: _inputFile
+
+
+   .. py:attribute:: _filenameRoot
+
+
+   .. py:attribute:: _inputVarList
+      :value: []
+
+
+
+   .. py:attribute:: _outputVarList
+      :value: []
+
+
+
+   .. py:attribute:: _externalModelList
+      :value: []
+
+
+
+   .. py:attribute:: _externalModelInputDict
+
+
+   .. py:attribute:: _externalModelOutputDict
+
+
+   .. py:attribute:: _distList
+      :value: []
+
+
+
+   .. py:attribute:: _samplerList
+      :value: []
+
+
+
+   .. py:attribute:: _ensembleModelList
+      :value: []
+
+
+
+   .. py:attribute:: _dsList
+      :value: []
+
+
+
+   .. py:attribute:: _printList
+      :value: []
+
+
+
+   .. py:attribute:: _variableGroupsList
+      :value: []
+
+
+
+   .. py:attribute:: _inputDict
+
+
+   .. py:attribute:: _pivot
+      :value: 'time'
+
+
+
+   .. py:attribute:: _limit
+      :value: 1000
+
+
+
+   .. py:attribute:: _initSamples
+      :value: 20
+
+
+
+   .. py:attribute:: _templateFile
+      :value: None
+
+
+
+   .. py:attribute:: _analysisType
+      :value: None
+
+
+
+   .. py:attribute:: _ravenNodeDict
+
+
+   .. py:attribute:: _statsPrefix
+      :value: ['skewness', 'variationCoefficient', 'mean', 'kurtosis', 'median', 'max', 'min', 'var', 'sigma']
+
+
+
+   .. py:attribute:: _statsVectorPrefix
+      :value: ['nsen', 'sen', 'pearson', 'cov', 'vsen', 'spearman']
+
+
+
+   .. py:attribute:: _polynomialOrder
+      :value: '2'
+
+
+
+   .. py:attribute:: _sparseGridData
+      :value: None
+
+
+
+   .. py:attribute:: _data
+      :value: None
+
+
+
+   .. py:attribute:: _expTargets
+      :value: None
+
+
+
+   .. py:attribute:: _expCov
+      :value: None
+
+
+
+   .. py:attribute:: _dynamic
+      :value: False
+
+
+
+   .. py:attribute:: _initInputs
+      :value: None
+
+
+
+   .. py:attribute:: _globalSettings
+
+
+   .. py:attribute:: _miscDict
+
+
+   .. py:method:: getTemplateFile()
+
+      
+
+
+
+   .. py:method:: getOutput()
+
+      get the processed outputs from this class: PoemTemplateInterface
+      @ In, None
+      @ Out, (outputDict, miscDict), tuple, first dictionary contains the whole element that need to be appended in
+        the templated input, while the second dictionary contains only the values that need to be replaced.
+
+
+
+   .. py:method:: readInput()
+
+      Read the POEM input files, and construct corresponding ET elements
+      @ In, None
+      @ Out, None
+
+
+
+   .. py:method:: readGlobalSettings(xmlNode)
+
+      Read the RunInfo XML node from the input root
+      @ In, xmlNode, xml.etree.ElementTree.Element, the input root xml
+      @ Out, None
+
+
+
+   .. py:method:: checkInput()
+
+      Check the consistency of user provided inputs
+      @ In, None
+      @ Out, None
+
+
+
+   .. py:method:: buildPointSet(name, inputs, outputs)
+      :staticmethod:
+
+
+      Build single PointSet XML node
+      @ In, name, str, the name for the PointSet
+      @ In, inputs, str, string that contains the list of input variables
+      @ In, outputs, str, string that contains the list of output variables
+      @ out, pointSet, xml.etree.ElementTree.Element, the constructed PointSet XML node
+
+
+
+   .. py:method:: buildHistorySet(name, inputs, outputs, pivot='time')
+      :staticmethod:
+
+
+      Build single HistorySet XML node
+      @ In, name, str, the name for the PointSet
+      @ In, inputs, str, string that contains the list of input variables
+      @ In, outputs, str, string that contains the list of output variables
+      @ out, historySet, xml.etree.ElementTree.Element, the constructed HistorySet XML node
+
+
+
+   .. py:method:: buildPrint(name, source)
+      :staticmethod:
+
+
+      Build single OutStream Print XML node
+      @ In, name, str, the name for the PointSet
+      @ In, source, str, string that contains name of Data Object
+      @ out, printObj, xml.etree.ElementTree.Element, the constructed print XML node
+
+
+
+   .. py:method:: buildSamplerVariable(inputs, distNode, limit=20, grid=False, init=None)
+
+      build the sampler variable block
+
+
+
+   .. py:method:: buildSparseGridSampler(name='SparseGrid')
+      :staticmethod:
+
+
+      
+
+
+
+   .. py:method:: buildMonteCarloSampler(name, limit)
+      :staticmethod:
+
+
+      
+
+
+
+   .. py:method:: buildVariableGroup(name, varList)
+      :staticmethod:
+
+
+      Build variable group node
+      @ In, name, str, the name for the variable group
+      @ In, varList, list, list of variables
+      @ out, group, xml.etree.ElementTree.Element, the constructed variable group XML node
+
+
+
+   .. py:method:: buildStatsGroup(name, inputs, outputs)
+
+      Build basic statistic variable group node
+      @ In, name, str, the name for the variable group
+      @ In, inputs, list, list of input variables
+      @ In, outputs, list, list of output variables
+      @ out, group, xml.etree.ElementTree.Element, the constructed variable group XML node
+
+
+
+   .. py:method:: findRequiredNode(xmlNode, nodeTag)
+      :staticmethod:
+
+
+      Find the required xml node
+      @ In, xmlNode, xml.etree.ElementTree.Element, xml element node
+      @ In, nodeTag, str, node tag that is used to find the node
+      @ Out, subnode, xml.etree.ElementTree.Element, xml element node
+
+
+
