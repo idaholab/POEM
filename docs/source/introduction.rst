@@ -31,7 +31,9 @@ Capabilities
 
   * See :ref:`lhs`
 
-    .. image:: ../pics/bayopt_matyas_LHS_existing_data.png
+    .. figure:: ../pics/bayopt_matyas_LHS_existing_data.png
+
+      Random model explorations with LHS sampling for experiment design
 
 * Machine learning aided parameter space exploration
 

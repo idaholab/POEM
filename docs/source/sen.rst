@@ -6,7 +6,7 @@ Sensitivity Analysis
 Static Sensitivity Analysis
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 In this analysis, set ``<AnalysisType>sensitivity</AnalysisType>``. A Monte Carlo method will
-be utilized to sample the given model with ``limit`` number.
+be utilized to sample the given model with ``<limit>`` number.
 
 .. code:: xml
 
