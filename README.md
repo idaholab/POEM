@@ -1,7 +1,7 @@
 # POEM
 ## Platform of Optimal Experiment Management (POEM)
 
-An optimal experimental design platform powered with automated machine learning to automatically guides the design of experiment to be evaluated.
+An optimal experimental design platform powered with automated machine learning to automatically guides the design of experiment to be evaluated. More information can be found at https://idaholab.github.io/POEM/
 
 ## How to build html?
 
