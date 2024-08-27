@@ -72,6 +72,12 @@ class PoemTemplate(TemplateBase):
               if modelNode.get('type') not in ['ROM', 'EnsembleModel']:
                 modelNode.text = val[0].get('name')
                 modelNode.attrib['type'] = val[0].tag
+              # remove 'dummyIN' Dataobject Input when there is a code
+              if val[0].tag == 'Code':
+                inputNodes = multiRunNode.findall('Input')
+                for inp in inputNodes:
+                  if inp.text.lower() == 'dummyin' and inp.get('class') == 'DataObjects':
+                    multiRunNode.remove(inp)
             for subnode in template.iter(key):
               ensemble = subnode.find('EnsembleModel')
               if ensemble:
