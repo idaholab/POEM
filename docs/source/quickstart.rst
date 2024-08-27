@@ -11,7 +11,7 @@ POEM utilizes XML to define its input structure. The main input blocks are as fo
 Simulation block
 ^^^^^^^^^^^^^^^^
 The root node containing the entire input, all of the following blocks fit inside
-the ``Simulaiton`` block
+the ``Simulation`` block
 
 .. code:: xml
 
