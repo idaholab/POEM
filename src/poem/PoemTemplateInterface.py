@@ -134,6 +134,7 @@ class PoemTemplateInterface(object):
     self._dynamic = False
     self._initInputs = None
     self._globalSettings = {}
+    self._restartTol = 1.0E-2
     self._miscDict =  {'AnalysisType':'required',
                     'limit':self._limit,
                     'Inputs':'required',
@@ -145,7 +146,9 @@ class PoemTemplateInterface(object):
                     'expTargets': self._expTargets,
                     'expCov': self._expCov,
                     'InitialInputs': self._initInputs,
-                    'dynamic':self._dynamic} # dictionary stores some default values and required inputs
+                    'dynamic':self._dynamic,
+                    'SparseGridDataTol':self._restartTol} # dictionary stores some default values and required inputs
+
 
   def getTemplateFile(self):
     """
@@ -324,6 +327,7 @@ class PoemTemplateInterface(object):
     self._polynomialOrder = self._globalSettings.get('PolynomialOrder', self._polynomialOrder)
     self._sparseGridData = self._globalSettings.get('SparseGridData', self._sparseGridData)
     self._data = self._globalSettings.get('data', self._data)
+    self._restartTol = self._globalSettings.get('SparseGridDataTol', self._restartTol)
 
     if self._analysisType not in self.validAnalysis:
       raise IOError(f'Invalid analysis type "{self._analysisType}" provided, please choose one of "{self.validAnalysis}" instead.')
@@ -403,12 +407,18 @@ class PoemTemplateInterface(object):
       varNodeList.append(varNode)
     return varNodeList
 
-  @staticmethod
-  def buildSparseGridSampler(name='SparseGrid'):
+  # @staticmethod
+  def buildSparseGridSampler(self, name='SparseGrid'):
     """
     """
     sgNode = xmlUtils.newNode(tag='SparseGridCollocation', attrib={'name':name})
     sgNode.append(xmlUtils.newNode(tag='ROM', attrib={'class':'Models', 'type':'ROM'}, text='SparseGridRom'))
+    if self._analysisType in ['sparse_grid_rom']:
+      sgNode.append(xmlUtils.newNode(tag='restartTolerance', text=self._restartTol))
+      if not self._dynamic:
+        sgNode.append(xmlUtils.newNode(tag='Restart', attrib={'class':'DataObjects', 'type':'PointSet'}, text='outGrid'))
+      else:
+        sgNode.append(xmlUtils.newNode(tag='Restart', attrib={'class':'DataObjects', 'type':'HistorySet'}, text='outGrid'))
     return sgNode
 
   @staticmethod
