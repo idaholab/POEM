@@ -219,6 +219,11 @@ Module Contents
    .. py:attribute:: _globalSettings
 
 
+   .. py:attribute:: _restartTol
+      :value: 0.01
+
+
+
    .. py:attribute:: _miscDict
 
 
@@ -303,8 +308,6 @@ Module Contents
 
 
    .. py:method:: buildSparseGridSampler(name='SparseGrid')
-      :staticmethod:
-
 
       
 
