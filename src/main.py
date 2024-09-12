@@ -10,6 +10,7 @@ import os
 import sys
 import logging
 import argparse
+import shutil
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
@@ -45,9 +46,13 @@ def runWorkflow(destination):
   cwd = os.getcwd()
   os.chdir(destDir)
   raven = os.path.join(RAVEN_FRAMEWORK_LOC, 'raven_framework')
-  command = '{command} {workflow}'.format(command=raven,
-                                          workflow=workflow)
-  res = os.system(command)
+  if shutil.which(raven) is None:
+    logger.warning(f'Executable for RAVEN is not available at: {raven}')
+    res = -1
+  else:
+    command = '{command} {workflow}'.format(command=raven,
+                                            workflow=workflow)
+    res = os.system(command)
   os.chdir(cwd)
   return res
 
