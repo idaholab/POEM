@@ -15,7 +15,6 @@ Attributes
 .. autoapisummary::
 
    PoemTester.POEM_LOC
-   PoemTester.RAVEN_FRAMEWORK_LOC
    PoemTester.TESTER_LOC
 
 
@@ -31,8 +30,6 @@ Module Contents
 ---------------
 
 .. py:data:: POEM_LOC
-
-.. py:data:: RAVEN_FRAMEWORK_LOC
 
 .. py:data:: TESTER_LOC
 

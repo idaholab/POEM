@@ -21,7 +21,6 @@ Attributes
    src.poem.PoemTemplateInterface.logger
    src.poem.PoemTemplateInterface.fh
    src.poem.PoemTemplateInterface.formatter
-   src.poem.PoemTemplateInterface.ravenFrameworkPath
 
 
 Classes
@@ -40,8 +39,6 @@ Module Contents
 .. py:data:: fh
 
 .. py:data:: formatter
-
-.. py:data:: ravenFrameworkPath
 
 .. py:class:: PoemTemplateInterface(filename)
 

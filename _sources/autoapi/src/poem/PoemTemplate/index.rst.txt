@@ -18,7 +18,6 @@ Attributes
 
 .. autoapisummary::
 
-   src.poem.PoemTemplate.RAVEN_FRAMEWORK_LOC
    src.poem.PoemTemplate.logger
 
 
@@ -32,8 +31,6 @@ Classes
 
 Module Contents
 ---------------
-
-.. py:data:: RAVEN_FRAMEWORK_LOC
 
 .. py:data:: logger
 
