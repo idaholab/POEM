@@ -5,6 +5,7 @@
     inputArg = '-i'
     output = 'Optimization/final_opt.csv Optimization/opt_export.csv'
     skip_if_OS = mac
+    prereq = test_lhs_sampling_mishra_bird
   [../]
 
   [./test_lhs_sampling]

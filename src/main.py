@@ -18,7 +18,7 @@ from POEM.src.poem.PoemTemplate import PoemTemplate
 from POEM.src.poem.PoemTemplateInterface import PoemTemplateInterface
 
 import POEM.src._utils as POEM_utils
-RAVEN_FRAMEWORK_LOC = POEM_utils.get_raven_loc()
+RAVEN_FRAMEWORK_LOC, RAVEN_EXEC = POEM_utils.get_raven_loc()
 sys.path.append(RAVEN_FRAMEWORK_LOC)
 
 logging.basicConfig(format='%(asctime)s %(name)-20s %(levelname)-8s %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.DEBUG)
@@ -45,14 +45,9 @@ def runWorkflow(destination):
   workflow = os.path.basename(destination)
   cwd = os.getcwd()
   os.chdir(destDir)
-  raven = os.path.join(RAVEN_FRAMEWORK_LOC, 'raven_framework')
-  if shutil.which(raven) is None:
-    logger.warning(f'Executable for RAVEN is not available at: {raven}')
-    res = -1
-  else:
-    command = '{command} {workflow}'.format(command=raven,
-                                            workflow=workflow)
-    res = os.system(command)
+  command = '{command} {workflow}'.format(command=RAVEN_EXEC,
+                                          workflow=workflow)
+  res = os.system(command)
   os.chdir(cwd)
   return res
 
