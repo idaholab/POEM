@@ -36,11 +36,11 @@ except ImportError:
     logger.info('Import "get_raven_loc" from "POEM.src._utils"')
     from POEM.src._utils import get_raven_loc
 
-  ## We need to add raven to the system path, since this file will be executed before RAVEN
-  ## Otherwise, an ModuleNotFoundError will be raised to complain no module named 'ravenframework'
-  ravenFrameworkPath = get_raven_loc()
-  sys.path.append(os.path.join(ravenFrameworkPath, '..'))
-  from ravenframework.utils import xmlUtils
+    ## We need to add raven to the system path, since this file will be executed before RAVEN
+    ## Otherwise, an ModuleNotFoundError will be raised to complain no module named 'ravenframework'
+    ravenFrameworkPath, _ = get_raven_loc()
+    sys.path.append(os.path.join(ravenFrameworkPath, '..'))
+    from ravenframework.utils import xmlUtils
 
 class PoemTemplateInterface(object):
   """
