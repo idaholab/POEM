@@ -18,7 +18,6 @@ Attributes
 
 .. autoapisummary::
 
-   src.main.RAVEN_FRAMEWORK_LOC
    src.main.logger
    src.main.fh
    src.main.formatter
@@ -35,8 +34,6 @@ Functions
 
 Module Contents
 ---------------
-
-.. py:data:: RAVEN_FRAMEWORK_LOC
 
 .. py:data:: logger
 
