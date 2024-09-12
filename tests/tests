@@ -61,7 +61,7 @@
     type = 'PoemRun'
     input = 'model_calibration_dynamic.xml'
     inputArg = '-i'
-    output = 'calibration_dynamic/posterior_dump.csv calibration_dynamic/samples_dump.csv'
+    output = 'calibration_dynamic/posterior_dynamic_dump.csv calibration_dynamic/samples_dynamic_dump.csv'
   [../]
 
   [./test_sauq]
