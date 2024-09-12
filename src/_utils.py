@@ -7,6 +7,7 @@ from os import path
 import sys
 import importlib
 import xml.etree.ElementTree as ET
+import shutil
 
 def get_raven_loc():
   """
@@ -16,7 +17,8 @@ def get_raven_loc():
   """
   try:
     import ravenframework
-    return path.dirname(ravenframework.__path__[0])
+    if shutil.which('raven_framework') is not None:
+      return path.dirname(ravenframework.__path__[0])
   except ModuleNotFoundError:
     pass
   config = os.path.abspath(os.path.join(os.path.dirname(__file__),'..', '.ravenconfig.xml'))
