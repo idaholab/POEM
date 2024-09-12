@@ -18,7 +18,7 @@ def get_raven_loc():
   try:
     import ravenframework
     if shutil.which('raven_framework') is not None:
-      return path.dirname(ravenframework.__path__[0])
+      return path.dirname(ravenframework.__path__[0]), 'raven_framework'
   except ModuleNotFoundError:
     pass
   config = os.path.abspath(os.path.join(os.path.dirname(__file__),'..', '.ravenconfig.xml'))
@@ -27,7 +27,11 @@ def get_raven_loc():
                   .format(config))
   loc = ET.parse(config).getroot().find('FrameworkLocation')
   assert loc is not None and loc.text is not None
-  return path.abspath(path.dirname(loc.text))
+  ravenPath = path.abspath(path.dirname(loc.text))
+  ravenExec = os.path.join(ravenPath, 'raven_framework')
+  if shutil.which(ravenExec) is None:
+    raise IOError(f'Executable for RAVEN is not available at: {ravenExec}')
+  return ravenPath, ravenExec
 
 def get_plugin_loc(plugin, raven_path=None):
   """
