@@ -119,6 +119,7 @@
     input = 'train_gp_rom.xml'
     inputArg = '-i'
     output = 'GP/rom_dump.csv'
+    prereq = test_lhs_sampling_model
   [../]
 
   [./test_train_gp_rom_dynamic]

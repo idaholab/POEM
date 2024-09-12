@@ -10,7 +10,7 @@ import logging
 import sys
 
 import POEM.src._utils as POEM_utils
-RAVEN_FRAMEWORK_LOC = POEM_utils.get_raven_loc()
+RAVEN_FRAMEWORK_LOC,_ = POEM_utils.get_raven_loc()
 sys.path.append(RAVEN_FRAMEWORK_LOC)
 
 from ravenframework.InputTemplates.TemplateBaseClass import Template as TemplateBase

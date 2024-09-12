@@ -10,7 +10,7 @@ sys.path.append(POEM_LOC)
 import POEM.src._utils as POEM_utils
 
 # get RAVEN base testers
-RAVEN_FRAMEWORK_LOC = POEM_utils.get_raven_loc()
+RAVEN_FRAMEWORK_LOC, _ = POEM_utils.get_raven_loc()
 TESTER_LOC = os.path.join(RAVEN_FRAMEWORK_LOC, 'scripts', 'TestHarness', 'testers')
 sys.path.append(TESTER_LOC)
 from RavenFramework import RavenFramework as RavenTester
