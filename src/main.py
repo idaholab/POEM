@@ -44,12 +44,7 @@ def runWorkflow(destination):
   workflow = os.path.basename(destination)
   cwd = os.getcwd()
   os.chdir(destDir)
-  try:
-    import ravenframework
-    raven = 'raven_framework'
-  except ModuleNotFoundError:
-    raven = os.path.join(RAVEN_FRAMEWORK_LOC, 'raven_framework')
-  # raven = '/Users/wangc/projects/raven/raven_framework'
+  raven = os.path.join(RAVEN_FRAMEWORK_LOC, 'raven_framework')
   command = '{command} {workflow}'.format(command=raven,
                                           workflow=workflow)
   res = os.system(command)
