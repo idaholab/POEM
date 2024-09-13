@@ -24,6 +24,7 @@ Functions
 
    src._utils.get_raven_loc
    src._utils.get_plugin_loc
+   src._utils.getOperatingSystem
 
 
 Module Contents
@@ -45,4 +46,10 @@ Module Contents
 
 
 .. py:data:: argvs
+
+.. py:function:: getOperatingSystem()
+
+   Determine the operating system in use.
+   @ Out, os, str, name of operating system class
+
 
