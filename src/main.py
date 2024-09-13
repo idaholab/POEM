@@ -10,7 +10,6 @@ import os
 import sys
 import logging
 import argparse
-import shutil
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
@@ -45,7 +44,17 @@ def runWorkflow(destination):
   workflow = os.path.basename(destination)
   cwd = os.getcwd()
   os.chdir(destDir)
-  command = '{command} {workflow}'.format(command=RAVEN_EXEC,
+  logger.info(f'RAVEN framework location: {RAVEN_FRAMEWORK_LOC}')
+  logger.info(f'RAVEN executable: {RAVEN_EXEC}')
+  logger.info(f'RAVEN input file: {workflow}')
+
+  osName = POEM_utils.getOperatingSystem()
+  logger.info(f'Operating system: {osName}')
+  if osName == 'windows':
+    command = '{prefix} {command} {workflow}'.format(prefix='bash', command=RAVEN_EXEC,
+                                          workflow=workflow)
+  else:
+    command = '{command} {workflow}'.format(command=RAVEN_EXEC,
                                           workflow=workflow)
   res = os.system(command)
   os.chdir(cwd)

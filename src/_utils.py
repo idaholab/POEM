@@ -8,6 +8,7 @@ import sys
 import importlib
 import xml.etree.ElementTree as ET
 import shutil
+import platform
 
 def get_raven_loc():
   """
@@ -68,3 +69,18 @@ if __name__ == '__main__':
     print(get_plugin_loc(plugin))
   else:
     raise IOError('Unrecognized action: "{}"'.format(action))
+
+def getOperatingSystem():
+  """
+    Determine the operating system in use.
+    @ Out, os, str, name of operating system class
+  """
+  osName = platform.system().lower()
+  if osName in ['linux', 'linux-gnu']:
+    return 'linux'
+  elif osName in ['windows', 'msys', 'cygwin']:
+    return 'windows'
+  elif osName in ['darwin']:
+    return 'mac'
+  else:
+    raise TypeError('Unrecognized platform system: "{}"'.format(osName))
