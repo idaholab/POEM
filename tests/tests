@@ -27,6 +27,7 @@
     input = 'lhs_sampling_model.xml'
     inputArg = '-i'
     output = 'LHS/sampling_dump.csv'
+    prereq = test_lhs_sampling
   [../]
 
   [./test_lhs_sampling_model_dynamic]
