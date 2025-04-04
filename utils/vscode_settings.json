@@ -1,0 +1,64 @@
+{
+    "workbench.colorTheme": "Default Light+",
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    // lines should not exceed 100 characters, and may not exceed 120
+    "editor.rulers": [100, 120],
+    // navigation within code
+    "breadcrumbs.enabled": true,
+    // set up python path -> FIXME change to your conda libs install location!
+    // "python.pythonPath": "/Users/wangc/projects/miniconda3/envs/raven_libraries/bin/",
+    "python.defaultInterpreterPath": "/Users/wangc/miniforge3/envs/hpc",
+
+    // "python.defaultInterpreterPath": "/Users/wangc/projects/miniconda3/envs/dackar_libs",
+    // "python.pythonPath": "/Users/wangc/miniconda3/envs/nlp_libs/bin/",
+
+    // "python.pythonPath": "/Users/wangc/miniconda3/envs/causal_libs/bin/",
+    // "python.defaultInterpreterPath": "/Users/wangc/projects/miniconda3/envs/dackar_libs",
+
+    // "python.pythonPath": "/Users/wangc/miniconda3/envs/nlp_libs_spacy/bin/",
+    // "python.defaultInterpreterPath": "/Users/wangc/miniconda3/envs/nlp_libs_spacy/bin/",
+    // "python.pythonPath": "/Users/wangc/miniconda3/envs/sr2ml_libs/bin/",
+    // "python.defaultInterpreterPath": "/Users/wangc/miniconda3/envs/sr2ml_libs/bin/",
+    // python linting (automatic checking) to be compatible with RAVEN
+    // C0103: naming conventions in RAVEN are different than PEP8 standard, so disable this
+    // C0301: line too long, while we have suggestions we don't enforce this rule, so disable this
+    // W0511: TODOs in code comments, this is acceptable in RAVEN
+    // R0902: too many instance attributes, we don't enforce this
+    // R0914: too many local variables, we don't enforce this
+    // E0401: path unresolved, generally this is handled by the importing structure of RAVEN
+    // see more at e.g. http://pylint-messages.wikidot.com/all-codes
+    "python.linting.pylintEnabled": true,
+    "python.linting.lintOnSave": true,
+    "python.linting.pylintArgs": [
+    "--disable=C0103,C0301,W0511,R0902,R0914,E0401",
+    "--indent-string=' '"
+    ],
+    "python.languageServer": "Pylance",
+    "editor.tabSize": 2,
+    "python.linting.pylintUseMinimalCheckers": false,
+    // associate XML and XSD as HTML files for the coloring and features
+    "files.associations": {
+    "*.xml": "html",
+    "*.xsd": "html"
+    },
+    "files.exclude": {
+        "**/*.pyc": {"when": "$(basename).py"},
+        "**/__pycache__": true,
+      },
+    "files.insertFinalNewline": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "files.trimTrailingWhitespace": true,
+    "files.eol": "\n",
+    "terminal.integrated.inheritEnv": false,
+    "workbench.colorCustomizations": {},
+    "workbench.editorAssociations": {
+      "*.pdf": "latex-workshop-pdf-hook"
+    },
+    "terminal.integrated.commandsToSkipShell": [
+      "matlab.interrupt"
+    ],
+    "MATLAB.installPath": " /Applications/MATLAB_R2023b.app",
+    "settingsSync.ignoredSettings": [
+      "-MATLAB.installPath"
+    ],
+}
