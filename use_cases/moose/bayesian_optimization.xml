@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<Simulation verbosity="debug">
+  <RunInfo>
+    <WorkingDir>heat_opt</WorkingDir>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <GlobalSettings>
+    <AnalysisType>bayesian_optimization</AnalysisType>
+    <data>sampling_dump.csv</data>
+    <limit>10</limit>
+    <Inputs>x_concrete_hd_thickness,ym_concrete_hd_thickness,yp_concrete_hd_thickness,ceiling_concrete_hd_thickness</Inputs>
+    <Outputs>max_concrete_temperature</Outputs>
+  </GlobalSettings>
+
+  <Distributions>
+    <Uniform name='x_concrete_hd_thickness'>
+      <lowerBound>0.4</lowerBound>
+      <upperBound>0.6</upperBound>
+    </Uniform>
+    <Uniform name='ym_concrete_hd_thickness'>
+      <lowerBound>0.4</lowerBound>
+      <upperBound>0.6</upperBound>
+    </Uniform>
+    <Uniform name='yp_concrete_hd_thickness'>
+      <lowerBound>0.4</lowerBound>
+      <upperBound>0.6</upperBound>
+    </Uniform>
+    <Uniform name='ceiling_concrete_hd_thickness'>
+      <lowerBound>0.4</lowerBound>
+      <upperBound>0.6</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Models>
+    <Code name="mooseApp" subType="MooseBasedApp">
+      <executable>moose-opt --n-threads=3</executable>
+    </Code>
+  </Models>
+
+  <Files>
+    <Input name="heat_conduction.i" type="">../heat_runs/heat_conduction.i</Input>
+  </Files>
+</Simulation>

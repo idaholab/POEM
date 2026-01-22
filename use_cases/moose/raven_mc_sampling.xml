@@ -1,0 +1,77 @@
+<Simulation>
+  <RunInfo>
+    <WorkingDir>heat_runs</WorkingDir>
+    <Sequence>
+      Sampling, Print
+    </Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Steps>
+    <MultiRun name="Sampling">
+      <Model class="Models" type="Code">mooseApp</Model>
+      <Sampler class="Samplers" type="Stratified">Sampler</Sampler>
+      <Output class="DataObjects" type="PointSet">out</Output>
+      <Input class="Files" type="">heat_conduction.i</Input>
+    </MultiRun>
+    <IOStep name="Print">
+      <Input class="DataObjects" type="PointSet">out</Input>
+      <Output class="OutStreams" type="Print">sampling_dump</Output>
+    </IOStep>
+  </Steps>
+
+  <Distributions>
+    <Normal name="x_concrete_hd_thickness">
+      <mean>0.5</mean>
+      <sigma>0.1</sigma>
+      <lowerBound>0.1</lowerBound>
+      <upperBound>1.2</upperBound>
+    </Normal>
+  </Distributions>
+
+  <Samplers>
+    <MonteCarlo name="Sampler">
+      <samplerInit>
+        <limit>2</limit>
+      </samplerInit>
+      <variable name="x_concrete_hd_thickness">
+        <distribution>x_concrete_hd_thickness</distribution>
+      </variable>
+    </MonteCarlo>
+  </Samplers>
+
+  <Models>
+    <Dummy name="Dummy" subType="" />
+    <Code name="mooseApp" subType="MooseBasedApp">
+      <executable>moose-opt</executable>
+    </Code>
+  </Models>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>inputGroup</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="out">
+      <Input>inputGroup</Input>
+      <Output>outputGroup</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="sampling_dump">
+      <type>csv</type>
+      <source>out</source>
+      <what>input,output</what>
+    </Print>
+  </OutStreams>
+
+  <Files>
+    <Input name="heat_conduction.i" type="">heat_conduction.i</Input>
+  </Files>
+
+  <VariableGroups>
+    <Group name="inputGroup">x_concrete_hd_thickness</Group>
+    <Group name="outputGroup">max_concrete_temperature,max_surface_temperature</Group>
+  </VariableGroups>
+</Simulation>
