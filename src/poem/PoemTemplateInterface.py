@@ -263,12 +263,25 @@ class PoemTemplateInterface(object):
 
     if self._analysisType in ['train_rom', 'bayesian_optimization']:
       if self._data is None:
-        raise IOError('Training data is required, please specify it in "GlobalSettings" using subnode "data"')
-      inputNode = xmlUtils.newNode(tag='Input', attrib={'name':'training_data', 'type':''}, text=self._data)
-      if 'Files' not in self._ravenNodeDict:
-        self._ravenNodeDict['Files'] = [inputNode]
+        if self._analysisType == 'train_rom':
+          raise IOError('Training data is required, please specify it in "GlobalSettings" using subnode "data"')
+        else:
+          self._templateFile,_ = xmlUtils.loadToTree(self._templateFile)
+          # remove a couple of unused nodes
+          pathToRemove = [".//Steps/IOStep[@name='load_data']", ".//Steps/RomTrainer[@name='train']"]
+          stepNode = self._templateFile.find(".//Steps")
+          for xp in pathToRemove:
+            node = self._templateFile.find(xp)
+            stepNode.remove(node)
+          seqNode = self._templateFile.find(".//RunInfo/Sequence")
+          seqNode.text = ','.join(list(seqNode.text.split(','))[2:])
+
       else:
-        self._ravenNodeDict['Files'].append(inputNode)
+        inputNode = xmlUtils.newNode(tag='Input', attrib={'name':'training_data', 'type':''}, text=self._data)
+        if 'Files' not in self._ravenNodeDict:
+          self._ravenNodeDict['Files'] = [inputNode]
+        else:
+          self._ravenNodeDict['Files'].append(inputNode)
 
     # build 'bayesian_optimization'
     if self._analysisType in ['bayesian_optimization']:

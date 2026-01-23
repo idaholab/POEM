@@ -1,24 +1,15 @@
 <Simulation verbosity="debug">
   <RunInfo>
     <WorkingDir>heat_opt</WorkingDir>
-    <Sequence>load_data, train, optimize, collect_final, print</Sequence>
+    <Sequence> optimize, collect_final, print</Sequence>
     <batchSize>1</batchSize>
   </RunInfo>
 
   <Files>
     <Input name="heat_conduction.i" type="">../heat_runs/heat_conduction.i</Input>
-    <Input name="training_data" type="">sampling_dump.csv</Input>
   </Files>
 
   <Steps>
-    <IOStep name="load_data">
-      <Input class="Files" type="">training_data</Input>
-      <Output class="DataObjects" type="PointSet">samples</Output>
-    </IOStep>
-    <RomTrainer name="train">
-      <Input class="DataObjects" type="PointSet">samples</Input>
-      <Output class="Models" type="ROM">gpROM</Output>
-    </RomTrainer>
     <MultiRun name="optimize">
       <Input class="DataObjects" type="PointSet">placeholder</Input>
       <Model class="Models" type="Code">mooseApp</Model>
