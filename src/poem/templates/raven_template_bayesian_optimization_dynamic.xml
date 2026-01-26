@@ -23,7 +23,7 @@
     </RomTrainer>
 
     <MultiRun name="optimize" >
-      <Input class="DataObjects" type="PointSet">placeholder</Input>
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
       <Model class="Models" type="ExternalModel">externalModel</Model>
       <Optimizer class="Optimizers" type="BayesianOptimizer">BayesianOptimizer</Optimizer>
       <SolutionExport class="DataObjects" type="HistorySet">opt_export</SolutionExport>
