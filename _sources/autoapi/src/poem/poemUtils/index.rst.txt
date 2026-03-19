@@ -35,6 +35,8 @@ Module Contents
 ---------------
 
 .. py:data:: logger
+   :value: None
+
 
 .. py:function:: convertNodeTextToList(nodeText, sep=None)
 

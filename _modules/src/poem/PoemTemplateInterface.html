@@ -1,25 +1,23 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.poem.PoemTemplateInterface &mdash; POEM 1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=359c27e9"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
-        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="../../../_static/copybutton.js?v=f281be69"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=359c27e9"></script>
+      <script src="../../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -97,11 +95,11 @@
 <span class="sd">This module is the POEM Template interface, which use the user provided input XML</span>
 <span class="sd">file to construct the corresponding RAVEN workflows i.e. RAVEN input XML file.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">.templates</span> <span class="kn">import</span> <span class="n">templateConfig</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">poemUtils</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.templates</span><span class="w"> </span><span class="kn">import</span> <span class="n">templateConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">poemUtils</span>
 
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(name)-20s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">-%b-%y %H:%M:%S&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 <span class="c1"># To enable the logging to both file and console, the logger for the main should be the root,</span>
@@ -117,23 +115,23 @@
 <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
 
 <span class="k">try</span><span class="p">:</span>
-  <span class="kn">from</span> <span class="nn">ravenframework.utils</span> <span class="kn">import</span> <span class="n">xmlUtils</span>
+  <span class="kn">from</span><span class="w"> </span><span class="nn">ravenframework.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">xmlUtils</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
   <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">.._utils</span> <span class="kn">import</span> <span class="n">get_raven_loc</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.._utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_raven_loc</span>
     <span class="c1"># from ._utils import get_raven_loc</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Import &quot;get_raven_loc&quot; from &quot;_utils&quot;&#39;</span><span class="p">)</span>
   <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Import &quot;get_raven_loc&quot; from &quot;POEM.src._utils&quot;&#39;</span><span class="p">)</span>
-    <span class="kn">from</span> <span class="nn">POEM.src._utils</span> <span class="kn">import</span> <span class="n">get_raven_loc</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">POEM.src._utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_raven_loc</span>
 
     <span class="c1">## We need to add raven to the system path, since this file will be executed before RAVEN</span>
     <span class="c1">## Otherwise, an ModuleNotFoundError will be raised to complain no module named &#39;ravenframework&#39;</span>
     <span class="n">ravenFrameworkPath</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_raven_loc</span><span class="p">()</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ravenFrameworkPath</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">))</span>
-    <span class="kn">from</span> <span class="nn">ravenframework.utils</span> <span class="kn">import</span> <span class="n">xmlUtils</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">ravenframework.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">xmlUtils</span>
 
-<div class="viewcode-block" id="PoemTemplateInterface"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface">[docs]</a><span class="k">class</span> <span class="nc">PoemTemplateInterface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">PoemTemplateInterface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    POEM Template Interface</span>
 <span class="sd">  &quot;&quot;&quot;</span>
@@ -188,7 +186,7 @@
                     <span class="s1">&#39;model_calibration&#39;</span><span class="p">:[]}</span></div>
 
 
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Constructor.</span>
 <span class="sd">      @ In, filename, the filename of POEM input</span>
@@ -241,12 +239,12 @@
                     <span class="s1">&#39;SparseGridDataTol&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_restartTol</span><span class="p">}</span> <span class="c1"># dictionary stores some default values and required inputs</span></div>
 
 
-<div class="viewcode-block" id="PoemTemplateInterface.getTemplateFile"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.getTemplateFile">[docs]</a>  <span class="k">def</span> <span class="nf">getTemplateFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.getTemplateFile"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.getTemplateFile">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">getTemplateFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_templateFile</span></div>
 
-<div class="viewcode-block" id="PoemTemplateInterface.getOutput"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.getOutput">[docs]</a>  <span class="k">def</span> <span class="nf">getOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.getOutput"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.getOutput">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">getOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      get the processed outputs from this class: PoemTemplateInterface</span>
 <span class="sd">      @ In, None</span>
@@ -258,7 +256,7 @@
                 <span class="s1">&#39;PolynomialOrder&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_polynomialOrder</span><span class="p">}</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ravenNodeDict</span><span class="p">,</span> <span class="n">miscDict</span></div>
 
-<div class="viewcode-block" id="PoemTemplateInterface.readInput"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.readInput">[docs]</a>  <span class="k">def</span> <span class="nf">readInput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.readInput"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.readInput">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">readInput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Read the POEM input files, and construct corresponding ET elements</span>
 <span class="sd">      @ In, None</span>
@@ -354,12 +352,25 @@
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_analysisType</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;train_rom&#39;</span><span class="p">,</span> <span class="s1">&#39;bayesian_optimization&#39;</span><span class="p">]:</span>
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Training data is required, please specify it in &quot;GlobalSettings&quot; using subnode &quot;data&quot;&#39;</span><span class="p">)</span>
-      <span class="n">inputNode</span> <span class="o">=</span> <span class="n">xmlUtils</span><span class="o">.</span><span class="n">newNode</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;Input&#39;</span><span class="p">,</span> <span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;training_data&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">},</span> <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
-      <span class="k">if</span> <span class="s1">&#39;Files&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ravenNodeDict</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ravenNodeDict</span><span class="p">[</span><span class="s1">&#39;Files&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputNode</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_analysisType</span> <span class="o">==</span> <span class="s1">&#39;train_rom&#39;</span><span class="p">:</span>
+          <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Training data is required, please specify it in &quot;GlobalSettings&quot; using subnode &quot;data&quot;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_templateFile</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">xmlUtils</span><span class="o">.</span><span class="n">loadToTree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_templateFile</span><span class="p">)</span>
+          <span class="c1"># remove a couple of unused nodes</span>
+          <span class="n">pathToRemove</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.//Steps/IOStep[@name=&#39;load_data&#39;]&quot;</span><span class="p">,</span> <span class="s2">&quot;.//Steps/RomTrainer[@name=&#39;train&#39;]&quot;</span><span class="p">]</span>
+          <span class="n">stepNode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_templateFile</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//Steps&quot;</span><span class="p">)</span>
+          <span class="k">for</span> <span class="n">xp</span> <span class="ow">in</span> <span class="n">pathToRemove</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_templateFile</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span>
+            <span class="n">stepNode</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+          <span class="n">seqNode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_templateFile</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//RunInfo/Sequence&quot;</span><span class="p">)</span>
+          <span class="n">seqNode</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">seqNode</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))[</span><span class="mi">2</span><span class="p">:])</span>
+
       <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ravenNodeDict</span><span class="p">[</span><span class="s1">&#39;Files&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputNode</span><span class="p">)</span>
+        <span class="n">inputNode</span> <span class="o">=</span> <span class="n">xmlUtils</span><span class="o">.</span><span class="n">newNode</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;Input&#39;</span><span class="p">,</span> <span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;training_data&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">},</span> <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;Files&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ravenNodeDict</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_ravenNodeDict</span><span class="p">[</span><span class="s1">&#39;Files&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputNode</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_ravenNodeDict</span><span class="p">[</span><span class="s1">&#39;Files&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputNode</span><span class="p">)</span>
 
     <span class="c1"># build &#39;bayesian_optimization&#39;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_analysisType</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;bayesian_optimization&#39;</span><span class="p">]:</span>
@@ -389,7 +400,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">checkInput</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="PoemTemplateInterface.readGlobalSettings"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.readGlobalSettings">[docs]</a>  <span class="k">def</span> <span class="nf">readGlobalSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmlNode</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.readGlobalSettings"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.readGlobalSettings">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">readGlobalSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmlNode</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Read the RunInfo XML node from the input root</span>
 <span class="sd">      @ In, xmlNode, xml.etree.ElementTree.Element, the input root xml</span>
@@ -425,7 +436,7 @@
 
     <span class="bp">self</span><span class="o">.</span><span class="n">_miscDict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalSettings</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoemTemplateInterface.checkInput"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.checkInput">[docs]</a>  <span class="k">def</span> <span class="nf">checkInput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.checkInput"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.checkInput">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">checkInput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Check the consistency of user provided inputs</span>
 <span class="sd">      @ In, None</span>
@@ -434,7 +445,7 @@
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checking the consistency of user provided input&quot;</span><span class="p">)</span></div>
 
   <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="PoemTemplateInterface.buildPointSet"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildPointSet">[docs]</a>  <span class="k">def</span> <span class="nf">buildPointSet</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.buildPointSet"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildPointSet">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">buildPointSet</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Build single PointSet XML node</span>
 <span class="sd">      @ In, name, str, the name for the PointSet</span>
@@ -448,7 +459,7 @@
     <span class="k">return</span> <span class="n">pointSet</span></div>
 
   <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="PoemTemplateInterface.buildHistorySet"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildHistorySet">[docs]</a>  <span class="k">def</span> <span class="nf">buildHistorySet</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">pivot</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.buildHistorySet"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildHistorySet">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">buildHistorySet</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">pivot</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Build single HistorySet XML node</span>
 <span class="sd">      @ In, name, str, the name for the PointSet</span>
@@ -465,7 +476,7 @@
     <span class="k">return</span> <span class="n">historySet</span></div>
 
   <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="PoemTemplateInterface.buildPrint"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildPrint">[docs]</a>  <span class="k">def</span> <span class="nf">buildPrint</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.buildPrint"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildPrint">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">buildPrint</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Build single OutStream Print XML node</span>
 <span class="sd">      @ In, name, str, the name for the PointSet</span>
@@ -478,7 +489,7 @@
     <span class="n">printObj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xmlUtils</span><span class="o">.</span><span class="n">newNode</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;what&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;input,output&#39;</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">printObj</span></div>
 
-<div class="viewcode-block" id="PoemTemplateInterface.buildSamplerVariable"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildSamplerVariable">[docs]</a>  <span class="k">def</span> <span class="nf">buildSamplerVariable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">distNode</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.buildSamplerVariable"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildSamplerVariable">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">buildSamplerVariable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">distNode</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      build the sampler variable block</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -499,7 +510,7 @@
     <span class="k">return</span> <span class="n">varNodeList</span></div>
 
   <span class="c1"># @staticmethod</span>
-<div class="viewcode-block" id="PoemTemplateInterface.buildSparseGridSampler"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildSparseGridSampler">[docs]</a>  <span class="k">def</span> <span class="nf">buildSparseGridSampler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;SparseGrid&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.buildSparseGridSampler"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildSparseGridSampler">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">buildSparseGridSampler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;SparseGrid&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">sgNode</span> <span class="o">=</span> <span class="n">xmlUtils</span><span class="o">.</span><span class="n">newNode</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;SparseGridCollocation&#39;</span><span class="p">,</span> <span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">name</span><span class="p">})</span>
@@ -513,7 +524,7 @@
     <span class="k">return</span> <span class="n">sgNode</span></div>
 
   <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="PoemTemplateInterface.buildMonteCarloSampler"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildMonteCarloSampler">[docs]</a>  <span class="k">def</span> <span class="nf">buildMonteCarloSampler</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.buildMonteCarloSampler"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildMonteCarloSampler">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">buildMonteCarloSampler</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mcNode</span> <span class="o">=</span> <span class="n">xmlUtils</span><span class="o">.</span><span class="n">newNode</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;MonteCarlo&#39;</span><span class="p">,</span> <span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">name</span><span class="p">})</span>
@@ -523,7 +534,7 @@
     <span class="k">return</span> <span class="n">mcNode</span></div>
 
   <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="PoemTemplateInterface.buildVariableGroup"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildVariableGroup">[docs]</a>  <span class="k">def</span> <span class="nf">buildVariableGroup</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">varList</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.buildVariableGroup"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildVariableGroup">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">buildVariableGroup</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">varList</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Build variable group node</span>
 <span class="sd">      @ In, name, str, the name for the variable group</span>
@@ -539,7 +550,7 @@
     <span class="n">group</span> <span class="o">=</span> <span class="n">xmlUtils</span><span class="o">.</span><span class="n">newNode</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">name</span><span class="p">},</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">group</span></div>
 
-<div class="viewcode-block" id="PoemTemplateInterface.buildStatsGroup"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildStatsGroup">[docs]</a>  <span class="k">def</span> <span class="nf">buildStatsGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.buildStatsGroup"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.buildStatsGroup">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">buildStatsGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Build basic statistic variable group node</span>
 <span class="sd">      @ In, name, str, the name for the variable group</span>
@@ -558,7 +569,7 @@
 
 
   <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="PoemTemplateInterface.findRequiredNode"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.findRequiredNode">[docs]</a>  <span class="k">def</span> <span class="nf">findRequiredNode</span><span class="p">(</span><span class="n">xmlNode</span><span class="p">,</span> <span class="n">nodeTag</span><span class="p">):</span>
+<div class="viewcode-block" id="PoemTemplateInterface.findRequiredNode"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplateInterface/index.html#src.poem.PoemTemplateInterface.PoemTemplateInterface.findRequiredNode">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">findRequiredNode</span><span class="p">(</span><span class="n">xmlNode</span><span class="p">,</span> <span class="n">nodeTag</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Find the required xml node</span>
 <span class="sd">      @ In, xmlNode, xml.etree.ElementTree.Element, xml element node</span>

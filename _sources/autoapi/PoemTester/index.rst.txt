@@ -30,6 +30,8 @@ Module Contents
 ---------------
 
 .. py:data:: POEM_LOC
+   :value: b'.'
+
 
 .. py:data:: TESTER_LOC
 

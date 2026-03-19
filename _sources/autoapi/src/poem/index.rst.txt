@@ -4,15 +4,6 @@ src.poem
 .. py:module:: src.poem
 
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 1
-
-   /autoapi/src/poem/templates/index
-
-
 Submodules
 ----------
 
@@ -23,5 +14,6 @@ Submodules
    /autoapi/src/poem/PoemTemplateInterface/index
    /autoapi/src/poem/plotUtils/index
    /autoapi/src/poem/poemUtils/index
+   /autoapi/src/poem/templates/index
 
 

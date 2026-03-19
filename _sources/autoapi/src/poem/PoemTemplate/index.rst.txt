@@ -33,6 +33,8 @@ Module Contents
 ---------------
 
 .. py:data:: logger
+   :value: None
+
 
 .. py:class:: PoemTemplate
 
