@@ -58,6 +58,7 @@ poem -i lhs_sampling.xml --norun
 - Pareto Frontier to guide the design of experiment to be evaluated
 - Sparse grid stochastic collocation to accelerate experimental design
 
+
 ## Accelerate Experimental Design via Sparse Grid Stochastic Collocation Method
 
 ### Matyas Function
