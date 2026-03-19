@@ -94,7 +94,7 @@
 
 
   <DataObjects>
-    <PointSet name="placeholder"/>
+    <PointSet name="dummyIN"/>
     <PointSet name="samples">
       <Input>inputGroup</Input>
       <Output>outputGroup</Output>
