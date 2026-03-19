@@ -8,6 +8,7 @@ template as an accelerated way to write new RAVEN workflows.
 """
 import logging
 import sys
+import xml.etree.ElementTree as ET
 
 import POEM.src._utils as POEM_utils
 RAVEN_FRAMEWORK_LOC,_ = POEM_utils.get_raven_loc()
@@ -39,7 +40,12 @@ class PoemTemplate(TemplateBase):
       @ In, filename, str, name of file to load (xml)
       @ Out, None
     """
-    self._template, _ = xmlUtils.loadToTree(filename)
+    if isinstance(filename, str):
+      self._template, _ = xmlUtils.loadToTree(filename)
+    elif isinstance(filename, ET.Element):
+      self._template = filename
+    else:
+      raise IOError(f'Unrecognized type of input {type(filename)}')
 
   def createWorkflow(self, inputs, miscDict):
     """

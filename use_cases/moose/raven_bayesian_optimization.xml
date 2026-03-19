@@ -1,34 +1,22 @@
-<?xml version="1.0" ?>
-<!-- Copyright 2024, Battelle Energy Alliance, LLC All Rights Reserved -->
 <Simulation verbosity="debug">
   <RunInfo>
-    <WorkingDir>Optimization</WorkingDir>
-    <Sequence>load_data, train, optimize, collect_final, print</Sequence>
+    <WorkingDir>heat_opt</WorkingDir>
+    <Sequence> optimize, collect_final, print</Sequence>
     <batchSize>1</batchSize>
   </RunInfo>
 
   <Files>
-
+    <Input name="heat_conduction.i" type="">../heat_runs/heat_conduction.i</Input>
   </Files>
 
   <Steps>
-    <IOStep name="load_data">
-      <Input class="Files" type="">training_data</Input>
-      <Output class="DataObjects" type="PointSet">samples</Output>
-    </IOStep>
-
-    <RomTrainer name="train">
-      <Input class="DataObjects" type="PointSet">samples</Input>
-      <Output class="Models" type="ROM">gpROM</Output>
-    </RomTrainer>
-
-    <MultiRun name="optimize" >
-      <Input class="DataObjects" type="PointSet">dummyIN</Input>
-      <Model class="Models" type="ExternalModel">externalModel</Model>
+    <MultiRun name="optimize">
+      <Model class="Models" type="Code">mooseApp</Model>
       <Optimizer class="Optimizers" type="BayesianOptimizer">BayesianOptimizer</Optimizer>
       <SolutionExport class="DataObjects" type="PointSet">opt_export</SolutionExport>
       <Output class="DataObjects" type="PointSet">optOut</Output>
       <Output class="OutStreams" type="Print">opt_export</Output>
+      <Input class="Files" type="">heat_conduction.i</Input>
     </MultiRun>
     <PostProcess name="collect_final">
       <Input class="DataObjects" type="PointSet">opt_export</Input>
@@ -49,8 +37,8 @@
 
   <Optimizers>
     <BayesianOptimizer name="BayesianOptimizer">
-      <Sampler    class="Samplers"  type="Stratified" >Sampler</Sampler>
-      <ROM  class="Models" type="ROM">gpROM</ROM>
+      <Sampler class="Samplers" type="Stratified">Sampler</Sampler>
+      <ROM class="Models" type="ROM">gpROM</ROM>
       <TargetEvaluation class="DataObjects" type="PointSet">optOut</TargetEvaluation>
       <ModelSelection>
         <Duration>1</Duration>
@@ -66,12 +54,44 @@
           <seedingCount>8</seedingCount>
         </ExpectedImprovement>
       </Acquisition>
+      <variable name="x_concrete_hd_thickness">
+        <distribution>x_concrete_hd_thickness</distribution>
+      </variable>
+      <variable name="ym_concrete_hd_thickness">
+        <distribution>ym_concrete_hd_thickness</distribution>
+      </variable>
+      <variable name="yp_concrete_hd_thickness">
+        <distribution>yp_concrete_hd_thickness</distribution>
+      </variable>
+      <variable name="ceiling_concrete_hd_thickness">
+        <distribution>ceiling_concrete_hd_thickness</distribution>
+      </variable>
+      <objective>max_concrete_temperature</objective>
+      <samplerInit>
+        <limit>10</limit>
+      </samplerInit>
     </BayesianOptimizer>
   </Optimizers>
 
-
   <Samplers>
-
+    <Stratified name="Sampler">
+      <variable name="x_concrete_hd_thickness">
+        <distribution>x_concrete_hd_thickness</distribution>
+        <grid construction="equal" steps="20" type="CDF">0.0 1.0</grid>
+      </variable>
+      <variable name="ym_concrete_hd_thickness">
+        <distribution>ym_concrete_hd_thickness</distribution>
+        <grid construction="equal" steps="20" type="CDF">0.0 1.0</grid>
+      </variable>
+      <variable name="yp_concrete_hd_thickness">
+        <distribution>yp_concrete_hd_thickness</distribution>
+        <grid construction="equal" steps="20" type="CDF">0.0 1.0</grid>
+      </variable>
+      <variable name="ceiling_concrete_hd_thickness">
+        <distribution>ceiling_concrete_hd_thickness</distribution>
+        <grid construction="equal" steps="20" type="CDF">0.0 1.0</grid>
+      </variable>
+    </Stratified>
   </Samplers>
 
   <Models>
@@ -88,13 +108,15 @@
       <multioutput>False</multioutput>
     </ROM>
     <PostProcessor name="PPindex" subType="SampleSelector" verbosity="debug">
-      <criterion value='-1'> index </criterion>
+      <criterion value="-1"> index </criterion>
     </PostProcessor>
+    <Code name="mooseApp" subType="MooseBasedApp">
+      <executable>moose-opt --n-threads=3</executable>
+    </Code>
   </Models>
 
-
   <DataObjects>
-    <PointSet name="dummyIN"/>
+    <PointSet name="placeholder" />
     <PointSet name="samples">
       <Input>inputGroup</Input>
       <Output>outputGroup</Output>
@@ -132,4 +154,28 @@
       <vars>outputGroup,inputGroup</vars>
     </Plot>
   </OutStreams>
+
+  <Distributions>
+    <Uniform name="x_concrete_hd_thickness">
+      <lowerBound>0.4</lowerBound>
+      <upperBound>0.6</upperBound>
+    </Uniform>
+    <Uniform name="ym_concrete_hd_thickness">
+      <lowerBound>0.4</lowerBound>
+      <upperBound>0.6</upperBound>
+    </Uniform>
+    <Uniform name="yp_concrete_hd_thickness">
+      <lowerBound>0.4</lowerBound>
+      <upperBound>0.6</upperBound>
+    </Uniform>
+    <Uniform name="ceiling_concrete_hd_thickness">
+      <lowerBound>0.4</lowerBound>
+      <upperBound>0.6</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <VariableGroups>
+    <Group name="inputGroup">x_concrete_hd_thickness,ym_concrete_hd_thickness,yp_concrete_hd_thickness,ceiling_concrete_hd_thickness</Group>
+    <Group name="outputGroup">max_concrete_temperature</Group>
+  </VariableGroups>
 </Simulation>

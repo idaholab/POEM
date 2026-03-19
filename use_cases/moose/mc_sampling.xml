@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>heat_runs</WorkingDir>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="heat_conduction.i" type="">heat_conduction.i</Input>
+  </Files>
+
+  <Models>
+    <Code name="mooseApp" subType="MooseBasedApp">
+      <executable>moose-opt</executable>
+    </Code>
+  </Models>
+
+  <GlobalSettings>
+    <AnalysisType>MC</AnalysisType>
+    <limit>2</limit>
+    <Inputs>x_concrete_hd_thickness</Inputs>
+    <Outputs>max_concrete_temperature,max_surface_temperature</Outputs>
+  </GlobalSettings>
+
+  <Distributions>
+    <Normal name="x_concrete_hd_thickness">
+      <mean>0.5</mean>
+      <sigma>0.1</sigma>
+      <lowerBound>0.1</lowerBound>
+      <upperBound>1.2</upperBound>
+    </Normal>
+  </Distributions>
+
+</Simulation>
