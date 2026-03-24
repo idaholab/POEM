@@ -1,7 +1,7 @@
 # POEM
 ## Platform of Optimal Experiment Management (POEM)
 
-An optimal experimental design platform powered with automated machine learning to automatically guides the design of experiment to be evaluated. More information can be found at https://idaholab.github.io/POEM/
+An optimal experimental design platform powered with automated machine learning to automatically guides the design of experiment to be evaluated. This tool generates RAVEN (https://github.com/idaholab/raven) input files. More information can be found at https://idaholab.github.io/POEM/
 
 ## How to build html?
 
@@ -29,6 +29,20 @@ pip install poem-ravenframework
 ```
 git clone git@github.com:idaholab/POEM.git
 ```
+
+## Source Installation (Linux/macOS)
+
+When installing from source in plugin layout, create a local `POEM` symlink before editable install:
+
+```bash
+ln -s ../POEM .
+pip install -e .
+```
+
+Keep the `POEM` symlink (`POEM -> ../POEM`) in the repository root while using `poem` from a source editable install.
+Do not commit this symlink to git.
+
+Note: this workaround is for Linux/macOS and is not supported on Windows.
 
 ## Test
 
@@ -119,5 +133,3 @@ https://media.github.inl.gov/user/161/files/86dc8928-7017-4a4b-893c-f77286ded0d4
 A python analytic problem with 50 responses, three input parameters with uniform prior distributions.
 
 ![image](https://media.github.inl.gov/user/161/files/08ba5691-f4cc-49d8-9d1e-034ba14f40c2)
-
-
