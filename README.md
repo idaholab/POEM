@@ -6,22 +6,24 @@ An optimal experimental design platform powered with automated machine learning 
 ## How to build html?
 
 ```bash
-  pip install sphinx sphinx_rtd_theme nbsphinx sphinx-copybutton sphinx-autoapi
-  conda install pandoc
-  cd doc
-  make html
-  cd build/html
-  python3 -m http.server
+uv sync --python 3.11 --extra docs
+source .venv/bin/activate
+cd docs
+make html
+cd build/html
+python3 -m http.server
 ```
 
-open your brower to: http://localhost:8000
+open your browser to: http://localhost:8000
 
 ## Installation
 
-```
-conda create -n poem_libs python=3.10
-conda activate poem_libs
-pip install poem-ravenframework
+Install the released package from PyPI:
+
+```bash
+uv venv --python 3.11
+source .venv/bin/activate
+uv pip install poem-ravenframework
 ```
 
 ## Git Clone Repository
@@ -30,19 +32,16 @@ pip install poem-ravenframework
 git clone git@github.com:idaholab/POEM.git
 ```
 
-## Source Installation (Linux/macOS)
-
-When installing from source in plugin layout, create a local `POEM` symlink before editable install:
+## Source Installation
 
 ```bash
-ln -s ../POEM .
-pip install -e .
+git clone git@github.com:idaholab/POEM.git
+cd POEM
+uv sync --python 3.11
+source .venv/bin/activate
 ```
 
-Keep the `POEM` symlink (`POEM -> ../POEM`) in the repository root while using `poem` from a source editable install.
-Do not commit this symlink to git.
-
-Note: this workaround is for Linux/macOS and is not supported on Windows.
+The `uv sync` command creates `.venv`, installs POEM in editable mode, and installs the runtime dependencies listed in `pyproject.toml`.
 
 ## Test
 

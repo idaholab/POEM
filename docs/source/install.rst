@@ -8,11 +8,13 @@ How to install?
 Installation
 ++++++++++++
 
+Install the released package from PyPI:
+
 .. code:: bash
 
-  conda create -n poem_libs python=3.10
-  conda activate poem_libs
-  pip install poem-ravenframework
+  uv venv --python 3.11
+  source .venv/bin/activate
+  uv pip install poem-ravenframework
 
 Clone
 +++++
@@ -20,6 +22,22 @@ Clone
 .. code:: bash
 
   git clone git@github.com:idaholab/POEM.git
+  cd POEM
+  uv sync --python 3.11
+  source .venv/bin/activate
+
+The ``uv sync`` command creates ``.venv``, installs POEM in editable mode, and installs
+the runtime dependencies listed in ``pyproject.toml``.
+
+Build Documentation
++++++++++++++++++++
+
+.. code:: bash
+
+  uv sync --python 3.11 --extra docs
+  source .venv/bin/activate
+  cd docs
+  make html
 
 
 Test
