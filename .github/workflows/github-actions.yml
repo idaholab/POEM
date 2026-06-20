@@ -1,7 +1,11 @@
 name: GitHub POEM test
 run-name: ${{ github.actor }} is testing out POEM
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 
 concurrency:
   group: ${{ github.head_ref || github.ref }}
