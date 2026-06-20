@@ -13,6 +13,8 @@
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
 
   
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=359c27e9"></script>
       <script src="_static/doctools.js?v=888ff710"></script>
       <script src="_static/sphinx_highlight.js?v=4825356b"></script>
@@ -52,6 +54,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#how-to-install">How to install?</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">Installation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#clone">Clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-documentation">Build Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#test">Test</a></li>
 </ul>
 </li>
@@ -98,25 +101,40 @@
            <div itemprop="articleBody">
              
   <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
 <section id="how-to-install">
-<h2>How to install?<a class="headerlink" href="#how-to-install" title="Permalink to this heading">¶</a></h2>
+<h2>How to install?<a class="headerlink" href="#how-to-install" title="Permalink to this heading"></a></h2>
 <section id="id1">
-<h3>Installation<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>poem_libs<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10
-conda<span class="w"> </span>activate<span class="w"> </span>poem_libs
-pip<span class="w"> </span>install<span class="w"> </span>poem-ravenframework
+<h3>Installation<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<p>Install the released package from PyPI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>venv<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.11
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>poem-ravenframework
 </pre></div>
 </div>
 </section>
 <section id="clone">
-<h3>Clone<a class="headerlink" href="#clone" title="Permalink to this heading">¶</a></h3>
+<h3>Clone<a class="headerlink" href="#clone" title="Permalink to this heading"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:idaholab/POEM.git
+<span class="nb">cd</span><span class="w"> </span>POEM
+uv<span class="w"> </span>sync<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.11
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">sync</span></code> command creates <code class="docutils literal notranslate"><span class="pre">.venv</span></code>, installs POEM in editable mode, and installs
+the runtime dependencies listed in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.</p>
+</section>
+<section id="build-documentation">
+<h3>Build Documentation<a class="headerlink" href="#build-documentation" title="Permalink to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>sync<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.11<span class="w"> </span>--extra<span class="w"> </span>docs
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<span class="nb">cd</span><span class="w"> </span>docs
+make<span class="w"> </span>html
 </pre></div>
 </div>
 </section>
 <section id="test">
-<h3>Test<a class="headerlink" href="#test" title="Permalink to this heading">¶</a></h3>
+<h3>Test<a class="headerlink" href="#test" title="Permalink to this heading"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>POEM/tests
 poem<span class="w"> </span>-i<span class="w"> </span>lhs_sampling.xml
 </pre></div>
