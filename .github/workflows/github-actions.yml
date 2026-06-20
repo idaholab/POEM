@@ -1,28 +1,146 @@
 name: GitHub POEM test
 run-name: ${{ github.actor }} is testing out POEM
-on: [push, pull_request]
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  Test-POEM-Linux:
-    runs-on: ubuntu-latest
+  Test-POEM-uv-install:
+    name: uv install (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
     steps:
-      - uses: conda-incubator/setup-miniconda@v3
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        run: python -m pip install --upgrade uv
+
+      - name: Build and install POEM wheel with uv
+        run: |
+          uv build --wheel
+          uv venv --python 3.11
+          uv pip install dist/*.whl
+
+      - name: Smoke test installed POEM package
+        run: |
+          if [[ "${RUNNER_OS}" == "Windows" ]]; then
+            export PATH="${PWD}/.venv/Scripts:${PATH}"
+          else
+            export PATH="${PWD}/.venv/bin:${PATH}"
+          fi
+
+          python - <<'PY'
+          import pandas
+          import statsmodels.api as sm
+          print(f"pandas={pandas.__version__}")
+          print(f"statsmodels={sm.__version__}")
+          PY
+
+          poem -i tests/lhs_sampling.xml -o "${RUNNER_TEMP}/raven_lhs_sampling.xml" -nr
+          test -f "${RUNNER_TEMP}/raven_lhs_sampling.xml"
+
+  Test-POEM-RAVEN:
+    name: RAVEN plugin tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            use_tar_bz2: true
+          - os: macos-latest
+            use_tar_bz2: false
+          - os: windows-latest
+            use_tar_bz2: true
+
+    steps:
+      - name: Setup Conda
+        uses: conda-incubator/setup-miniconda@v3
         with:
           miniconda-version: "latest"
           channels: conda-forge, defaults
-          use-only-tar-bz2: true  # IMPORTANT: This needs to be set for caching to work properly!
+          activate-environment: raven_libraries
+          use-only-tar-bz2: ${{ matrix.use_tar_bz2 }}
           auto-update-conda: true
           auto-activate-base: true
-      - run: echo " The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo " This job is now running on a ${{ runner.os }} server"
-      - run: echo " The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: pwd
-      - run: cd .. && rm -Rf raven && git clone https://github.com/idaholab/raven.git
-      - run: python3 ../raven/scripts/install_plugins.py -s BayCal
-      - run: python3 ../raven/scripts/install_plugins.py -s ${{ github.workspace }}
-      - run: WD=`(cd ../../.. && pwd)` && export RAVEN_LIBS_NAME="raven_libs_"`basename $WD` && ../raven/scripts/establish_conda_env.sh --install
-      - run: cd ../raven && ./build_raven
-      - run: ../raven/run_tests --library-report
-      - run: ../raven/run_tests -j4 --plugins --re=POEM
 
+      - name: Job Information
+        run: |
+          echo "The job was automatically triggered by a ${{ github.event_name }} event."
+          echo "This job is now running on a ${{ runner.os }} server."
+          echo "The branch is ${{ github.ref }} in ${{ github.repository }}."
+
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Clone RAVEN
+        run: |
+          cd ..
+          rm -rf raven
+          git clone https://github.com/idaholab/raven.git
+
+      - name: Install required RAVEN plugins
+        run: |
+          if [[ "${RUNNER_OS}" == "Windows" ]]; then
+            POEM_PLUGIN_PATH="$(cygpath -w "${GITHUB_WORKSPACE}")"
+          else
+            POEM_PLUGIN_PATH="${GITHUB_WORKSPACE}"
+          fi
+
+          python3 ../raven/scripts/install_plugins.py -s BayCal
+          python3 ../raven/scripts/install_plugins.py -s "${POEM_PLUGIN_PATH}"
+
+      - name: Set Python environment
+        run: |
+          if [[ "${RUNNER_OS}" == "Windows" ]]; then
+            bash ../raven/scripts/establish_conda_env.sh --install --conda-defs "${HOME}/miniconda3/etc/profile.d/conda.sh"
+          else
+            ../raven/scripts/establish_conda_env.sh --install
+          fi
+
+      - name: Build RAVEN
+        run: |
+          cd ../raven
+          if [[ "${RUNNER_OS}" == "Windows" ]]; then
+            bash ./build_raven
+          else
+            ./build_raven
+          fi
+
+      - name: Test POEM RAVEN plugin
+        run: |
+          cd ../raven
+          if [[ "${RUNNER_OS}" == "Linux" ]]; then
+            export LD_LIBRARY_PATH="${HOME}/miniconda3/envs/raven_libraries/lib:${LD_LIBRARY_PATH:-}"
+          fi
+
+          if [[ "${RUNNER_OS}" == "Windows" ]]; then
+            bash ./run_tests --library-report
+            bash ./run_tests -j4 --plugins --re=POEM
+          else
+            ./run_tests --library-report
+            ./run_tests -j4 --plugins --re=POEM
+          fi
