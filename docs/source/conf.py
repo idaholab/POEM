@@ -30,7 +30,6 @@ extensions = ['sphinx.ext.intersphinx',
 	'sphinx.ext.autodoc',
 	'sphinx.ext.doctest',
 	'sphinx.ext.todo',
-	"sphinx.ext.autodoc.typehints",
 	"sphinx.ext.mathjax",
     "sphinx.ext.autosummary",
 	"nbsphinx",  # <- For Jupyter Notebook support
@@ -44,21 +43,14 @@ extensions = ['sphinx.ext.intersphinx',
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-source_suffix = [".rst", ".md"]
+source_suffix = {".rst": "restructuredtext"}
 autoapi_dirs = ['../../src']
 
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-# html_theme = 'alabaster'
-# html_static_path = ['_static']
-
-import sphinx_rtd_theme
-
 html_theme = 'sphinx_rtd_theme'
-
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 
 # -- NBSphinx options

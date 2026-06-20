@@ -1,135 +1,208 @@
 # POEM
-## Platform of Optimal Experiment Management (POEM)
 
-An optimal experimental design platform powered with automated machine learning to automatically guides the design of experiment to be evaluated. This tool generates RAVEN (https://github.com/idaholab/raven) input files. More information can be found at https://idaholab.github.io/POEM/
+**Platform of Optimal Experiment Management**
 
-## How to build html?
+POEM is a Python package and command line tool for building RAVEN workflows for
+optimal experiment management. It translates a compact POEM XML input into a
+RAVEN input file, then optionally runs the generated workflow.
 
-```bash
-  pip install sphinx sphinx_rtd_theme nbsphinx sphinx-copybutton sphinx-autoapi
-  conda install pandoc
-  cd doc
-  make html
-  cd build/html
-  python3 -m http.server
-```
+POEM uses RAVEN for model exploration and decision support, and supports random
+sampling, surrogate model training, sparse-grid experiment design, dynamic
+sensitivity analysis, Bayesian optimization, and Bayesian model calibration.
 
-open your brower to: http://localhost:8000
+- Documentation: <https://idaholab.github.io/POEM/>
+- Source: <https://github.com/idaholab/POEM>
+- Package: `poem-ravenframework`
+- Command line entry point: `poem`
+
+## Requirements
+
+- Python 3.11
+- `uv`
+- Runtime dependencies from `pyproject.toml`, including `raven_framework` and
+  `baycal-ravenframework`
+
+`pyproject.toml` currently restricts Python to `>=3.11,<3.12` because the
+resolved RAVEN/BayCal dependency stack includes packages that do not provide
+compatible wheels for Python 3.12 on all supported platforms.
 
 ## Installation
 
-```
-conda create -n poem_libs python=3.10
-conda activate poem_libs
-pip install poem-ravenframework
-```
-
-## Git Clone Repository
-
-```
-git clone git@github.com:idaholab/POEM.git
-```
-
-## Source Installation (Linux/macOS)
-
-When installing from source in plugin layout, create a local `POEM` symlink before editable install:
+Install the released package from PyPI:
 
 ```bash
-ln -s ../POEM .
-pip install -e .
+uv venv --python 3.11
+source .venv/bin/activate
+uv pip install poem-ravenframework
 ```
 
-Keep the `POEM` symlink (`POEM -> ../POEM`) in the repository root while using `poem` from a source editable install.
-Do not commit this symlink to git.
+Install from source for development:
 
-Note: this workaround is for Linux/macOS and is not supported on Windows.
-
-## Test
-
-```
-cd POEM/tests
-poem -i lhs_sampling.xml
-```
-or test without run
-```
-poem -i lhs_sampling.xml -nr
-```
-or
-```
-poem -i lhs_sampling.xml --norun
+```bash
+git clone git@github.com:idaholab/POEM.git
+cd POEM
+uv sync --python 3.11
+source .venv/bin/activate
 ```
 
-## Capabilities
+`uv sync` creates `.venv`, installs POEM in editable mode, and installs the
+runtime dependencies declared in `pyproject.toml`.
 
-- Material thermal property modeling
-- Design parameter optimization with multiple objectives
-- Determining where to obtain new data in order to build accurate surrogate model
-- Dynamic sensitivity and uncertainty analysis
-- Model calibration through Bayesian inference
-- Data adjustment through generalized linear least square method
-- Machine learning aided parameter space exploration
-- Bayesian optimization for optimal experimental design
-- Pareto Frontier to guide the design of experiment to be evaluated
-- Sparse grid stochastic collocation to accelerate experimental design
+## Quick Start
 
+Run an example input from a source checkout:
 
-## Accelerate Experimental Design via Sparse Grid Stochastic Collocation Method
+```bash
+poem -i tests/lhs_sampling.xml -nr
+```
 
-### Matyas Function
+The `-nr` option creates the RAVEN input file without running RAVEN. By default,
+POEM writes the generated file next to the input as `raven_<input-file-name>`.
+Use `-o` to choose a different output path:
 
-![Sparse grid sampling for the Matyas function](docs/pics/SparseGrid_sampling_matyas.png)
+```bash
+poem -i tests/lhs_sampling.xml -o tests/raven_lhs_sampling.xml -nr
+```
 
-### Himmelblau's Function
-![Sparse grid sampling for Himmelblau's function](docs/pics/SparseGrid_sampling_himmelblau.png)
+To generate and run the RAVEN workflow, omit `-nr`:
 
-### Pareto Frontier
+```bash
+poem -i tests/lhs_sampling.xml
+```
 
-![Pareto frontier scatter plot](docs/pics/plot_pp_scatter-scatter.png)
+## Input Model
 
+POEM inputs are XML files rooted at `<Simulation>`. The main blocks are:
 
-## Accelerate Experimental Design via Bayesian Optimization Method
+| Block | Purpose |
+| --- | --- |
+| `<RunInfo>` | Working directory, batch size, and execution settings. |
+| `<GlobalSettings>` | Analysis type, input variables, output variables, limits, and analysis-specific options. |
+| `<Distributions>` | RAVEN distributions for input variables. |
+| `<Models>` | RAVEN models, commonly external Python models. |
+| `<Files>` | Optional model input files. |
+| `<Functions>` | Optional external functions, such as Bayesian optimization constraints. |
+| `<LikelihoodModel>` | Bayesian calibration likelihood data. |
 
-### Matyas Function
-- LHS pre-samplings to simulate experiments
-![LHS sampling scatter for the Matyas function](docs/pics/bayopt_matyas_LHS_existing_data.png)
-- Train Gaussian Process model with LHS samples, and use Grid approach to sample the trained Gaussian Process model
-![Grid ROM sampling scatter for the Matyas function](docs/pics/bayopt_matyas_grid_rom_sampling.png)
-- Utilize Bayesian Optimization with pre-trained Gaussian Process model to optimize the experimental design
+Minimal LHS input:
 
-<div align="center">
-  <img src="docs/pics/bayopt_matyas_opt_path.png" alt="Bayesian optimization path for the Matyas function"><br><br>
-  <img src="docs/pics/bayopt_matyas_input_opt_path.png" alt="Bayesian optimization input path for the Matyas function"><br><br>
-</div>
+```xml
+<?xml version="1.0" ?>
+<Simulation>
+  <RunInfo>
+    <WorkingDir>LHS</WorkingDir>
+    <batchSize>1</batchSize>
+  </RunInfo>
 
-[Bayesian optimization animation for the Matyas function](docs/pics/bayopt_matyas.mp4)
+  <GlobalSettings>
+    <AnalysisType>LHS</AnalysisType>
+    <limit>10</limit>
+    <Inputs>x, y</Inputs>
+    <Outputs>OutputPlaceHolder</Outputs>
+  </GlobalSettings>
 
-### Mishra
+  <Distributions>
+    <Uniform name="x">
+      <lowerBound>-10</lowerBound>
+      <upperBound>0</upperBound>
+    </Uniform>
+    <Uniform name="y">
+      <lowerBound>-6.5</lowerBound>
+      <upperBound>0</upperBound>
+    </Uniform>
+  </Distributions>
+</Simulation>
+```
 
-Bird Constrained Function
+See [Quick Start](docs/source/quickstart.rst) for the full input structure.
 
-- LHS pre-samplings to simulate experiments
-![LHS sampling scatter for the Mishra bird constrained function](docs/pics/bayopt_mishra_LHS_existing_data.png)
-- Train Gaussian Process model with LHS samples, and use Grid approach to sample the trained Gaussian Process model
-![Grid ROM sampling scatter for the Mishra bird constrained function](docs/pics/bayopt_mishra.png)
-- Utilize Bayesian Optimization with pre-trained Gaussian Process model to optimize the experimental design
+## Supported Analyses
 
-<div align="center">
-  <img src="docs/pics/bayopt_mishra_opt_path.png" alt="Bayesian optimization path for the Mishra bird constrained function"><br><br>
-  <img src="docs/pics/bayopt_mishra_input_opt_path.png" alt="Bayesian optimization input path for the Mishra bird constrained function"><br><br>
-</div>
+Set the workflow type with `<AnalysisType>` in `<GlobalSettings>`.
 
-[Bayesian optimization animation for the Mishra bird constrained function](docs/pics/bayopt_mishra.mp4)
+| `AnalysisType` | Description | Documentation |
+| --- | --- | --- |
+| `mc` | Monte Carlo model exploration. | [Monte Carlo](docs/source/mc.rst) |
+| `lhs` | Latin Hypercube Sampling for experiment design. | [LHS](docs/source/lhs.rst) |
+| `train_rom` | Train Gaussian Process ROMs from data. | [ROM](docs/source/rom.rst) |
+| `sparse_grid_construction` | Generate sparse-grid experiment locations. | [Sparse Grid](docs/source/sparsegrid.rst) |
+| `sparse_grid_rom` | Train Gaussian Polynomial Chaos ROMs from sparse-grid data. | [ROM](docs/source/rom.rst) |
+| `sensitivity` | Static or dynamic sensitivity and uncertainty analysis. | [Sensitivity](docs/source/sen.rst) |
+| `bayesian_optimization` | Bayesian optimization using simulation and optional prior data. | [Bayesian Optimization](docs/source/bayesian.rst) |
+| `model_calibration` | Bayesian model calibration with experiment data. | [Calibration](docs/source/calibration.rst) |
 
-## Dynamic Sensitivity Analysis
+Many analyses support dynamic models by setting `<dynamic>True</dynamic>` and a
+`<pivot>` variable in `<GlobalSettings>`.
 
-- Regression based method
-- Sobol index based method
+## Examples
 
-![Dynamic sensitivity analysis](docs/pics/sen.png)
+Representative outputs from the documented workflows:
 
-## Bayesian Model Calibration
+| Sparse-grid sampling | Bayesian optimization | Sensitivity analysis |
+| --- | --- | --- |
+| ![Sparse grid sampling for Himmelblau's function](docs/pics/SparseGrid_sampling_himmelblau.png) | ![Bayesian optimization path for the Mishra bird constrained function](docs/pics/bayopt_mishra_opt_path.png) | ![Dynamic sensitivity analysis](docs/pics/sen.png) |
 
-### Analytic High-Dimensional Problem
-A python analytic problem with 50 responses, three input parameters with uniform prior distributions.
+Additional figures and animations:
 
-![Bayesian model calibration](docs/pics/model_calibration.png)
+- [Pareto frontier scatter plot](docs/pics/plot_pp_scatter-scatter.png)
+- [Matyas Bayesian optimization animation](docs/pics/bayopt_matyas.mp4)
+- [Mishra Bayesian optimization animation](docs/pics/bayopt_mishra.mp4)
+- [Bayesian model calibration example](docs/pics/model_calibration.png)
+
+Example inputs are available under:
+
+- `tests/`
+- `workflow/`
+- `use_cases/`
+
+## Documentation
+
+Build the HTML documentation locally:
+
+```bash
+uv sync --python 3.11 --extra docs
+source .venv/bin/activate
+cd docs
+make html
+cd build/html
+python3 -m http.server
+```
+
+Open <http://localhost:8000> in your browser.
+
+## Project Layout
+
+| Path | Description |
+| --- | --- |
+| `src/main.py` | CLI entry point used by the `poem` command. |
+| `src/poem/PoemTemplateInterface.py` | Parses POEM XML and builds RAVEN workflow blocks. |
+| `src/poem/PoemTemplate.py` | Loads, modifies, writes, and optionally runs RAVEN templates. |
+| `src/poem/templates/` | RAVEN XML templates selected by `AnalysisType`. |
+| `models/` | Example external models. |
+| `tests/` | Example POEM and generated RAVEN inputs. |
+| `docs/source/` | Sphinx documentation source. |
+| `docs/pics/` | Documentation and README figures. |
+
+## Development Checks
+
+Useful local checks:
+
+```bash
+uv sync --python 3.11 --extra docs
+source .venv/bin/activate
+poem -i tests/lhs_sampling.xml -nr
+cd docs
+make html
+```
+
+Full workflow execution requires a working RAVEN installation and any external
+model dependencies required by the selected input.
+
+## Contributing
+
+Contributions are welcome. Open an issue for bugs or feature requests, and submit
+pull requests against the development branch used by the project.
+
+## License
+
+See [LICENSE](LICENSE) and [NOTICE.txt](NOTICE.txt).

@@ -1,3 +1,51 @@
 [build-system]
-requires = ["setuptools>=42"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "poem-ravenframework"
+version = "0.2"
+description = "Platform of Optimal Experiment Management"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.11,<3.12"
+license-files = ["LICENSE", "NOTICE.txt"]
+dependencies = [
+  "raven_framework>=3.2",
+  "baycal-ravenframework",
+  # raven-framework 3.2 pins statsmodels 0.13.*, which is incompatible with pandas 3.
+  "pandas<3",
+  "tomli>=2.4.1",
+]
+
+[project.optional-dependencies]
+docs = [
+  "sphinx>=6.2.0",
+  "sphinx-rtd-theme",
+  "nbsphinx",
+  "sphinx-copybutton",
+  "sphinx-autoapi",
+  "pandoc",
+]
+
+[project.urls]
+Homepage = "https://github.com/idaholab/POEM"
+
+[project.scripts]
+poem = "POEM.src.main:main"
+
+[tool.setuptools]
+include-package-data = true
+packages = [
+  "POEM",
+  "POEM.models",
+  "POEM.src",
+  "POEM.src.poem",
+  "POEM.src.poem.templates",
+]
+
+[tool.setuptools.package-dir]
+POEM = "."
+
+[tool.setuptools.package-data]
+"POEM.models" = ["*.py", "*.m"]
+"POEM.src.poem.templates" = ["*.xml", "*.toml", "*.py"]

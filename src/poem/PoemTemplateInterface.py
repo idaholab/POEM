@@ -159,8 +159,7 @@ class PoemTemplateInterface(object):
     """
       get the processed outputs from this class: PoemTemplateInterface
       @ In, None
-      @ Out, (outputDict, miscDict), tuple, first dictionary contains the whole element that need to be appended in
-        the templated input, while the second dictionary contains only the values that need to be replaced.
+      @ Out, (outputDict, miscDict), tuple, output XML nodes and replacement values for the templated input.
     """
     miscDict = {'limit': self._limit,
                 'pivotParameter':self._pivot,
