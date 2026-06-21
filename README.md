@@ -70,6 +70,32 @@ To generate and run the RAVEN workflow, omit `-nr`:
 poem -i tests/lhs_sampling.xml
 ```
 
+## Web GUI
+
+POEM also includes a Streamlit GUI for building, editing, running, and inspecting
+POEM inputs from a browser. From a source checkout:
+
+```bash
+uv sync --python 3.11
+uv run --with-requirements app/requirements.txt streamlit run app/streamlit_app.py
+```
+
+Open the Streamlit URL printed in the terminal, typically
+<http://localhost:8501>. The GUI provides:
+
+- `POEM`: a short project introduction.
+- `Examples`: load XML examples from `tests/`, edit them, run prerequisite
+  tests from `tests/tests`, run POEM, and inspect generated files.
+- `Build Workflow`: choose an `AnalysisType`, start from test-backed default
+  values, build a custom input, run POEM, and view results.
+- `Help`: browse rendered documentation, supported analyses, and a standalone
+  XML editor.
+
+The GUI writes generated POEM XML, generated RAVEN XML, run logs, and output
+files under `app/workspaces/` by default. Generate-only mode is the default;
+full RAVEN execution remains opt-in and requires the selected model dependencies
+to be available.
+
 ## Input Model
 
 POEM inputs are XML files rooted at `<Simulation>`. The main blocks are:
@@ -180,6 +206,7 @@ Open <http://localhost:8000> in your browser.
 | `src/poem/templates/` | RAVEN XML templates selected by `AnalysisType`. |
 | `models/` | Example external models. |
 | `tests/` | Example POEM and generated RAVEN inputs. |
+| `app/` | Streamlit GUI source, app requirements, and local workspaces. |
 | `docs/source/` | Sphinx documentation source. |
 | `docs/pics/` | Documentation and README figures. |
 

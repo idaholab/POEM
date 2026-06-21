@@ -29,6 +29,19 @@ Clone
 The ``uv sync`` command creates ``.venv``, installs POEM in editable mode, and installs
 the runtime dependencies listed in ``pyproject.toml``.
 
+Run Web GUI
++++++++++++
+
+From a source checkout, run the Streamlit GUI with:
+
+.. code:: bash
+
+  uv sync --python 3.11
+  uv run --with-requirements app/requirements.txt streamlit run app/streamlit_app.py
+
+Open the Streamlit URL printed in the terminal, usually
+``http://localhost:8501``. See :ref:`gui` for the GUI workflow details.
+
 Build Documentation
 +++++++++++++++++++
 

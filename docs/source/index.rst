@@ -16,6 +16,8 @@ Welcome to POEM's documentation!
 
    quickstart
 
+   gui
+
    mc
 
    lhs
