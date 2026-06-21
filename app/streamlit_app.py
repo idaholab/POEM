@@ -334,21 +334,30 @@ def render_run_panel(
         st.code(" ".join(result.command), language="bash")
         st.write(f"Return code: `{result.return_code}`")
         if result.stdout:
-            with st.expander("stdout", expanded=True):
+            with st.expander("stdout", expanded=False):
                 st.code(result.stdout)
         if result.stderr:
-            with st.expander("stderr", expanded=True):
+            with st.expander("stderr", expanded=False):
                 st.code(result.stderr)
 
     return workspace
 
 
-def render_results_panel(workspace: Path, key_prefix: str) -> None:
+def working_dir_from_xml(xml_text: str) -> str:
+    summary = summarize_xml(None, xml_text)
+    return summary.working_dir.strip()
+
+
+def render_results_panel(workspace: Path, key_prefix: str, working_dir: str = "") -> None:
     st.subheader("Results")
-    st.caption(str(workspace))
-    files = [item for item in list_result_files(workspace) if item.suffix in {".csv", ".py"}]
+    results_root = workspace / working_dir if working_dir else workspace
+    st.caption(str(results_root))
+    files = [item for item in list_result_files(results_root) if item.suffix in {".csv", ".py"}]
     if not files:
-        st.info("No CSV or Python files were found in this workspace.")
+        if working_dir:
+            st.info(f'No CSV or Python files were found under WorkingDir "{working_dir}".')
+        else:
+            st.info("No CSV or Python files were found in this workspace.")
         return
 
     selected = st.selectbox(
@@ -865,7 +874,7 @@ def page_example_workflow() -> None:
         default_token=f"example:{selected_input_name}",
     )
     st.divider()
-    render_results_panel(workspace, "example_results")
+    render_results_panel(workspace, "example_results", working_dir_from_xml(edited_xml))
 
 
 def page_build_workflow() -> None:
@@ -876,7 +885,7 @@ def page_build_workflow() -> None:
     st.divider()
     workspace = render_run_panel("builder_run", preview_xml, "Builder draft")
     st.divider()
-    render_results_panel(workspace, "builder_results")
+    render_results_panel(workspace, "builder_results", working_dir_from_xml(preview_xml))
 
 
 def page_docs_xml() -> None:
