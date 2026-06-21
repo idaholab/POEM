@@ -8,7 +8,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from .config import REPO_ROOT
+from .config import MODELS_DIR, REPO_ROOT
 from .schema import RunResult
 
 
@@ -21,6 +21,28 @@ def poem_command() -> list[str]:
 
 def raven_available() -> bool:
     return shutil.which("raven_framework") is not None
+
+
+def copy_example_models(workspace: Path) -> list[Path]:
+    if not MODELS_DIR.exists():
+        raise FileNotFoundError(f"Models directory was not found: {MODELS_DIR}")
+
+    workspace = workspace.expanduser()
+    source = MODELS_DIR.resolve()
+    destinations = []
+    for destination in (workspace / "models", workspace.parent / "models"):
+        resolved = destination.resolve()
+        if resolved != source and resolved not in destinations:
+            destinations.append(resolved)
+
+    for destination in destinations:
+        shutil.copytree(
+            source,
+            destination,
+            dirs_exist_ok=True,
+            ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store"),
+        )
+    return destinations
 
 
 def environment_status() -> dict[str, str | bool]:
@@ -74,6 +96,9 @@ def write_run_log(workspace: Path, result: RunResult) -> Path:
     workspace.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     path = workspace / f"run_{timestamp}.json"
+    index = 1
+    while path.exists():
+        path = workspace / f"run_{timestamp}_{index}.json"
+        index += 1
     path.write_text(json.dumps(result.as_dict(), indent=2), encoding="utf-8")
     return path
-

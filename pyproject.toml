@@ -16,6 +16,7 @@ dependencies = [
   "pandas<3",
   "tomli>=2.4.1",
   "streamlit>=1.58.0",
+  "docutils>=0.22.4",
 ]
 
 [project.optional-dependencies]

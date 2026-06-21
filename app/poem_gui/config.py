@@ -5,6 +5,7 @@ from pathlib import Path
 
 APP_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = APP_DIR.parent
+MODELS_DIR = REPO_ROOT / "models"
 TESTS_DIR = REPO_ROOT / "tests"
 DOCS_SOURCE_DIR = REPO_ROOT / "docs" / "source"
 WORKSPACES_DIR = APP_DIR / "workspaces"
@@ -20,6 +21,17 @@ SUPPORTED_ANALYSES = [
     "bayesian_optimization",
     "model_calibration",
 ]
+
+BUILDER_DEFAULT_EXAMPLES = {
+    "mc": "mc_sampling.xml",
+    "lhs": "lhs_sampling.xml",
+    "train_rom": "train_gp_rom.xml",
+    "sparse_grid_construction": "sparse_grid_construction.xml",
+    "sparse_grid_rom": "sparse_grid_rom.xml",
+    "sensitivity": "sauq.xml",
+    "bayesian_optimization": "bayesian_optimization.xml",
+    "model_calibration": "model_calibration.xml",
+}
 
 ANALYSIS_LABELS = {
     "mc": "Monte Carlo",
@@ -80,4 +92,3 @@ COMMON_XML_NAMES = {
     "input": "poem_input.xml",
     "generated": "raven_poem_input.xml",
 }
-
