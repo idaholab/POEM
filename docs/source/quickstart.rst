@@ -3,6 +3,25 @@
 Quick Start
 ===========
 
+Web GUI Quick Start
++++++++++++++++++++
+
+The Streamlit GUI can load examples, build custom POEM XML, run POEM, and inspect
+CSV/Python result files in one browser workflow.
+
+Run it from the repository root:
+
+.. code:: bash
+
+  uv sync --python 3.11
+  uv run --with-requirements app/requirements.txt streamlit run app/streamlit_app.py
+
+Use the ``Examples`` page to load an XML file from ``tests/``, edit it, run
+prerequisites when needed, run POEM, and view the files under the selected
+``RunInfo/WorkingDir``. Use the ``Build Workflow`` page to select an
+``AnalysisType``, adjust builder fields, preview XML, run POEM, and visualize
+CSV output. See :ref:`gui` for the full GUI reference.
+
 Input Structure
 +++++++++++++++
 
