@@ -348,7 +348,154 @@ def working_dir_from_xml(xml_text: str) -> str:
     return summary.working_dir.strip()
 
 
-def render_results_panel(workspace: Path, key_prefix: str, working_dir: str = "") -> None:
+def inputs_outputs_from_xml(xml_text: str) -> tuple[list[str], list[str]]:
+    try:
+        state = state_from_xml(parse_xml_text(xml_text))
+    except Exception:
+        return [], []
+    return state.inputs, state.outputs
+
+
+def render_csv_visualizations(frame, input_names: list[str], output_names: list[str], key_prefix: str) -> None:
+    import altair as alt
+    import pandas as pd
+
+    numeric_columns = list(frame.select_dtypes(include="number").columns)
+    input_columns = [name for name in input_names if name in numeric_columns]
+    output_columns = [name for name in output_names if name in numeric_columns]
+    metadata_columns = {
+        "batchId",
+        "PointProbability",
+        "ProbabilityWeight",
+        "trajID",
+        "traceID",
+        "accepted",
+    }
+    metadata_prefixes = ("ProbabilityWeight-",)
+
+    if not output_columns:
+        output_columns = [
+            column
+            for column in numeric_columns
+            if column not in input_columns
+            and column not in metadata_columns
+            and not any(column.startswith(prefix) for prefix in metadata_prefixes)
+        ]
+    if not input_columns and output_columns:
+        input_columns = [
+            column
+            for column in numeric_columns
+            if column not in output_columns
+            and column not in metadata_columns
+            and not any(column.startswith(prefix) for prefix in metadata_prefixes)
+        ]
+
+    if not numeric_columns:
+        st.info("No numeric columns are available for plotting.")
+        return
+
+    st.subheader("Visualization")
+    chart_data = frame[numeric_columns].copy()
+    chart_data = chart_data.reset_index().rename(columns={"index": "row"})
+    alt.data_transformers.disable_max_rows()
+
+    if len(input_columns) >= 2 and output_columns:
+        st.markdown("**Input Space Colored By Output**")
+        col1, col2, col3 = st.columns(3)
+        x_col = col1.selectbox("X input", input_columns, key=f"{key_prefix}_space_x")
+        y_options = [column for column in input_columns if column != x_col] or input_columns
+        y_col = col2.selectbox("Y input", y_options, key=f"{key_prefix}_space_y")
+        color_col = col3.selectbox("Color output", output_columns, key=f"{key_prefix}_space_color")
+        tooltip_columns = list(dict.fromkeys(input_columns + output_columns))
+        chart = (
+            alt.Chart(chart_data)
+            .mark_circle(size=78, opacity=0.82)
+            .encode(
+                x=alt.X(f"{x_col}:Q", title=x_col),
+                y=alt.Y(f"{y_col}:Q", title=y_col),
+                color=alt.Color(f"{color_col}:Q", title=color_col),
+                tooltip=[alt.Tooltip(f"{column}:Q", title=column) for column in tooltip_columns],
+            )
+            .interactive()
+        )
+        st.altair_chart(chart, width="stretch")
+
+    if input_columns and output_columns:
+        st.markdown("**Input-Output Response**")
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox("Input", input_columns, key=f"{key_prefix}_response_x")
+        y_col = col2.selectbox("Output", output_columns, key=f"{key_prefix}_response_y")
+        chart = (
+            alt.Chart(chart_data)
+            .mark_circle(size=70, opacity=0.78)
+            .encode(
+                x=alt.X(f"{x_col}:Q", title=x_col),
+                y=alt.Y(f"{y_col}:Q", title=y_col),
+                tooltip=[
+                    alt.Tooltip(f"{x_col}:Q", title=x_col),
+                    alt.Tooltip(f"{y_col}:Q", title=y_col),
+                    alt.Tooltip("row:Q", title="row"),
+                ],
+            )
+            .interactive()
+        )
+        st.altair_chart(chart, width="stretch")
+
+    if len(numeric_columns) >= 2 and (not input_columns or not output_columns):
+        st.markdown("**Numeric Scatter**")
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox("X column", numeric_columns, key=f"{key_prefix}_numeric_x")
+        y_options = [column for column in numeric_columns if column != x_col] or numeric_columns
+        y_col = col2.selectbox("Y column", y_options, key=f"{key_prefix}_numeric_y")
+        chart = (
+            alt.Chart(chart_data)
+            .mark_circle(size=68, opacity=0.76)
+            .encode(
+                x=alt.X(f"{x_col}:Q", title=x_col),
+                y=alt.Y(f"{y_col}:Q", title=y_col),
+                tooltip=[
+                    alt.Tooltip(f"{x_col}:Q", title=x_col),
+                    alt.Tooltip(f"{y_col}:Q", title=y_col),
+                    alt.Tooltip("row:Q", title="row"),
+                ],
+            )
+            .interactive()
+        )
+        st.altair_chart(chart, width="stretch")
+
+    distribution_columns = list(dict.fromkeys(input_columns + output_columns)) or numeric_columns
+    selected_distribution_columns = st.multiselect(
+        "Distribution columns",
+        distribution_columns,
+        default=distribution_columns[: min(3, len(distribution_columns))],
+        key=f"{key_prefix}_distribution_columns",
+    )
+    if selected_distribution_columns:
+        long_data = chart_data[["row", *selected_distribution_columns]].melt(
+            id_vars="row",
+            var_name="variable",
+            value_name="value",
+        )
+        long_data = long_data[pd.notna(long_data["value"])]
+        chart = (
+            alt.Chart(long_data)
+            .mark_bar(opacity=0.78)
+            .encode(
+                x=alt.X("value:Q", bin=alt.Bin(maxbins=24), title="value"),
+                y=alt.Y("count():Q", title="count"),
+                color=alt.Color("variable:N", title="variable"),
+                column=alt.Column("variable:N", title=None),
+                tooltip=[
+                    alt.Tooltip("variable:N", title="variable"),
+                    alt.Tooltip("count():Q", title="count"),
+                ],
+            )
+            .resolve_scale(y="independent")
+        )
+        st.altair_chart(chart, width="stretch")
+
+
+def render_results_panel(workspace: Path, key_prefix: str, working_dir: str = "", xml_text: str = "") -> None:
     st.subheader("Results")
     results_root = workspace / working_dir if working_dir else workspace
     st.caption(str(results_root))
@@ -375,6 +522,8 @@ def render_results_panel(workspace: Path, key_prefix: str, working_dir: str = ""
             sep = "\t" if selected.path.suffix.lower() == ".tsv" else ","
             frame = pd.read_csv(selected.path, sep=sep)
             st.dataframe(frame, width="stretch")
+            input_names, output_names = inputs_outputs_from_xml(xml_text) if xml_text else ([], [])
+            render_csv_visualizations(frame, input_names, output_names, f"{key_prefix}_{selected.relative_path}")
         except Exception as exc:
             st.warning(f"Could not preview table: {exc}")
             st.code(read_text_preview(selected.path))
@@ -874,7 +1023,7 @@ def page_example_workflow() -> None:
         default_token=f"example:{selected_input_name}",
     )
     st.divider()
-    render_results_panel(workspace, "example_results", working_dir_from_xml(edited_xml))
+    render_results_panel(workspace, "example_results", working_dir_from_xml(edited_xml), edited_xml)
 
 
 def page_build_workflow() -> None:
@@ -885,7 +1034,7 @@ def page_build_workflow() -> None:
     st.divider()
     workspace = render_run_panel("builder_run", preview_xml, "Builder draft")
     st.divider()
-    render_results_panel(workspace, "builder_results", working_dir_from_xml(preview_xml))
+    render_results_panel(workspace, "builder_results", working_dir_from_xml(preview_xml), preview_xml)
 
 
 def page_docs_xml() -> None:
@@ -917,7 +1066,7 @@ def main() -> None:
             page_name,
             key=f"nav_{page_name.lower().replace(' ', '_')}",
             type="primary" if selected else "secondary",
-            use_container_width=True,
+            width="stretch",
         ):
             st.session_state.active_page = page_name
             st.rerun()
