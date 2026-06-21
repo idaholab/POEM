@@ -35,14 +35,17 @@ def copy_example_models(workspace: Path) -> list[Path]:
         if resolved != source and resolved not in destinations:
             destinations.append(resolved)
 
+    copied_destinations = []
     for destination in destinations:
+        if destination.exists():
+            continue
         shutil.copytree(
             source,
             destination,
-            dirs_exist_ok=True,
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store"),
         )
-    return destinations
+        copied_destinations.append(destination)
+    return copied_destinations
 
 
 def environment_status() -> dict[str, str | bool]:

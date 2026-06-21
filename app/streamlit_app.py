@@ -265,7 +265,10 @@ def render_run_panel(
         except Exception as exc:
             st.error(f"Could not prepare workspace: {exc}")
             return False
-        st.info("Copied models folder to: " + ", ".join(str(path) for path in destinations))
+        # if destinations:
+        #     st.info("Copied models folder to: " + ", ".join(str(path) for path in destinations))
+        # else:
+        #     st.info("Models folder already exists in the workspace.")
         return True
 
     def run_prerequisite_steps() -> bool:
