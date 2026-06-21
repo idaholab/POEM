@@ -36,8 +36,6 @@ Module Contents
 ---------------
 
 .. py:data:: logger
-   :value: None
-
 
 .. py:data:: fh
 

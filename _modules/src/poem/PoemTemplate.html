@@ -1,22 +1,22 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.poem.PoemTemplate &mdash; POEM 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=359c27e9"></script>
-      <script src="../../../_static/doctools.js?v=888ff710"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../_static/copybutton.js?v=f281be69"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -108,9 +108,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">ravenframework.InputTemplates.TemplateBaseClass</span><span class="w"> </span><span class="kn">import</span> <span class="n">Template</span> <span class="k">as</span> <span class="n">TemplateBase</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ravenframework.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">xmlUtils</span>
 
-<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
+<div class="viewcode-block" id="logger">
+<a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.logger">[docs]</a>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoemTemplate"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">PoemTemplate</span><span class="p">(</span><span class="n">TemplateBase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PoemTemplate">
+<a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PoemTemplate</span><span class="p">(</span><span class="n">TemplateBase</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot; POEM: Template Class &quot;&quot;&quot;</span>
 
   <span class="c1">###############</span>
@@ -123,9 +128,14 @@
 <span class="sd">      @ Out, None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">TemplateBase</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<div class="viewcode-block" id="PoemTemplate._validEntities"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate._validEntities">[docs]</a>    <span class="bp">self</span><span class="o">.</span><span class="n">_validEntities</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RunInfo&#39;</span><span class="p">,</span> <span class="s1">&#39;Files&#39;</span><span class="p">,</span> <span class="s1">&#39;Models&#39;</span><span class="p">,</span> <span class="s1">&#39;Distributions&#39;</span><span class="p">,</span> <span class="s1">&#39;Samplers&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimizers&#39;</span><span class="p">,</span> <span class="s1">&#39;DataObjects&#39;</span><span class="p">,</span> <span class="s1">&#39;OutStreams&#39;</span><span class="p">,</span> <span class="s1">&#39;Functions&#39;</span><span class="p">,</span> <span class="s1">&#39;Steps&#39;</span><span class="p">,</span> <span class="s1">&#39;Metrics&#39;</span><span class="p">,</span> <span class="s1">&#39;VariableGroups&#39;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="PoemTemplate._validEntities">
+<a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate._validEntities">[docs]</a>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_validEntities</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RunInfo&#39;</span><span class="p">,</span> <span class="s1">&#39;Files&#39;</span><span class="p">,</span> <span class="s1">&#39;Models&#39;</span><span class="p">,</span> <span class="s1">&#39;Distributions&#39;</span><span class="p">,</span> <span class="s1">&#39;Samplers&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimizers&#39;</span><span class="p">,</span> <span class="s1">&#39;DataObjects&#39;</span><span class="p">,</span> <span class="s1">&#39;OutStreams&#39;</span><span class="p">,</span> <span class="s1">&#39;Functions&#39;</span><span class="p">,</span> <span class="s1">&#39;Steps&#39;</span><span class="p">,</span> <span class="s1">&#39;Metrics&#39;</span><span class="p">,</span> <span class="s1">&#39;VariableGroups&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="PoemTemplate.loadTemplate"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.loadTemplate">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">loadTemplate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PoemTemplate.loadTemplate">
+<a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.loadTemplate">[docs]</a>
+  <span class="k">def</span><span class="w"> </span><span class="nf">loadTemplate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Loads template file statefully.</span>
 <span class="sd">      @ In, filename, str, name of file to load (xml)</span>
@@ -138,7 +148,10 @@
     <span class="k">else</span><span class="p">:</span>
       <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unrecognized type of input </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoemTemplate.createWorkflow"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.createWorkflow">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">createWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">miscDict</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PoemTemplate.createWorkflow">
+<a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.createWorkflow">[docs]</a>
+  <span class="k">def</span><span class="w"> </span><span class="nf">createWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">miscDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      creates a new RAVEN workflow based on the information in dicitonary &quot;inputs&quot;.</span>
 <span class="sd">      @ In, inputs, dict, dictionary that contains xml node info that need to append, i.e. {RavenXMLNodeTag: ListOfNodes}</span>
@@ -193,7 +206,10 @@
           <span class="n">subnode</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">val</span>
     <span class="k">return</span> <span class="n">template</span></div>
 
-<div class="viewcode-block" id="PoemTemplate.writeWorkflow"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.writeWorkflow">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">writeWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PoemTemplate.writeWorkflow">
+<a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.writeWorkflow">[docs]</a>
+  <span class="k">def</span><span class="w"> </span><span class="nf">writeWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Writes a template to file.</span>
 <span class="sd">      @ In, template, xml.etree.ElementTree.Element, file to write</span>
@@ -203,13 +219,18 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">TemplateBase</span><span class="o">.</span><span class="n">writeWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoemTemplate.runWorkflow"><a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.runWorkflow">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">runWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PoemTemplate.runWorkflow">
+<a class="viewcode-back" href="../../../autoapi/src/poem/PoemTemplate/index.html#src.poem.PoemTemplate.PoemTemplate.runWorkflow">[docs]</a>
+  <span class="k">def</span><span class="w"> </span><span class="nf">runWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">      Runs the workflow at the destination.</span>
 <span class="sd">      @ In, destination, str, path and filename of RAVEN input file</span>
 <span class="sd">      @ Out, res, int, system results of running the code</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">TemplateBase</span><span class="o">.</span><span class="n">runWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></div></div>
+    <span class="n">TemplateBase</span><span class="o">.</span><span class="n">runWorkflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

@@ -1,22 +1,22 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src._utils &mdash; POEM 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=359c27e9"></script>
-      <script src="../../_static/doctools.js?v=888ff710"></script>
-      <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../_static/copybutton.js?v=f281be69"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -101,7 +101,9 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">platform</span>
 
-<div class="viewcode-block" id="get_raven_loc"><a class="viewcode-back" href="../../autoapi/src/_utils/index.html#src._utils.get_raven_loc">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_raven_loc</span><span class="p">():</span>
+<div class="viewcode-block" id="get_raven_loc">
+<a class="viewcode-back" href="../../autoapi/src/_utils/index.html#src._utils.get_raven_loc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_raven_loc</span><span class="p">():</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return RAVEN location: read from POEM/.ravenconfig.xml</span>
 <span class="sd">    @ In, None</span>
@@ -125,7 +127,10 @@
     <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Executable for RAVEN is not available at: </span><span class="si">{</span><span class="n">ravenExec</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">ravenPath</span><span class="p">,</span> <span class="n">ravenExec</span></div>
 
-<div class="viewcode-block" id="get_plugin_loc"><a class="viewcode-back" href="../../autoapi/src/_utils/index.html#src._utils.get_plugin_loc">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_plugin_loc</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="n">raven_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="get_plugin_loc">
+<a class="viewcode-back" href="../../autoapi/src/_utils/index.html#src._utils.get_plugin_loc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_plugin_loc</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="n">raven_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get plugin location in installed RAVEN</span>
 <span class="sd">    @ In, plugin, string, the plugin name</span>
@@ -144,8 +149,12 @@
     <span class="n">plugin_loc</span> <span class="o">=</span> <span class="n">plugin_handler</span><span class="o">.</span><span class="n">getPluginLocation</span><span class="p">(</span><span class="n">plugin</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">plugin_loc</span></div>
 
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-<div class="viewcode-block" id="argvs"><a class="viewcode-back" href="../../autoapi/src/_utils/index.html#src._utils.argvs">[docs]</a>  <span class="n">argvs</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span></div>
+<div class="viewcode-block" id="argvs">
+<a class="viewcode-back" href="../../autoapi/src/_utils/index.html#src._utils.argvs">[docs]</a>
+  <span class="n">argvs</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span></div>
+
   <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argvs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;No action is provided, please use &quot;get_raven_loc&quot; or &quot;get_plugin_loc&quot; for command line argument.&#39;</span><span class="p">)</span>
   <span class="n">action</span> <span class="o">=</span> <span class="kc">None</span>
@@ -161,7 +170,9 @@
   <span class="k">else</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Unrecognized action: &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action</span><span class="p">))</span>
 
-<div class="viewcode-block" id="getOperatingSystem"><a class="viewcode-back" href="../../autoapi/src/_utils/index.html#src._utils.getOperatingSystem">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">getOperatingSystem</span><span class="p">():</span>
+<div class="viewcode-block" id="getOperatingSystem">
+<a class="viewcode-back" href="../../autoapi/src/_utils/index.html#src._utils.getOperatingSystem">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">getOperatingSystem</span><span class="p">():</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Determine the operating system in use.</span>
 <span class="sd">    @ Out, os, str, name of operating system class</span>
@@ -175,6 +186,7 @@
     <span class="k">return</span> <span class="s1">&#39;mac&#39;</span>
   <span class="k">else</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Unrecognized platform system: &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">osName</span><span class="p">))</span></div>
+
 </pre></div>
 
            </div>
