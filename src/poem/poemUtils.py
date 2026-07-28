@@ -51,7 +51,7 @@ def convertStringToFloat(xmlNode):
     val = float(xmlNode.text)
     return val
   except (ValueError,TypeError):
-    raise IOError('Real value is required for content of node %s, but got %s' %(node.tag, node.text))
+    raise IOError('Real value is required for content of node %s, but got %s' %(xmlNode.tag, xmlNode.text))
 
 def convertStringToInt(xmlNode):
   """
@@ -63,7 +63,7 @@ def convertStringToInt(xmlNode):
     val = int(xmlNode.text)
     return val
   except (ValueError,TypeError):
-    raise IOError('Integer value is required for content of node %s, but got %s' %(node.tag, node.text))
+    raise IOError('Integer value is required for content of node %s, but got %s' %(xmlNode.tag, xmlNode.text))
 
 def toString(s):
   """
